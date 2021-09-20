@@ -6,8 +6,16 @@ namespace Brubeck.Architecture
 {
     public partial class CPU
     {
+        /// <summary>
+        /// An extension of Qyte with specific methods for rapid temporary memory storage.
+        /// </summary>
         public class Register : Qyte
         {
+            /// <summary>
+            /// Gets a register with the specified Qyte Alias.
+            /// </summary>
+            /// <param name="addr">Qyte alias of the Register (between IEA and IEU or IOA and IOU).</param>
+            /// <returns>Reference to the specified Register.</returns>
             public static ref Register GetRegisterFromQyte(Qyte addr)
             {
                 switch (addr.ToString())
