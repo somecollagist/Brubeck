@@ -5,4 +5,11 @@
     <TargetFramework>net5.0</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Brubeck.Architecture\Brubeck.Architecture.csproj" />
+    <ProjectReference Include="..\Brubeck.Assembler\Brubeck.Assembler.csproj" />
+    <ProjectReference Include="..\Brubeck.Core\Brubeck.Core.csproj" />
+    <ProjectReference Include="..\Brubeck.Peripheral\Brubeck.Peripheral.csproj" />
+  </ItemGroup>
+
 </Project>

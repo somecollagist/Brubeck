@@ -39,6 +39,9 @@ namespace Brubeck.Core
             Qits = gen.ToCharArray().Select(t => QitConverter.GetQitFromChar(t)).ToArray()[0..3];
         }
 
+        /// <summary>
+        /// Returns an uppercase string that represents the object.
+        /// </summary>
         public override string ToString()
         {
             return new string(Qits.Select(t => QitConverter.GetCharFromQit(t)).ToArray());

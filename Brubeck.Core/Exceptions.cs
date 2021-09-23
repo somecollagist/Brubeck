@@ -31,4 +31,18 @@ namespace Brubeck.Core
         public ComponentNonExistentException(string message) : base(message) { }
         public ComponentNonExistentException(string message, Exception inner) : base(message, inner) { }
     }
+
+    public class UnknownOpcodeException : Exception
+    {
+        public UnknownOpcodeException() : base() { }
+        public UnknownOpcodeException(string message) : base(message) { }
+        public UnknownOpcodeException(string message, Exception inner) : base(message, inner) { }
+    }
+
+    public class SegmentationFaultException : Exception
+    {
+        public SegmentationFaultException() : base() { }
+        public SegmentationFaultException(string message) : base(message) { }
+        public SegmentationFaultException(string message, Exception inner) : base(message, inner) { }
+    }
 }

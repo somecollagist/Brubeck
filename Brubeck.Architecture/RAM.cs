@@ -12,7 +12,7 @@ namespace Brubeck.Architecture
         /// <summary>
         /// Maximum number of RAM Addresses. Each RAM address contains one Qyte.
         /// </summary>
-        public const int RamCeiling = 9765625;
+        public const int RamCeiling = 9765625;  //This is 5^10
 
 #pragma warning disable IDE0044
         /// <summary>
@@ -38,6 +38,16 @@ namespace Brubeck.Architecture
         {
             if (index < 0 || index > RamCeiling) throw new IllegalIndexException($"No such RAM index '{index}' exists");
             return ref Memory[index];
+        }
+
+        /// <summary>
+        /// Sets the current instance's Memory to the given Qyte array.
+        /// </summary>
+        /// <remarks>This method overwrites preexisting RAM states.</remarks>
+        /// <param name="state">The Memory state to flash onto RAM.</param>
+        public void FlashRAMState(Qyte[] state)
+        {
+            Array.Copy(state, Memory, state.Length);
         }
     }
 }

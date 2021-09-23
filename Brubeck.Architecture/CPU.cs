@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 using Brubeck.Core;
 
@@ -37,11 +38,23 @@ namespace Brubeck.Architecture
         /// <summary>
         /// Returns the value of the next Qyte in Memory.
         /// </summary>
-        /// <param name="Memory">Reference to the current Memory being used.</param>
+        /// <param name="Memory">Reference to the current memory being used.</param>
         public Qyte GetNextQyte(ref RAM Memory)
         {
             IncMemAddr();
             return Memory.QyteAtIndex(MemAddr - 1);
+        }
+
+        /// <summary>
+        /// Returns the values of the next number of Qytes in memory;
+        /// </summary>
+        /// <param name="count">Number of qytes to read.</param>
+        /// <param name="Memory">Reference to the current memory being used.</param>
+        public Qyte[] GetNextQytes(int count, ref RAM Memory)
+        {
+            Qyte[] qytes = new Qyte[count];
+            for (int x = 0; x < count; x++) qytes[x] = GetNextQyte(ref Memory);
+            return qytes;
         }
 
 #pragma warning disable CA2211
@@ -50,5 +63,21 @@ namespace Brubeck.Architecture
         /// </summary>
         public static Register R0, R1, R2, R3, R4, R5, R6, R7, R8, R9;
 #pragma warning restore CA2211
+
+        private enum ExecutionState
+        {
+            /// <summary>
+            /// No CPU fault, execution was successful.
+            /// </summary>
+            OK,
+            /// <summary>
+            /// CPU encountered an error, execution was unsuccessful.
+            /// </summary>
+            ERR,
+            /// <summary>
+            /// CPU was instructed to stop.
+            /// </summary>
+            HLT
+        }
     }
 }
