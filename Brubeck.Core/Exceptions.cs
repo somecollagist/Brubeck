@@ -23,6 +23,16 @@ namespace Brubeck.Core
     }
 
     /// <summary>
+    /// Thrown when an illegal operation is attempted.
+    /// </summary>
+    public class IllegalOperationException : Exception
+    {
+        public IllegalOperationException() : base() { }
+        public IllegalOperationException(string message) : base(message) { }
+        public IllegalOperationException(string message, Exception inner) : base(message, inner) { }
+    }
+
+    /// <summary>
     /// Thrown when attepmting to access a non-existent component.
     /// </summary>
     public class ComponentNonExistentException : Exception
@@ -32,6 +42,9 @@ namespace Brubeck.Core
         public ComponentNonExistentException(string message, Exception inner) : base(message, inner) { }
     }
 
+    /// <summary>
+    /// Thrown when an unknown opcode is passed.
+    /// </summary>
     public class UnknownOpcodeException : Exception
     {
         public UnknownOpcodeException() : base() { }
@@ -39,6 +52,9 @@ namespace Brubeck.Core
         public UnknownOpcodeException(string message, Exception inner) : base(message, inner) { }
     }
 
+    /// <summary>
+    /// Thrown when a data stream cannot be properly segmented.
+    /// </summary>
     public class SegmentationFaultException : Exception
     {
         public SegmentationFaultException() : base() { }

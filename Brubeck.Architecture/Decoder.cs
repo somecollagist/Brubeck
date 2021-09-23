@@ -20,10 +20,9 @@ namespace Brubeck.Architecture
 
         private Qyte[] GetOperands(Qyte opcode, ref RAM Memory)
         {
-            return opcode.ToString() switch
-            {
-                _ => throw new UnknownOpcodeException($"Opcode {opcode} at Memory Location {MemAddr-1} is unknown."),
-            };
+            return null;
         }
+
+
     }
 }
