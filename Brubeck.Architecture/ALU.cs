@@ -46,6 +46,17 @@ namespace Brubeck.Architecture
 
                 return (s, Logic.OR(y, n));
             }
+
+            public static (Qyte, Qit) Add(Qyte a, Qyte b, Qit cin)
+            {
+                Qit s = cin;
+                Qit[] gen = new Qit[3];
+                for(int x = 0; x < 3; x++)
+                {
+                    (gen[x], s) = Add(a.QitAtIndex(x), b.QitAtIndex(x), s);
+                }
+                return (new Qyte(gen), s);
+            }
         }
     }
 }

@@ -87,5 +87,15 @@ namespace Brubeck.Core
 				 _ => throw new IllegalConstructionException($"Illegal Qit constructor integer '{value}'")
 			};
 		}
+
+		public static int GetIntFromQitArray(Qit[] qits)
+        {
+			int total = 0;
+			for(int x = 0; x < qits.Length; x++)
+            {
+				total += (sbyte)qits[qits.Length - 1 - x] * (int)Math.Pow(5, x);
+            }
+			return total;
+        }
 	}
 }

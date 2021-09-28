@@ -18,6 +18,7 @@ namespace Brubeck.Architecture
             /// <returns>Reference to the specified Register.</returns>
             public static ref Register GetRegisterFromQyte(Qyte addr)
             {
+                //This is just a map of qyte values to references to respective Registers, what more d'you want?
                 switch (addr.ToString())
                 {
                     case "IEA":
@@ -44,6 +45,20 @@ namespace Brubeck.Architecture
                         throw new ComponentNonExistentException($"No Register can be accessed from Qyte '{addr}'");
                 }
             }
+
+            /// <summary>
+            /// Adds a value to the Register.
+            /// </summary>
+            /// <param name="alpha">Value to add.</param>
+            /// <param name="carry">Carry Qit.</param>
+            public void Add(Qyte alpha, Qit carry = Qit.I) => Qits = ALU.Add(this, alpha, carry).Item1.Qits;
+
+            /// <summary>
+            /// Subtracts a value from the Register.
+            /// </summary>
+            /// <param name="alpha">Value to subtract by.</param>
+            /// <param name="carry">Carry Qit.</param>
+            public void Sub(Qyte alpha, Qit carry = Qit.I) => Qits = ALU.Add(this, Logic.NOT(alpha), carry).Item1.Qits;
         }
     }
 }

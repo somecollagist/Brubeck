@@ -79,5 +79,19 @@ namespace Brubeck.Architecture
             /// </summary>
             HLT
         }
+
+        public CPU()
+        {
+            R0 = new();
+            R1 = new();
+            R2 = new();
+            R3 = new();
+            R4 = new();
+            R5 = new();
+            R6 = new();
+            R7 = new();
+            R8 = new();
+            R9 = new();
+        }
     }
 }
