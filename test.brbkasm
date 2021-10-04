@@ -1,0 +1,3 @@
+mov %0, EEE
+mov %1, IIO
+add %0, %1

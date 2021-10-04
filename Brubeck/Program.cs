@@ -16,6 +16,7 @@ namespace Brubeck
         /// <param name="args"></param>
         public static void Main(params string[] args)
         {
+            Console.WriteLine(string.Join(" ", args));
             if(args[0] == "-r") //Run mode
             {
                 RAM Memory = new();
@@ -41,7 +42,9 @@ namespace Brubeck
 
             else if(args[0] == "-a")    //Assemble mode
             {
-                Brubeck.Assembler.
+                bool verbose = false;
+                if (args.Length > 2) verbose = args[2] == "-v"; //Run in verbose mode
+                Brubeck.Assembler.Program.Assemble(args[1], verbose);
             }
         }
     }

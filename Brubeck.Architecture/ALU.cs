@@ -19,14 +19,18 @@ namespace Brubeck.Architecture
                 return QitConverter.GetQitFromInt((int)Logic.OR(a, b) + (int)Logic.AND(a, b));
             }
 
+            public static Qit Overflow(Qit a, Qit b)
+            {
+                return QitConverter.GetQitFromInt(((int)Logic.OR(a, b) + (int)Logic.AND(a, b))/3);
+            }
+            
             /// <summary>
             /// Adds two inputs, returns their sum with carry out.
             /// </summary>
             /// <returns>Sum of a and b, and their carryover.</returns>
             public static (Qit, Qit) HalfAdder(Qit a, Qit b)
             {
-                Qit s = Sum(a, b);
-                return (s, QitConverter.GetQitFromInt(((int)s) / 3));
+                return (Sum(a,b), Overflow(a,b));
             }
 
             /// <summary>
@@ -47,11 +51,18 @@ namespace Brubeck.Architecture
                 return (s, Logic.OR(y, n));
             }
 
+            /// <summary>
+            /// Adds two numbers with a carry input, returns their sum with carry out.
+            /// </summary>
+            /// <param name="a">An input Qyte.</param>
+            /// <param name="b">An input Qyte.</param>
+            /// <param name="cin">Carry in.</param>
+            /// <returns>Sum of a and b with carry in, and resulting carryover.</returns>
             public static (Qyte, Qit) Add(Qyte a, Qyte b, Qit cin)
             {
                 Qit s = cin;
                 Qit[] gen = new Qit[3];
-                for(int x = 0; x < 3; x++)
+                for(int x = 2; x >= 0; x--)
                 {
                     (gen[x], s) = Add(a.QitAtIndex(x), b.QitAtIndex(x), s);
                 }

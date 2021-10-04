@@ -5,20 +5,49 @@ using System.Text.RegularExpressions;
 
 namespace Brubeck.Assembler
 {
-    class Program
+    public class Program
     {
-        public static void Assemble(string path)
+        public static void Assemble(string path, bool verbose = false)
         {
-            using StreamReader sr = new(path);
-            string[] code = sr
-                .ReadToEnd()
-                .Split('\n')
-                .Select(t => t.ToUpper())
-                .ToArray();
-            foreach(string cmd in code)
+            string[] code;
+            using (StreamReader sr = new(path))
             {
-                Console.WriteLine(cmd);
+                Console.WriteLine($"Full path: {Path.GetFullPath(path)}");
+                code = sr
+                    .ReadToEnd()
+                    .Split('\n')
+                    .Select(t => t.ToUpper())
+                    .ToArray();
             }
+
+            using(StreamWriter sr = new(Path.ChangeExtension(path, "brbk5")))
+            {
+                if (verbose)
+                {
+                    foreach (string cmd in code)
+                    {
+                        if (cmd[0] == ':')   //LABEL
+                        {
+
+                        }
+                        else
+                        {
+                            switch (cmd.Substring(0, cmd.IndexOf(' ')))
+                            {
+                                case "MOV":
+                                    break;
+
+                                case "ADD":
+                                    break;
+
+                                case "SUB":
+                                    break;
+                            }
+                        }
+                    }
+                }
+            }
+            Console.WriteLine("Assembly complete!");
         }
     }
 }
