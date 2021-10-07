@@ -59,6 +59,11 @@ namespace Brubeck.Architecture
             /// <param name="alpha">Value to subtract by.</param>
             /// <param name="carry">Carry Qit.</param>
             public void Sub(Qyte alpha, Qit carry = Qit.I) => Qits = ALU.Add(this, Logic.NOT(alpha), carry).Item1.Qits;
+
+            public void Mul(Qyte alpha)
+            {
+
+            }
         }
     }
 }
