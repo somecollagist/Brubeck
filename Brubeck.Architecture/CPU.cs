@@ -64,7 +64,7 @@ namespace Brubeck.Architecture
         public static Register R0, R1, R2, R3, R4, R5, R6, R7, R8, R9;
 #pragma warning restore CA2211
 
-        private enum ExecutionState
+        public enum ExecutionState
         {
             /// <summary>
             /// No CPU fault, execution was successful.

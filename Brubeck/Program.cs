@@ -37,7 +37,8 @@ namespace Brubeck
                     Memory.FlashRAMState(state);
                 }
 
-                ProcUnit.Run(ref Memory);
+                CPU.ExecutionState es = ProcUnit.Run(ref Memory);
+                Console.WriteLine($"Program completed with execution state {es}");
             }
 
             else if(args[0] == "-a")    //Assemble mode

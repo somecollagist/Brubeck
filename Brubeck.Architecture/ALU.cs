@@ -19,6 +19,9 @@ namespace Brubeck.Architecture
                 return QitConverter.GetQitFromInt((int)Logic.OR(a, b) + (int)Logic.AND(a, b));
             }
 
+            /// <summary>
+            /// Calculates the carryover of the addition of two inputs. 
+            /// </summary>
             public static Qit Overflow(Qit a, Qit b)
             {
                 return QitConverter.GetQitFromInt(((int)Logic.OR(a, b) + (int)Logic.AND(a, b))/3);
