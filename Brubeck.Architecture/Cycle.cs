@@ -32,6 +32,7 @@ namespace Brubeck.Architecture
 
                 case "AI": //MUL
                     ops = GetOperands(opcode.QitAtIndex(0), ref Memory);
+                    Register.GetRegisterFromQyte(ops.Item1).Mul(ops.Item2);
                     break;
 
                 case "IA": //MOV

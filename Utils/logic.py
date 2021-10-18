@@ -1,10 +1,10 @@
 import numpy
 
-reference = [[-1, -1,  0,  0,  0],
-             [-1,  0,  0,  0,  0],
+reference = [[-1,  2,  0, -2,  1],
+             [ 2,  1,  0, -1, -2],
              [ 0,  0,  0,  0,  0],
-             [ 0,  0,  0,  0,  1],
-             [ 0,  0,  0,  1,  1]]
+             [-2, -1,  0,  1,  2],
+             [ 1, -2,  0,  2, -1]]
 
 build =     [[0, 0, 0, 0, 0],
              [0, 0, 0, 0, 0],
@@ -47,7 +47,7 @@ def GEN(a):
 
 for x in range(-2,3):
     for y in range(-2,3):
-        build[x+2][y+2] = int((AND(x,y) + OR(x,y))/3)
+        pass
 
 print(numpy.array(reference))
 print()

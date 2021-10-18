@@ -57,5 +57,29 @@ namespace Brubeck.Core
             if (index < 0 || index > 2) throw new IllegalIndexException($"Cannot access Qit at index {index}");
             return ref Qits[index];
         }
+
+        /// <summary>
+        /// Leftshifts a Qyte.
+        /// </summary>
+        /// <param name="input">The Qit to input into the rightmost index.</param>
+        /// <returns>The original leftmost Qit.</returns>
+        public Qit LeftShift(Qit input = Qit.I)
+        {
+            Qit ret = Qits[0];
+            Qits = new Qit[] { Qits[1], Qits[2], input };
+            return ret;
+        }
+
+        /// <summary>
+        /// Rightshifts a Qyte.
+        /// </summary>
+        /// <param name="input">The Qit to input into the leftmost index.</param>
+        /// <returns>the original rightmost Qit.</returns>
+        public Qit RightShift(Qit input = Qit.I)
+        {
+            Qit ret = Qits[2];
+            Qits = new Qit[] { input, Qits[0], Qits[1] };
+            return ret;
+        }
     }
 }
