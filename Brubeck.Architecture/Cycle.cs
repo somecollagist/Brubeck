@@ -35,6 +35,11 @@ namespace Brubeck.Architecture
                     Register.GetRegisterFromQyte(ops.Item1).Mul(ops.Item2);
                     break;
 
+                case "AO": //DIV
+                    ops = GetOperands(opcode.QitAtIndex(0), ref Memory);
+                    Register.GetRegisterFromQyte(ops.Item1).Div(ops.Item2);
+                    break;
+
                 case "IA": //MOV
                     ops = GetOperands(opcode.QitAtIndex(0), ref Memory);
                     Register.GetRegisterFromQyte(ops.Item1).Qits = ops.Item2.Qits;

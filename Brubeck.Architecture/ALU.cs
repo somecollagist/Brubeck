@@ -73,7 +73,7 @@ namespace Brubeck.Architecture
             }
 
             /// <summary>
-            /// Multiplies two inputs, returns their product wihtout carry out.
+            /// Multiplies two inputs, returns their product without carry out.
             /// </summary>
             public static Qit Prod(Qit a, Qit b)
             {
@@ -81,7 +81,7 @@ namespace Brubeck.Architecture
             }
 
             /// <summary>
-            /// Calculates the carryover of the multiplicatoin of two inputs.
+            /// Calculates the carryover of the multiplication of two inputs.
             /// </summary>
             public static Qit ProdOverflow(Qit a, Qit b)
             {
@@ -103,7 +103,7 @@ namespace Brubeck.Architecture
             /// <param name="a">An input Qit.</param>
             /// <param name="b">An input Qit.</param>
             /// <param name="cin">Carry in.</param>
-            /// <returns>Product of a md b with carry in, and resulting carryover.</returns>
+            /// <returns>Product of a and b with carry in, and resulting carryover.</returns>
             public static (Qit, Qit) Multiply(Qit a, Qit b, Qit cin)
             {
                 Qit x, y;
@@ -148,6 +148,24 @@ namespace Brubeck.Architecture
                 }
 
                 return (new Qyte(newgen), s);
+            }
+
+            /// <summary>
+            /// Divides two inputs, returns the first divides by the second without overflow.
+            /// </summary>
+            public static Qit Part(Qit a, Qit b)
+            {
+                if (b == Qit.I) throw new ALUOperationException("Zero Division");
+                return QitConverter.GetQitFromInt(((int)a) / (int)b);
+            }
+
+            /// <summary>
+            /// Calculates the carryover of the division of the first input divided the second.
+            /// </summary>
+            public static Qit PartOverflow(Qit a, Qit b)
+            {
+                if (b == Qit.I) throw new ALUOperationException("Zero Division");
+                return QitConverter.GetQitFromInt((2 * (int)b) / (3 * (int)a));
             }
         }
     }

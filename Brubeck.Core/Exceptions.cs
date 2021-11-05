@@ -61,4 +61,11 @@ namespace Brubeck.Core
         public SegmentationFaultException(string message) : base(message) { }
         public SegmentationFaultException(string message, Exception inner) : base(message, inner) { }
     }
+
+    public class ALUOperationException : Exception
+    {
+        public ALUOperationException() : base() { }
+        public ALUOperationException(string message) : base(message) { }
+        public ALUOperationException(string message, Exception inner) : base(message, inner) { }
+    }
 }

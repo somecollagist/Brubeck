@@ -60,7 +60,13 @@ namespace Brubeck.Architecture
             /// <param name="carry">Carry Qit.</param>
             public void Sub(Qyte alpha, Qit carry = Qit.I) => Qits = ALU.Add(this, Logic.NOT(alpha), carry).Item1.Qits;
 
+            /// <summary>
+            /// Multiplies the Register by a given value.
+            /// </summary>
+            /// <param name="alpha">Value to multiply by.</param>
             public void Mul(Qyte alpha) => Qits = ALU.Multiply(this, alpha, Qit.I).Item1.Qits;
+
+            public void Div(Qyte alpha) { }
         }
     }
 }

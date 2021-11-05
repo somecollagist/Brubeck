@@ -1,10 +1,10 @@
 import numpy
 
-reference = [[-1,  2,  0, -2,  1],
+reference = [[ 1,  0,  0,  0, -1],
              [ 2,  1,  0, -1, -2],
              [ 0,  0,  0,  0,  0],
              [-2, -1,  0,  1,  2],
-             [ 1, -2,  0,  2, -1]]
+             [-1,  0,  0,  0,  1]]
 
 build =     [[0, 0, 0, 0, 0],
              [0, 0, 0, 0, 0],
@@ -43,11 +43,18 @@ def GEN(a):
         a -= 5
     while a < -2:
         a += 5
-    return a
+    return int(a)
 
 for x in range(-2,3):
     for y in range(-2,3):
-        pass
+        try:
+            build[x+2][y+2] = (2*x)/(3*y)
+        except:
+            build[x+2][y+2] = 0
+        build[x+2][y+2] = GEN(build[x+2][y+2])
+
+# for x in range(5):
+#     build[2][x] = 3
 
 print(numpy.array(reference))
 print()
