@@ -12,6 +12,29 @@ namespace Brubeck.Architecture
         private static class ALU
         {
             /// <summary>
+            /// Returns if the given Qyte is 0 (III).
+            /// </summary>
+            public static bool IsZero(Qyte a)
+            {
+                return a.QitAtIndex(0) == Qit.I
+                       && a.QitAtIndex(1) == Qit.I
+                       && a.QitAtIndex(2) == Qit.I;
+            }
+
+            /// <summary>
+            /// Returns if the given Qyte is greater than 0 (III).
+            /// </summary>
+            /// <param name="a"></param>
+            /// <returns></returns>
+            public static bool IsGreaterThanZero(Qyte a)
+            {
+                if (a.QitAtIndex(0) > Qit.I) return true;
+                else if (a.QitAtIndex(1) > Qit.I) return true;
+                else if (a.QitAtIndex(2) > Qit.I) return true;
+                return false;
+            }
+
+            /// <summary>
             /// Adds two inputs, returns their sum without carry out.
             /// </summary>
             public static Qit Sum(Qit a, Qit b)
@@ -51,7 +74,7 @@ namespace Brubeck.Architecture
                 Qit s, n;
                 (s, n) = HalfAdder(cin, x);
 
-                return (s, Logic.OR(y, n));
+                return (s, HalfAdder(y, n).Item1);
             }
 
             /// <summary>
@@ -173,7 +196,7 @@ namespace Brubeck.Architecture
                 Qyte s = new();
                 Qyte c = a;
                 Qit o = Qit.I;
-                while (c.QitAtIndex(0) > Qit.E)
+                while (!IsZero(c) && IsGreaterThanZero(c))
                 {
                     (c, o) = Add(c, Logic.NOT(b), o);
                     s = Add(s, new("IIO"), Qit.I).Item1;
