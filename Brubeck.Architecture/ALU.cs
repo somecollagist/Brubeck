@@ -156,7 +156,7 @@ namespace Brubeck.Architecture
             public static Qit Part(Qit a, Qit b)
             {
                 if (b == Qit.I) throw new ALUOperationException("Zero Division");
-                return QitConverter.GetQitFromInt(((int)a) / (int)b);
+                return QitConverter.GetQitFromInt((int)a / (int)b);
             }
 
             /// <summary>
@@ -165,7 +165,21 @@ namespace Brubeck.Architecture
             public static Qit PartOverflow(Qit a, Qit b)
             {
                 if (b == Qit.I) throw new ALUOperationException("Zero Division");
-                return QitConverter.GetQitFromInt((2 * (int)b) / (3 * (int)a));
+                return QitConverter.GetQitFromInt(((int)(1 / ((3 * (float)a) / (2 * (float)b)))) * 2);
+            }
+
+            public static (Qyte, Qyte) Divide(Qyte a, Qyte b)
+            {
+                Qyte s = new();
+                Qyte c = a;
+                Qit o = Qit.I;
+                while (c.QitAtIndex(0) > Qit.E)
+                {
+                    (c, o) = Add(c, Logic.NOT(b), o);
+                    s = Add(s, new("IIO"), Qit.I).Item1;
+                }
+
+                return (s, Add(a, Logic.NOT(Multiply(b, s, Qit.I).Item1), Qit.I).Item1);
             }
         }
     }

@@ -1,10 +1,10 @@
 import numpy
 
-reference = [[ 1,  0,  0,  0, -1],
-             [ 2,  1,  0, -1, -2],
+reference = [[ 0,  2,  0, -2,  0],
              [ 0,  0,  0,  0,  0],
-             [-2, -1,  0,  1,  2],
-             [-1,  0,  0,  0,  1]]
+             [ 0,  0,  0,  0,  0],
+             [ 0,  0,  0,  0,  0],
+             [ 0, -2,  0,  2,  0]]
 
 build =     [[0, 0, 0, 0, 0],
              [0, 0, 0, 0, 0],
@@ -48,10 +48,10 @@ def GEN(a):
 for x in range(-2,3):
     for y in range(-2,3):
         try:
-            build[x+2][y+2] = (2*x)/(3*y)
+            build[x+2][y+2] = GEN(((2*x)/(3*y)))*2
         except:
             build[x+2][y+2] = 0
-        build[x+2][y+2] = GEN(build[x+2][y+2])
+        ##build[x+2][y+2] = GEN(build[x+2][y+2])
 
 # for x in range(5):
 #     build[2][x] = 3

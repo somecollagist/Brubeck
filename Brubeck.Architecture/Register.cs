@@ -66,7 +66,7 @@ namespace Brubeck.Architecture
             /// <param name="alpha">Value to multiply by.</param>
             public void Mul(Qyte alpha) => Qits = ALU.Multiply(this, alpha, Qit.I).Item1.Qits;
 
-            public void Div(Qyte alpha) { }
+            public void Div(Qyte alpha) => Qits = ALU.Divide(this, alpha).Item1.Qits;
         }
     }
 }
