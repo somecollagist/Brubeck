@@ -45,7 +45,7 @@ namespace Brubeck
             {
                 bool verbose = false;
                 if (args.Length > 2) verbose = args[2] == "-v"; //Run in verbose mode
-                Brubeck.Assembler.Program.Assemble(args[1], verbose);
+                Assembler.Assembler.Run(args[1], verbose);
             }
         }
     }

@@ -18,6 +18,12 @@ namespace Brubeck.Architecture
             /// <returns>Reference to the specified Register.</returns>
             public static ref Register GetRegisterFromQyte(Qyte addr)
             {
+                /* Hi there future Johann! There's a neat little thing where we can use return switch x {...};,
+                 * and we could maybe use it here, but we gotta consider these refs, a=so it might not work.
+                 * Since it's almost 21:00 and I've bene putting off this assembler work for ages, maybe look
+                 * into it for me sometime? Cheers commander. P.S. they're called ref switch expressions
+                 */
+
                 //This is just a map of qyte values to references to respective Registers, what more d'you want?
                 switch (addr.ToString())
                 {

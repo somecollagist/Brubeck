@@ -205,10 +205,10 @@ namespace Brubeck.Architecture
 
                 do
                 {
-                    (c, o) = Add(c, Logic.NOT(b), o);       //Subtract b from a  (corsair-style overflow)
-                    s = Add(s, new("IIO"), Qit.I).Item1;    //Increment quotient
-                } while (!IsZero(c) && IsGreaterThanZero(c));   //Loop until remainder <= 0
-                if (!IsZero(c)) s = Add(s, new("IIE"), Qit.I).Item1;
+                    (c, o) = Add(c, Logic.NOT(b), o);                   //Subtract b from a  (corsair-style overflow)
+                    s = Add(s, new("IIO"), Qit.I).Item1;                //Increment quotient
+                } while (!IsZero(c) && IsGreaterThanZero(c));           //Loop until remainder <= 0
+                if (!IsZero(c)) s = Add(s, new("IIE"), Qit.I).Item1;    //We've gone one too far, so decrement the quotient.
 
                 return (s, Add(a, Logic.NOT(Multiply(b, s, Qit.I).Item1), Qit.I).Item1);
             }
