@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
@@ -22,32 +23,52 @@ namespace Brubeck.Assembler
 
             using(StreamWriter sr = new(Path.ChangeExtension(path, "brbk5")))
             {
-                if (verbose)
+                foreach(string cmd in code)
                 {
-                    foreach (string cmd in code)
+                    string push = "";
+                    if(cmd[0] == ':')
                     {
-                        if (cmd[0] == ':')   //LABEL
-                        {
-
-                        }
-                        else
-                        {
-                            switch (cmd.Substring(0, cmd.IndexOf(' ')))
-                            {
-                                case "MOV":
-                                    break;
-
-                                case "ADD":
-                                    break;
-
-                                case "SUB":
-                                    break;
-                            }
-                        }
+                        //named label
+                    }
+                    else
+                    {
                     }
                 }
             }
             Console.WriteLine("Assembly complete!");
         }
+
+        private static Dictionary<string, string> CommandOpcodePairs = new()
+        {
+            { "ADD", "AA" },
+            { "SUB", "AE" },
+            { "MUL", "AI" },
+            { "DIV", "AO" },
+            { "MOD",        "AU" },
+
+            { "NOT",        "EA" },
+            { "AND",        "EE" },
+            { "OR",         "EI" },
+            { "XOR",        "EO" },
+
+            { "MOV",        "IA" },
+            { "PUSH",       "IE" },
+            { "PUSHALL",    "II" },
+            { "POP",        "IO" },
+            { "POPALL",     "IU" },
+
+            { "CMP", "OA"},
+            { "LABEL", "OE" },
+            { "SUBR", "OI" },
+
+            { "LSHIFT", "OO" },
+            { "RSHIFT", "OU" },
+
+            { "INC", "UA" },
+            { "DEC", "UE" },
+            { "CALL", "UI" },
+            { "INT", "UO" },
+            { "HALT", "UU"}
+        };
     }
 }

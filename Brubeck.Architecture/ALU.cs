@@ -16,9 +16,7 @@ namespace Brubeck.Architecture
             /// </summary>
             public static bool IsZero(Qyte a)
             {
-                return a.QitAtIndex(0) == Qit.I
-                       && a.QitAtIndex(1) == Qit.I
-                       && a.QitAtIndex(2) == Qit.I;
+                return new Qyte("III").Equals(a);
             }
 
             /// <summary>
@@ -210,9 +208,11 @@ namespace Brubeck.Architecture
                     (c, o) = Add(c, Logic.NOT(b), o);       //Subtract b from a  (corsair-style overflow)
                     s = Add(s, new("IIO"), Qit.I).Item1;    //Increment quotient
                 } while (!IsZero(c) && IsGreaterThanZero(c));   //Loop until remainder <= 0
+                if (!IsZero(c)) s = Add(s, new("IIE"), Qit.I).Item1;
 
                 return (s, Add(a, Logic.NOT(Multiply(b, s, Qit.I).Item1), Qit.I).Item1);
             }
         }
     }
 }
+

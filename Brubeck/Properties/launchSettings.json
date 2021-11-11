@@ -2,7 +2,7 @@
   "profiles": {
     "Brubeck": {
       "commandName": "Project",
-      "commandLineArgs": "-r ../../../../MemoryStates\\state.brbk5"
+      "commandLineArgs": "-r ../../../../MemoryStates/state.brbk5 ##-a ../../../../test.brbkasm -v ##"
     }
   }
 }
