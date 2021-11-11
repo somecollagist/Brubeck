@@ -190,17 +190,26 @@ namespace Brubeck.Architecture
                 if (b == Qit.I) throw new ALUOperationException("Zero Division");
                 return QitConverter.GetQitFromInt(((int)(1 / ((3 * (float)a) / (2 * (float)b)))) * 2);
             }
-
+            
+            /// <summary>
+            /// Divides one number by another number.
+            /// </summary>
+            /// <param name="a">The numerator.</param>
+            /// <param name="b">The denominator.</param>
+            /// <remarks>This method is iterative and as such isn't very efficient. Consider depreciating this in favour of a more efficient method.</remarks>
             public static (Qyte, Qyte) Divide(Qyte a, Qyte b)
             {
-                Qyte s = new();
-                Qyte c = a;
-                Qit o = Qit.I;
-                while (!IsZero(c) && IsGreaterThanZero(c))
+                if (b.Equals(new Qyte("III"))) throw new ALUOperationException("Zero Division");
+
+                Qyte s = new(); //Quotient
+                Qyte c = a;     //Remainder
+                Qit o = Qit.I;  //Overflow for subtraction
+
+                do
                 {
-                    (c, o) = Add(c, Logic.NOT(b), o);
-                    s = Add(s, new("IIO"), Qit.I).Item1;
-                }
+                    (c, o) = Add(c, Logic.NOT(b), o);       //Subtract b from a  (corsair-style overflow)
+                    s = Add(s, new("IIO"), Qit.I).Item1;    //Increment quotient
+                } while (!IsZero(c) && IsGreaterThanZero(c));   //Loop until remainder <= 0
 
                 return (s, Add(a, Logic.NOT(Multiply(b, s, Qit.I).Item1), Qit.I).Item1);
             }

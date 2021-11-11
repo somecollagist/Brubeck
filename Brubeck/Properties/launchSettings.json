@@ -2,7 +2,7 @@
   "profiles": {
     "Brubeck": {
       "commandName": "Project",
-      "commandLineArgs": "-r C:\\Users\\jacks\\OneDrive\\Documents\\Programming\\HugeStuff\\Brubeck\\MemoryStates\\state.brbk5"
+      "commandLineArgs": "-r ../../../../MemoryStates\\state.brbk5"
     }
   }
 }

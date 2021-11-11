@@ -81,5 +81,17 @@ namespace Brubeck.Core
             Qits = new Qit[] { input, Qits[0], Qits[1] };
             return ret;
         }
+
+#pragma warning disable CS0109
+        /// <summary>
+        /// Checks if this Qyte has the same value as another Qyte.
+        /// </summary>
+        public new bool Equals(Qyte qyte)
+        {
+            return QitAtIndex(0) == qyte.QitAtIndex(0)
+                && QitAtIndex(1) == qyte.QitAtIndex(1)
+                && QitAtIndex(2) == qyte.QitAtIndex(2);
+        }
+#pragma warning restore CS0109
     }
 }
