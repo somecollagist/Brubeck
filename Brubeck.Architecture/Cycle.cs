@@ -18,35 +18,60 @@ namespace Brubeck.Architecture
         {
             Qyte opcode = GetNextQyte(ref Memory);
             (Qyte, Qyte) ops;
-            switch(new string(opcode.Qits[1..3].Select(t => QitConverter.GetCharFromQit(t)).ToArray()))
+
+            //Raw opcodes
+            if (opcode.QitAtIndex(0) == Qit.U)
             {
-                case "AA": //ADD
-                    ops = GetOperands(opcode.QitAtIndex(0), ref Memory);
-                    Register.GetRegisterFromQyte(ops.Item1).Add(ops.Item2);
-                    break;
+                switch(new string(opcode.Qits[1..3].Select(t => QitConverter.GetCharFromQit(t)).ToArray()))
+                {
+                    case "II": //HALT
+                        return ExecutionState.HLT;
 
-                case "AE": //SUB
-                    ops = GetOperands(opcode.QitAtIndex(0), ref Memory);
-                    Register.GetRegisterFromQyte(ops.Item1).Sub(ops.Item2);
-                    break;
+                    default:
+                        return ExecutionState.ERR;
+                }
+            }
+            else
+            {
+                switch (new string(opcode.Qits[1..3].Select(t => QitConverter.GetCharFromQit(t)).ToArray()))
+                {
+                    case "AA": //ADD
+                        ops = GetOperands(opcode.QitAtIndex(0), ref Memory);
+                        Register.GetRegisterFromQyte(ops.Item1).Add(ops.Item2);
+                        break;
 
-                case "AI": //MUL
-                    ops = GetOperands(opcode.QitAtIndex(0), ref Memory);
-                    Register.GetRegisterFromQyte(ops.Item1).Mul(ops.Item2);
-                    break;
+                    case "AE": //SUB
+                        ops = GetOperands(opcode.QitAtIndex(0), ref Memory);
+                        Register.GetRegisterFromQyte(ops.Item1).Sub(ops.Item2);
+                        break;
 
-                case "AO": //DIV
-                    ops = GetOperands(opcode.QitAtIndex(0), ref Memory);
-                    Register.GetRegisterFromQyte(ops.Item1).Div(ops.Item2);
-                    break;
+                    case "AI": //MUL
+                        ops = GetOperands(opcode.QitAtIndex(0), ref Memory);
+                        Register.GetRegisterFromQyte(ops.Item1).Mul(ops.Item2);
+                        break;
 
-                case "IA": //MOV
-                    ops = GetOperands(opcode.QitAtIndex(0), ref Memory);
-                    Register.GetRegisterFromQyte(ops.Item1).Qits = ops.Item2.Qits;
-                    break;
+                    case "AO": //DIV
+                        ops = GetOperands(opcode.QitAtIndex(0), ref Memory);
+                        Register.GetRegisterFromQyte(ops.Item1).Div(ops.Item2);
+                        break;
 
-                default:
-                    return ExecutionState.ERR;
+                    case "AU": //MOD
+                        ops = GetOperands(opcode.QitAtIndex(0), ref Memory);
+                        Register.GetRegisterFromQyte(ops.Item1).Mod(ops.Item2);
+                        break;
+
+                    case "IA": //MOV
+                        ops = GetOperands(opcode.QitAtIndex(0), ref Memory);
+                        Register.GetRegisterFromQyte(ops.Item1).Qits = ops.Item2.Qits;
+                        break;
+
+                    case "II":
+                        if (opcode.QitAtIndex(0) == Qit.I) return ExecutionState.OK;    //Allow continuation if qyte is null
+                        else return ExecutionState.ERR;                                 //Otherwise it's a segmentation fault
+
+                    default:
+                        return ExecutionState.ERR;
+                }
             }
             return ExecutionState.OK;
         }

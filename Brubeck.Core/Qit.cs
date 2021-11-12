@@ -23,6 +23,7 @@ namespace Brubeck.Core
 		/// Converts a char to its corresponding Qit value.
 		/// </summary>
 		/// <param name="value">Character to be converted (may be upper or lower case).</param>
+		/// <remarks>Ideally have the character as uppercase because that's how we use it in machine code.</remarks>
 		/// <returns>Converted char.</returns>
 		public static Qit GetQitFromChar(char value)
 		{
@@ -43,7 +44,7 @@ namespace Brubeck.Core
 		/// <param name="value">Qit to be converted.</param>
 		/// <returns>Qit converted to an upper case char.</returns>
 		public static char GetCharFromQit(Qit value)
-        {
+		{
 			/* While this technically isn't exclusive, it doesn't
 			 * matter because Qits don't marshall to values outside
 			 * of this range, hence our #pragma directives.
@@ -57,7 +58,7 @@ namespace Brubeck.Core
 				Qit.O => 'O',
 				Qit.U => 'U',
 			};
-        }
+		}
 #pragma warning restore CS8524
 
 		/// <summary>
@@ -67,8 +68,7 @@ namespace Brubeck.Core
 		/// <returns>Converted int.</returns>
 		public static Qit GetQitFromInt(int value)
 		{
-			/*
-			 * This is used as an overflow and underflow safety
+			/* This is used as an overflow and underflow safety
 			 * mechanism, in the event that a number out of the
 			 * normal range of a Qit is passed as value, this method
 			 * can force the value into its conversion range (-2 to +2),
@@ -89,13 +89,13 @@ namespace Brubeck.Core
 		}
 
 		public static int GetIntFromQitArray(Qit[] qits)
-        {
+		{
 			int total = 0;
-			for(int x = 0; x < qits.Length; x++)
-            {
+			for(int x = 0; x < qits.Length; x++)	//Go from the right, multiply by 5^x
+			{
 				total += (sbyte)qits[qits.Length - 1 - x] * (int)Math.Pow(5, x);
-            }
+			}
 			return total;
-        }
+		}
 	}
 }
