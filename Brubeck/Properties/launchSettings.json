@@ -7,6 +7,15 @@
     "Assemble": {
       "commandName": "Project",
       "commandLineArgs": "-a ../../../../test.brbkasm -v"
+    },
+    "WSL": {
+      "commandName": "WSL2",
+      "environmentVariables": {},
+      "distributionName": ""
+    },
+    "Brubeck Restore": {
+      "commandName": "Project",
+      "commandLineArgs": "-r"
     }
   }
 }

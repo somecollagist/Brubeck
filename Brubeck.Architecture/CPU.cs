@@ -13,27 +13,27 @@ namespace Brubeck.Architecture
         /// <summary>
         /// Current Memory Address of RAM being read.
         /// </summary>
-        private int MemAddr;
+        private int InstMemAddr;
 
         /// <summary>
         /// Getter for Current Memory Address.
         /// </summary>
-        public int GetMemAddr() => MemAddr;
+        public int GetInstMemAddr() => InstMemAddr;
         /// <summary>
         /// Setter for Current Memory Address.
         /// </summary>
-        public void SetMemAddr(int value) => MemAddr = value is < 0 or >= RAM.RamCeiling
+        public void SetInstMemAddr(int value) => InstMemAddr = value is < 0 or >= RAM.RamCeiling
             ? throw new IllegalIndexException($"Memory Address cannot be set to value {value} because it is either less than 0 or greater than the established RAM Ceiling.")
             : value;
 
         /// <summary>
         /// Increments Current Memory Address. Exceeding the RAM Ceiling sets the address to 0.
         /// </summary>
-        public void IncMemAddr() => MemAddr = ++MemAddr == RAM.RamCeiling ? 0 : MemAddr;
+        public void IncInstMemAddr() => InstMemAddr = ++InstMemAddr == RAM.RamCeiling ? 0 : InstMemAddr;
         /// <summary>
         /// Decrements Current Memory Address. Going below 0 sets the address to the RAM Ceiling.
         /// </summary>
-        public void DecMemAddr() => MemAddr = MemAddr-- == 0 ? RAM.RamCeiling - 1 : MemAddr;
+        public void DecInstMemAddr() => InstMemAddr = InstMemAddr-- == 0 ? RAM.RamCeiling - 1 : InstMemAddr;
 
         /// <summary>
         /// Returns the value of the next Qyte in Memory.
@@ -41,8 +41,9 @@ namespace Brubeck.Architecture
         /// <param name="Memory">Reference to the current memory being used.</param>
         public Qyte GetNextQyte(ref RAM Memory)
         {
-            IncMemAddr();
-            return Memory.QyteAtIndex(MemAddr - 1);
+            Qyte ret = Memory.QyteAtIndex(InstMemAddr);
+            IncInstMemAddr();
+            return ret;
         }
 
         /// <summary>
@@ -80,6 +81,9 @@ namespace Brubeck.Architecture
             HLT
         }
 
+        /// <summary>
+        /// Creates an instance of a CPU.
+        /// </summary>
         public CPU()
         {
             R0 = new();
@@ -92,6 +96,25 @@ namespace Brubeck.Architecture
             R7 = new();
             R8 = new();
             R9 = new();
+        }
+
+        /// <summary>
+        /// Sets the CPU's state to match the provided parameters.
+        /// </summary>
+        public void FlashCPUState((int, Register[]) state)
+        {
+            InstMemAddr = state.Item1;
+            if (state.Item2.Length != 10) throw new ComponentNonExistentException($"{state.Item2.Length} register states provided, should only be 10.");
+            R0 = state.Item2[0];
+            R1 = state.Item2[1];
+            R2 = state.Item2[2];
+            R3 = state.Item2[3];
+            R4 = state.Item2[4];
+            R5 = state.Item2[5];
+            R6 = state.Item2[6];
+            R7 = state.Item2[7];
+            R8 = state.Item2[8];
+            R9 = state.Item2[9];
         }
     }
 }

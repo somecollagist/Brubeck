@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="320.0px"
+   height="320.0px"
+   viewBox="0 0 320.0 320.0"
+   version="1.1"
+   id="SVGRoot"
+   sodipodi:docname="icon.svg"
+   inkscape:version="1.1 (c68e22c387, 2021-05-23)"
+   inkscape:export-filename="C:\Users\jacks\OneDrive\Documents\Programming\HugeStuff\Brubeck\Resources\icon.png"
+   inkscape:export-xdpi="480"
+   inkscape:export-ydpi="480"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview893"
+     pagecolor="#505050"
+     bordercolor="#eeeeee"
+     borderopacity="1"
+     inkscape:pageshadow="0"
+     inkscape:pageopacity="0"
+     inkscape:pagecheckerboard="0"
+     inkscape:document-units="px"
+     showgrid="true"
+     inkscape:zoom="2.6832492"
+     inkscape:cx="160.06713"
+     inkscape:cy="140.68764"
+     inkscape:window-width="1920"
+     inkscape:window-height="1009"
+     inkscape:window-x="1272"
+     inkscape:window-y="40"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="layer1">
+    <inkscape:grid
+       type="xygrid"
+       id="grid956" />
+  </sodipodi:namedview>
+  <defs
+     id="defs888">
+    <linearGradient
+       inkscape:collect="always"
+       id="linearGradient2002">
+      <stop
+         style="stop-color:#1a1a1a;stop-opacity:1;"
+         offset="0"
+         id="stop1998" />
+      <stop
+         style="stop-color:#f50000;stop-opacity:1"
+         offset="1"
+         id="stop2000" />
+    </linearGradient>
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient2002"
+       id="linearGradient2004"
+       x1="-1.1894102"
+       y1="136.67625"
+       x2="288.50634"
+       y2="136.67625"
+       gradientUnits="userSpaceOnUse" />
+  </defs>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1">
+    <path
+       sodipodi:type="star"
+       style="fill:url(#linearGradient2004);stroke:#808080;stroke-width:4.37887;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;fill-opacity:1"
+       id="path1739"
+       inkscape:flatsided="true"
+       sodipodi:sides="5"
+       sodipodi:cx="143.65846"
+       sodipodi:cy="122.35255"
+       sodipodi:r1="150"
+       sodipodi:r2="121.35255"
+       sodipodi:arg1="1.5707963"
+       sodipodi:arg2="2.1991149"
+       inkscape:rounded="0"
+       inkscape:randomized="0"
+       d="M 143.65847,272.35255 0.99998632,168.7051 55.490671,0.9999999 231.82625,0.99999517 286.31694,168.70509 Z"
+       inkscape:transform-center-y="13.298715"
+       transform="matrix(0.88368571,0,0,0.92843993,33.051065,33.104323)"
+       inkscape:transform-center-x="-2.3740236e-06" />
+    <text
+       xml:space="preserve"
+       style="font-size:164.665px;line-height:1.25;font-family:Ubuntu;-inkscape-font-specification:Ubuntu;fill:#808080;stroke-width:1.02916"
+       x="79.438164"
+       y="200.60524"
+       id="text3896"
+       transform="scale(0.99498784,1.0050374)"><tspan
+         sodipodi:role="line"
+         id="tspan3894"
+         x="79.438164"
+         y="200.60524"
+         style="stroke-width:1.02916">龙</tspan></text>
+  </g>
+</svg>

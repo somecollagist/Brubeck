@@ -40,7 +40,7 @@ namespace Brubeck.Core
 		}
 
 		/// <summary>
-		/// Returns an uppercase string that represents the object.
+		/// Returns an uppercase string that represents the Qyte.
 		/// </summary>
 		public override string ToString()
 		{
@@ -82,17 +82,16 @@ namespace Brubeck.Core
 			return ret;
 		}
 
-#pragma warning disable CS0109
+
 		/// <summary>
 		/// Checks if this Qyte has the same value as another Qyte.
 		/// </summary>
-		public new bool Equals(Qyte qyte)
+		public bool Equals(Qyte qyte)
 		{
 			//this gets overflowed because of how objects aren't equal with hashcodes
 			return QitAtIndex(0) == qyte.QitAtIndex(0)
 				&& QitAtIndex(1) == qyte.QitAtIndex(1)
 				&& QitAtIndex(2) == qyte.QitAtIndex(2);
 		}
-#pragma warning restore CS0109
 	}
 }

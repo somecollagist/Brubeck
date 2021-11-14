@@ -41,7 +41,6 @@ namespace Brubeck.Assembler
 			/// <param name="cmd">The command containing the assembly instruction.</param>
 			public Mnemonic(string cmd)
 			{
-				//Alias = cmd.Substring(0, cmd.IndexOf(' '));
 				Alias = Regex.Match(cmd, @"[A-Za-z]+").Value;   //Get the first bit of text in a command (this is independent of spaces)
 				Console.WriteLine($"\tAlias: {Alias}");
 				Opcode = CommandOpcodePairs[Alias];             //Get the opcode with the corresponding mnemonic

@@ -14,12 +14,10 @@ namespace Brubeck.Architecture
         /// </summary>
         public const int RamCeiling = 9765625;  //This is 5^10
 
-#pragma warning disable IDE0044
         /// <summary>
         /// One-Dimensional array of Qytes with size RamCeiling.
         /// </summary>
-        private Qyte[] Memory = new Qyte[RamCeiling];
-#pragma warning restore IDE0044
+        public Qyte[] Memory { get; private set; } = new Qyte[RamCeiling];
 
         /// <summary>
         /// Initialises RAM as an array of null Qytes.

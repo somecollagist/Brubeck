@@ -3,7 +3,29 @@
   <PropertyGroup>
     <OutputType>Exe</OutputType>
     <TargetFramework>net5.0</TargetFramework>
+    <Company>Prole Industries</Company>
+    <Authors>Ben Jackson</Authors>
+    <PackageIcon>icon.png</PackageIcon>
+    <RepositoryUrl>https://github.com/somecollagist/Brubeck</RepositoryUrl>
+    <PackageLicenseFile>..\Resources\LICENSE.txt</PackageLicenseFile>
+    <PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
+    <StartupObject>Brubeck.Program</StartupObject>
   </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="helpme.txt" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="helpme.txt" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="..\Resources\icon.png">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+  </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\Brubeck.Architecture\Brubeck.Architecture.csproj" />

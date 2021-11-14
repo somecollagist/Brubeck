@@ -1,0 +1,48 @@
+﻿                      Brubeck - A Balanced Quinary Computer
+                #################################################
+               #                                                 #
+              #                                                   #
+             ##                                                   ##
+             #                                                     #
+            #                   ####          ######                #
+           #                    ####             ######              #
+          ##                    ####                ####             ##
+         ##                     ####                                  #
+         #       ################################################      #
+        #                      #####     ####                           #
+       #                       ####      ####                           ##
+      ##                       ####      ####           ######           ##
+      #                       #####      ####         ######              #
+     #                        ####       ####       ######                 #
+    #                        #####       ####     ######                    #
+   ##                       #####        ####  ######                       ##
+  ##                        ####         ##########                          #
+  #                       #####          #######             ####             #
+ #                       #####       ########                ####              #
+ ##                    ######   #############               #####             ##
+    ##               ######    ######    #####              ####           ##
+        ##       ########                 #####################        ##
+           ##    #####                      ################        ##
+              ##                                                 ##
+                 ##                                          ###
+                     ##                                   ##
+                        ##                             ##
+                           ##                       ##
+                              ###               ###
+                                  ##         ##
+                                     #######
+
+GitHub Repository: https://www.github.com/somecollagist/Brubeck
+
+Usage:
+	-h, --help
+		Displays this help message.
+
+	-r, --run [instructions] [data]
+		Starts the Brubeck engine. The optional instructions and data parameters can be used to
+		flash RAM states to instruction and/or data memory, by being paths to files containing
+		valid machine code (usually ending in .brbk5).
+
+	-a, --assemble [path]
+		Reads from the provided path (usually ending in .brbkasm) and translates the provided
+		assembly code into Brubeck machine code.

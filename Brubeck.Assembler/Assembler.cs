@@ -47,58 +47,46 @@ namespace Brubeck.Assembler
 				string newpath = Path.ChangeExtension(path, "brbk5");   //The assembled machine code will be identical to the source, bar its new extension, brbk5
 				Console.WriteLine($"Machine code path: {newpath}");
 
-				using (StreamWriter sw = new(newpath))                  //Reader to assembled machine code file
+				using StreamWriter sw = new(newpath);                  //Reader to assembled machine code file
+				foreach (string cmd in code)
 				{
-					foreach (string cmd in code)
+					Console.WriteLine($"Instruction: {cmd}");
+
+					Mnemonic mnn = new(cmd);    //Create a mnemonic object for each command
+					string push = "";           //This will store machine code for each command
+
+					//Adverbial opcodes - only run this if the adverb is not null (i.e. has an adverb)
+					if (mnn.Adverb != '\0')
 					{
-						Console.WriteLine($"Instruction: {cmd}");
+						push = $"{mnn.Adverb}{mnn.Opcode}";                                     //Part 1 - Adverb of the command followed by the opcode
+						push += Utils.GetRegisterAlias(int.Parse(mnn.Args[0][1..]));            //Part 2 - This should be a register, so decode %x
 
-						Mnemonic mnn = new(cmd);    //Create a mnemonic object for each command
-						string push = "";           //This will store machine code for each command
-
-						//Adverbial opcodes - only run this if the adverb is not null (i.e. has an adverb)
-						if(mnn.Adverb != '\0')
+						push += mnn.Adverb switch                                               //Part 3 - Decide this based off the adverb
 						{
-							push = $"{mnn.Adverb}{mnn.Opcode}";                                     //Part 1 - Adverb of the command followed by the opcode
-							push += Utils.GetRegisterAlias(int.Parse(mnn.Args[0][1..]));            //Part 2 - This should be a register, so decode %x
-
-							switch (mnn.Adverb)                                                     //Part 3 - Decide this based off the adverb
-							{
-								//Register
-								case 'A':
-									push += Utils.GetRegisterAlias(int.Parse(mnn.Args[1][1..]));    //Part 3 is a register, so decode %y
-									break;
-
-								//Memory Location
-								case 'E':
-									push += $"{mnn.Args[1][1..11]}II";                              //Part 3 is a 10-qit memory location, so get the first 10 qits and add II to the end (4 qytes, easier to parse)
-									break;
-
-								//Constant
-								case 'O':
-									push += mnn.Args[1].Substring(0, 3);                            //Part 3 is a constant, so just push the given constant (trimmed to length 3, just in case)
-									break;
-
-								default:
-									throw new AssemblySegmentationFault();
-							}
-						}
-
-						//Raw opcodes - we don't need to do anything special to them (yet)
-						else
-						{
-							/* It is critical that adverbs be ignored in this context. Since
-							 * raw opcodes are given the adverb \0 (null), they will not be
-							 * displayed to the user BUT WILL STILL COUNT TOWARDS THE LENGTH
-							 * OF THE MACHINE CODE. Therefore, any machine code assembled
-							 * with null adverbs included may throw a segmentation fault.
-							 */
-							push = mnn.Opcode;
-						}
-
-						Console.WriteLine($"Decoded to machine code instruction {push}");
-						sw.Write(push); //Write the generated machine code to the assembly file
+							//Register
+							'A' => Utils.GetRegisterAlias(int.Parse(mnn.Args[1][1..])),			//Part 3 is a register, so decode %y
+							//Memory Location
+							'E' => $"{mnn.Args[1][1..11]}II",									//Part 3 is a 10-qit memory location, so get the first 10 qits and add II to the end (4 qytes, easier to parse)
+							//Constant
+							'O' => mnn.Args[1][..3],											//Part 3 is a constant, so just push the given constant (trimmed to length 3, just in case)
+							_ => throw new AssemblySegmentationFault(),
+						};
 					}
+
+					//Raw opcodes - we don't need to do anything special to them (yet)
+					else
+					{
+						/* It is critical that adverbs be ignored in this context. Since
+						 * raw opcodes are given the adverb \0 (null), they will not be
+						 * displayed to the user BUT WILL STILL COUNT TOWARDS THE LENGTH
+						 * OF THE MACHINE CODE. Therefore, any machine code assembled
+						 * with null adverbs included may throw a segmentation fault.
+						 */
+						push = mnn.Opcode;
+					}
+
+					Console.WriteLine($"Decoded to machine code instruction {push}");
+					sw.Write(push); //Write the generated machine code to the assembly file
 				}
 			}
 			catch (Exception e)

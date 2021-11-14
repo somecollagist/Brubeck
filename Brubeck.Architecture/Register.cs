@@ -12,6 +12,19 @@ namespace Brubeck.Architecture
         public class Register : Qyte
         {
             /// <summary>
+            /// Sets the regsister's value to null.
+            /// </summary>
+            public Register() { }
+
+            /// <summary>
+            /// Sets the register's value to the given Qyte.
+            /// </summary>
+            public Register(Qyte state)
+            {
+                Qits = state.Qits;
+            }
+
+            /// <summary>
             /// Gets a register with the specified Qyte Alias.
             /// </summary>
             /// <param name="addr">Qyte alias of the Register (between IEA and IEU or IOA and IOU).</param>
