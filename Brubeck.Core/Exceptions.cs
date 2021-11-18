@@ -68,4 +68,11 @@ namespace Brubeck.Core
 		public ALUOperationException(string message) : base(message) { }
 		public ALUOperationException(string message, Exception inner) : base(message, inner) { }
 	}
+
+	public class SystemOutOfMemoryException : Exception
+    {
+		public SystemOutOfMemoryException() : base() { }
+		public SystemOutOfMemoryException(string message) : base(message) { }
+		public SystemOutOfMemoryException(string message, Exception inner) : base(message, inner) { }
+    }
 }

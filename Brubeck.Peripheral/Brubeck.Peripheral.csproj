@@ -1,7 +1,16 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net5.0</TargetFramework>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net5.0-windows</TargetFramework>
+    <Nullable>enable</Nullable>
+    <UseWPF>true</UseWPF>
+    <SupportedOSPlatformVersion>7.0</SupportedOSPlatformVersion>
   </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Brubeck.Core\Brubeck.Core.csproj" />
+    <ProjectReference Include="..\Brubeck\Brubeck.csproj" />
+  </ItemGroup>
 
 </Project>

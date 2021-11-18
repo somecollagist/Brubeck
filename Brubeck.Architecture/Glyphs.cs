@@ -48,8 +48,8 @@ namespace Brubeck.Architecture
                 Qit.A, Qit.U, Qit.U, Qit.U, Qit.U, Qit.A, //  #### 
                 Qit.U, Qit.A, Qit.A, Qit.A, Qit.U, Qit.A, // #   # 
                 Qit.U, Qit.A, Qit.A, Qit.A, Qit.U, Qit.A, // #   # 
-                Qit.A, Qit.U, Qit.U, Qit.U, Qit.U, Qit.A  //  #### 
-            };
+                Qit.A, Qit.U, Qit.U, Qit.U, Qit.U, Qit.A, //  #### 
+                Qit.A, Qit.A, Qit.A, Qit.A, Qit.A, Qit.A, /*        */};
 
             /// <summary>
             /// Lower case B <code>b</code>
@@ -62,8 +62,8 @@ namespace Brubeck.Architecture
                 Qit.U, Qit.U, Qit.U, Qit.U, Qit.A, Qit.A, // ####  
                 Qit.U, Qit.A, Qit.A, Qit.A, Qit.U, Qit.A, // #   # 
                 Qit.U, Qit.A, Qit.A, Qit.A, Qit.U, Qit.A, // #   # 
-                Qit.U, Qit.U, Qit.U, Qit.U, Qit.A, Qit.A  // ####  
-            };
+                Qit.U, Qit.U, Qit.U, Qit.U, Qit.A, Qit.A, // ####  
+                Qit.A, Qit.A, Qit.A, Qit.A, Qit.A, Qit.A, /*        */};
 
             /// <summary>
             /// Lower case C <code>c</code>
@@ -77,7 +77,7 @@ namespace Brubeck.Architecture
                 Qit.U, Qit.A, Qit.A, Qit.A, Qit.A, Qit.A, // #     
                 Qit.U, Qit.A, Qit.A, Qit.A, Qit.U, Qit.A, // #   # 
                 Qit.A, Qit.U, Qit.U, Qit.U, Qit.A, Qit.A, //  ###  
-            };
+                Qit.A, Qit.A, Qit.A, Qit.A, Qit.A, Qit.A, /*        */};
 
             /// <summary>
             /// Lower case D <code>d</code>
@@ -91,7 +91,7 @@ namespace Brubeck.Architecture
                 Qit.U, Qit.A, Qit.A, Qit.A, Qit.U, Qit.A, // #   # 
                 Qit.U, Qit.A, Qit.A, Qit.A, Qit.U, Qit.A, // #   # 
                 Qit.A, Qit.U, Qit.U, Qit.U, Qit.U, Qit.A, //  #### 
-            };
+                Qit.A, Qit.A, Qit.A, Qit.A, Qit.A, Qit.A, /*        */};
 
 
             /// <summary>
@@ -106,7 +106,7 @@ namespace Brubeck.Architecture
                 Qit.U, Qit.U, Qit.U, Qit.U, Qit.U, Qit.A, // ##### 
                 Qit.U, Qit.A, Qit.A, Qit.A, Qit.A, Qit.A, // #     
                 Qit.A, Qit.U, Qit.U, Qit.U, Qit.A, Qit.A, //  ###  
-            };
+                Qit.A, Qit.A, Qit.A, Qit.A, Qit.A, Qit.A, /*        */};
 
             /// <summary>
             /// Lower case F <code>f</code>
@@ -120,7 +120,7 @@ namespace Brubeck.Architecture
                 Qit.A, Qit.U, Qit.A, Qit.A, Qit.A, Qit.A, //  #    
                 Qit.A, Qit.U, Qit.A, Qit.A, Qit.A, Qit.A, //  #    
                 Qit.A, Qit.U, Qit.A, Qit.A, Qit.A, Qit.A, //  #    
-            };
+                Qit.A, Qit.A, Qit.A, Qit.A, Qit.A, Qit.A, /*        */};
 
             /// <summary>
             /// Lower case G <code>g</code>
@@ -134,7 +134,7 @@ namespace Brubeck.Architecture
                 Qit.A, Qit.U, Qit.U, Qit.U, Qit.U, Qit.A, //  #### 
                 Qit.A, Qit.A, Qit.A, Qit.A, Qit.U, Qit.A, //     # 
                 Qit.A, Qit.U, Qit.U, Qit.U, Qit.A, Qit.A, //  ### 
-            };
+                Qit.A, Qit.A, Qit.A, Qit.A, Qit.A, Qit.A, /*        */};
 
             /// <summary>
             /// Lower case H <code>h</code>
@@ -148,7 +148,7 @@ namespace Brubeck.Architecture
                 Qit.U, Qit.A, Qit.A, Qit.U, Qit.A, Qit.A, // #  #  
                 Qit.U, Qit.A, Qit.A, Qit.U, Qit.A, Qit.A, // #  #  
                 Qit.U, Qit.A, Qit.A, Qit.U, Qit.A, Qit.A, // #  #  
-            };
+                Qit.A, Qit.A, Qit.A, Qit.A, Qit.A, Qit.A, /*        */};
 
             /// <summary>
             /// Lower case I <code>i</code>
@@ -162,7 +162,7 @@ namespace Brubeck.Architecture
                 Qit.A, Qit.A, Qit.U, Qit.A, Qit.A, Qit.A, //   #   
                 Qit.A, Qit.A, Qit.U, Qit.A, Qit.A, Qit.A, //   #   
                 Qit.A, Qit.A, Qit.U, Qit.A, Qit.A, Qit.A, //   #   
-            };
+                Qit.A, Qit.A, Qit.A, Qit.A, Qit.A, Qit.A, /*        */};
 
             /// <summary>
             /// Lower case J <code>j</code>
@@ -176,7 +176,7 @@ namespace Brubeck.Architecture
                 Qit.A, Qit.A, Qit.U, Qit.A, Qit.A, Qit.A, //   #   
                 Qit.U, Qit.A, Qit.U, Qit.A, Qit.A, Qit.A, // # #   
                 Qit.A, Qit.U, Qit.U, Qit.A, Qit.A, Qit.A, //  ##   
-            };
+                Qit.A, Qit.A, Qit.A, Qit.A, Qit.A, Qit.A, /*        */};
 
             /// <summary>
             /// Lower case K <code>k</code>
@@ -190,7 +190,7 @@ namespace Brubeck.Architecture
                 Qit.U, Qit.A, Qit.U, Qit.A, Qit.A, Qit.A, // # #   
                 Qit.U, Qit.A, Qit.A, Qit.U, Qit.A, Qit.A, // #  #  
                 Qit.U, Qit.A, Qit.A, Qit.U, Qit.A, Qit.A, // #  #  
-            };
+                Qit.A, Qit.A, Qit.A, Qit.A, Qit.A, Qit.A, /*        */};
 
             /// <summary>
             /// Lower case L <code>l</code>
@@ -204,7 +204,7 @@ namespace Brubeck.Architecture
                 Qit.A, Qit.A, Qit.U, Qit.A, Qit.A, Qit.A, //   #   
                 Qit.A, Qit.A, Qit.U, Qit.A, Qit.A, Qit.A, //   #   
                 Qit.A, Qit.A, Qit.A, Qit.U, Qit.U, Qit.A, //    ## 
-            };
+                Qit.A, Qit.A, Qit.A, Qit.A, Qit.A, Qit.A, /*        */};
 
             /// <summary>
             /// Lower case M <code>m</code>
@@ -218,7 +218,7 @@ namespace Brubeck.Architecture
                 Qit.U, Qit.A, Qit.U, Qit.A, Qit.U, Qit.A, // # # # 
                 Qit.U, Qit.A, Qit.A, Qit.A, Qit.U, Qit.A, // #   # 
                 Qit.U, Qit.A, Qit.A, Qit.A, Qit.U, Qit.A, // #   # 
-            };
+                Qit.A, Qit.A, Qit.A, Qit.A, Qit.A, Qit.A, /*        */};
 
             /// <summary>
             /// Lower case N <code>n</code>
@@ -232,7 +232,7 @@ namespace Brubeck.Architecture
                 Qit.U, Qit.A, Qit.A, Qit.A, Qit.U, Qit.A, // #   # 
                 Qit.U, Qit.A, Qit.A, Qit.A, Qit.U, Qit.A, // #   # 
                 Qit.U, Qit.A, Qit.A, Qit.A, Qit.U, Qit.A, // #   # 
-            };
+                Qit.A, Qit.A, Qit.A, Qit.A, Qit.A, Qit.A, /*        */};
 
             /// <summary>
             /// Lower case O <code>o</code>
@@ -246,7 +246,7 @@ namespace Brubeck.Architecture
                 Qit.U, Qit.A, Qit.A, Qit.A, Qit.U, Qit.A, // #   # 
                 Qit.U, Qit.A, Qit.A, Qit.A, Qit.U, Qit.A, // #   # 
                 Qit.A, Qit.U, Qit.U, Qit.U, Qit.A, Qit.A, //  ###   
-            };
+                Qit.A, Qit.A, Qit.A, Qit.A, Qit.A, Qit.A, /*        */};
 
             /// <summary>
             /// Lower case P <code>p</code>
@@ -260,7 +260,7 @@ namespace Brubeck.Architecture
                 Qit.U, Qit.U, Qit.U, Qit.U, Qit.A, Qit.A, // ####  
                 Qit.U, Qit.A, Qit.A, Qit.A, Qit.A, Qit.A, // #     
                 Qit.U, Qit.A, Qit.A, Qit.A, Qit.A, Qit.A, // #     
-            };
+                Qit.A, Qit.A, Qit.A, Qit.A, Qit.A, Qit.A, /*        */};
 
             /// <summary>
             /// Lower case Q <code>q</code>
@@ -274,7 +274,7 @@ namespace Brubeck.Architecture
                 Qit.A, Qit.U, Qit.U, Qit.U, Qit.U, Qit.A, //  #### 
                 Qit.A, Qit.A, Qit.A, Qit.A, Qit.U, Qit.A, //     # 
                 Qit.A, Qit.A, Qit.A, Qit.A, Qit.U, Qit.A, //     # 
-            };
+                Qit.A, Qit.A, Qit.A, Qit.A, Qit.A, Qit.A, /*        */};
 
             /// <summary>
             /// Lower case R <code>r</code>
@@ -288,7 +288,7 @@ namespace Brubeck.Architecture
                 Qit.A, Qit.U, Qit.A, Qit.A, Qit.A, Qit.A, //  #    
                 Qit.A, Qit.U, Qit.A, Qit.A, Qit.A, Qit.A, //  #    
                 Qit.A, Qit.U, Qit.A, Qit.A, Qit.A, Qit.A, //  #    
-            };
+                Qit.A, Qit.A, Qit.A, Qit.A, Qit.A, Qit.A, /*        */};
 
             /// <summary>
             /// Lower case S <code>s</code>
@@ -302,7 +302,7 @@ namespace Brubeck.Architecture
                 Qit.A, Qit.U, Qit.U, Qit.U, Qit.A, Qit.A, //  ###  
                 Qit.A, Qit.A, Qit.A, Qit.A, Qit.U, Qit.A, //     # 
                 Qit.A, Qit.U, Qit.U, Qit.U, Qit.A, Qit.A, //  ###  
-            };
+                Qit.A, Qit.A, Qit.A, Qit.A, Qit.A, Qit.A, /*        */};
 
             /// <summary>
             /// Lower case T <code>t</code>
@@ -316,7 +316,7 @@ namespace Brubeck.Architecture
                 Qit.A, Qit.A, Qit.U, Qit.A, Qit.A, Qit.A, //   #   
                 Qit.A, Qit.A, Qit.U, Qit.A, Qit.A, Qit.A, //   #   
                 Qit.A, Qit.A, Qit.A, Qit.U, Qit.A, Qit.A, //    #  
-            };
+                Qit.A, Qit.A, Qit.A, Qit.A, Qit.A, Qit.A, /*        */};
 
             /// <summary>
             /// Lower case U <code>u</code>
@@ -330,7 +330,7 @@ namespace Brubeck.Architecture
                 Qit.U, Qit.A, Qit.A, Qit.A, Qit.U, Qit.A, // #   # 
                 Qit.U, Qit.A, Qit.A, Qit.A, Qit.U, Qit.A, // #   # 
                 Qit.A, Qit.U, Qit.U, Qit.U, Qit.A, Qit.A, //  ###   
-            };
+                Qit.A, Qit.A, Qit.A, Qit.A, Qit.A, Qit.A, /*        */};
 
             /// <summary>
             /// Lower case V <code>v</code>
@@ -344,7 +344,7 @@ namespace Brubeck.Architecture
                 Qit.U, Qit.A, Qit.A, Qit.A, Qit.U, Qit.A, // #   # 
                 Qit.A, Qit.U, Qit.A, Qit.U, Qit.A, Qit.A, //  # #  
                 Qit.A, Qit.A, Qit.U, Qit.A, Qit.A, Qit.A, //   #   
-            };
+                Qit.A, Qit.A, Qit.A, Qit.A, Qit.A, Qit.A, /*        */};
 
             /// <summary>
             /// Lower case W <code>w</code>
@@ -358,7 +358,7 @@ namespace Brubeck.Architecture
                 Qit.U, Qit.A, Qit.U, Qit.A, Qit.U, Qit.A, // # # # 
                 Qit.U, Qit.A, Qit.U, Qit.A, Qit.U, Qit.A, // # # # 
                 Qit.A, Qit.U, Qit.A, Qit.U, Qit.A, Qit.A, //  # #  
-            };
+                Qit.A, Qit.A, Qit.A, Qit.A, Qit.A, Qit.A, /*        */};
 
             /// <summary>
             /// Lower case X <code>x</code>
@@ -372,7 +372,7 @@ namespace Brubeck.Architecture
                 Qit.A, Qit.A, Qit.U, Qit.A, Qit.A, Qit.A, //   #   
                 Qit.A, Qit.U, Qit.A, Qit.U, Qit.A, Qit.A, //  # #  
                 Qit.U, Qit.A, Qit.A, Qit.A, Qit.U, Qit.A, // #   # 
-            };
+                Qit.A, Qit.A, Qit.A, Qit.A, Qit.A, Qit.A, /*        */};
 
             /// <summary>
             /// Lower case Y <code>y</code>
@@ -386,7 +386,7 @@ namespace Brubeck.Architecture
                 Qit.A, Qit.U, Qit.U, Qit.U, Qit.U, Qit.A, //  #### 
                 Qit.A, Qit.A, Qit.A, Qit.A, Qit.U, Qit.A, //     # 
                 Qit.A, Qit.U, Qit.U, Qit.U, Qit.A, Qit.A, //  ###  
-            };
+                Qit.A, Qit.A, Qit.A, Qit.A, Qit.A, Qit.A, /*        */};
 
             /// <summary>
             /// Lower case Z <code>z</code>
@@ -400,7 +400,7 @@ namespace Brubeck.Architecture
                 Qit.A, Qit.A, Qit.U, Qit.A, Qit.A, Qit.A, //   #   
                 Qit.A, Qit.U, Qit.A, Qit.A, Qit.A, Qit.A, //  #    
                 Qit.U, Qit.U, Qit.U, Qit.U, Qit.U, Qit.A, // ##### 
-            };
+                Qit.A, Qit.A, Qit.A, Qit.A, Qit.A, Qit.A, /*        */};
 
 
             /// <summary>
@@ -415,7 +415,7 @@ namespace Brubeck.Architecture
                 Qit.U, Qit.A, Qit.A, Qit.A, Qit.U, Qit.A, // #   # 
                 Qit.U, Qit.A, Qit.A, Qit.A, Qit.U, Qit.A, // #   # 
                 Qit.U, Qit.A, Qit.A, Qit.A, Qit.U, Qit.A, // #   # 
-            };
+                Qit.A, Qit.A, Qit.A, Qit.A, Qit.A, Qit.A, /*        */};
 
             /// <summary>
             /// Upper case B <code>B</code>
@@ -429,7 +429,7 @@ namespace Brubeck.Architecture
                 Qit.U, Qit.A, Qit.A, Qit.A, Qit.U, Qit.A, // #   # 
                 Qit.U, Qit.A, Qit.A, Qit.A, Qit.U, Qit.A, // #   # 
                 Qit.U, Qit.U, Qit.U, Qit.U, Qit.A, Qit.A, // ####  
-            };
+                Qit.A, Qit.A, Qit.A, Qit.A, Qit.A, Qit.A, /*        */};
 
             /// <summary>
             /// Upper case C <code>C</code>
@@ -443,7 +443,7 @@ namespace Brubeck.Architecture
                 Qit.U, Qit.A, Qit.A, Qit.A, Qit.A, Qit.A, // #     
                 Qit.U, Qit.A, Qit.A, Qit.A, Qit.U, Qit.A, // #   # 
                 Qit.A, Qit.U, Qit.U, Qit.U, Qit.A, Qit.A, //  ###  
-            };
+                Qit.A, Qit.A, Qit.A, Qit.A, Qit.A, Qit.A, /*        */};
 
             /// <summary>
             /// Upper case D <code>D</code>
@@ -457,7 +457,7 @@ namespace Brubeck.Architecture
                 Qit.U, Qit.A, Qit.A, Qit.A, Qit.U, Qit.A, // #   # 
                 Qit.U, Qit.A, Qit.A, Qit.A, Qit.U, Qit.A, // #   # 
                 Qit.U, Qit.U, Qit.U, Qit.U, Qit.A, Qit.A, // #### 
-            };
+                Qit.A, Qit.A, Qit.A, Qit.A, Qit.A, Qit.A, /*        */};
 
             /// <summary>
             /// Upper case E <code>E</code>
@@ -471,7 +471,7 @@ namespace Brubeck.Architecture
                 Qit.U, Qit.A, Qit.A, Qit.A, Qit.A, Qit.A, // #     
                 Qit.U, Qit.A, Qit.A, Qit.A, Qit.A, Qit.A, // #     
                 Qit.U, Qit.U, Qit.U, Qit.U, Qit.U, Qit.A, // ##### 
-            };
+                Qit.A, Qit.A, Qit.A, Qit.A, Qit.A, Qit.A, /*        */};
 
             /// <summary>
             /// Upper case F <code>F</code>
@@ -485,7 +485,7 @@ namespace Brubeck.Architecture
                 Qit.U, Qit.A, Qit.A, Qit.A, Qit.A, Qit.A, // #     
                 Qit.U, Qit.A, Qit.A, Qit.A, Qit.A, Qit.A, // #     
                 Qit.U, Qit.A, Qit.A, Qit.A, Qit.A, Qit.A, // #     
-            };
+                Qit.A, Qit.A, Qit.A, Qit.A, Qit.A, Qit.A, /*        */};
 
             /// <summary>
             /// Upper case G <code>G</code>
@@ -499,7 +499,7 @@ namespace Brubeck.Architecture
                 Qit.U, Qit.A, Qit.A, Qit.A, Qit.U, Qit.A, // #   # 
                 Qit.U, Qit.A, Qit.A, Qit.A, Qit.U, Qit.A, // #   # 
                 Qit.A, Qit.U, Qit.U, Qit.U, Qit.A, Qit.A, //  ###  
-            };
+                Qit.A, Qit.A, Qit.A, Qit.A, Qit.A, Qit.A, /*        */};
 
             /// <summary>
             /// Upper case H <code>H</code>
@@ -513,7 +513,7 @@ namespace Brubeck.Architecture
                 Qit.U, Qit.A, Qit.A, Qit.A, Qit.U, Qit.A, // #   # 
                 Qit.U, Qit.A, Qit.A, Qit.A, Qit.U, Qit.A, // #   # 
                 Qit.U, Qit.A, Qit.A, Qit.A, Qit.U, Qit.A, // #   # 
-            };
+                Qit.A, Qit.A, Qit.A, Qit.A, Qit.A, Qit.A, /*        */};
 
             /// <summary>
             /// Upper case I <code>I</code>
@@ -527,7 +527,7 @@ namespace Brubeck.Architecture
                 Qit.A, Qit.A, Qit.U, Qit.A, Qit.A, Qit.A, //   #   
                 Qit.A, Qit.A, Qit.U, Qit.A, Qit.A, Qit.A, //   #   
                 Qit.U, Qit.U, Qit.U, Qit.U, Qit.U, Qit.A, // ##### 
-            };
+                Qit.A, Qit.A, Qit.A, Qit.A, Qit.A, Qit.A, /*        */};
 
             /// <summary>
             /// Upper case J <code>J</code>
@@ -541,7 +541,7 @@ namespace Brubeck.Architecture
                 Qit.A, Qit.A, Qit.U, Qit.A, Qit.A, Qit.A, //   #   
                 Qit.A, Qit.A, Qit.U, Qit.A, Qit.A, Qit.A, //   #   
                 Qit.U, Qit.U, Qit.A, Qit.A, Qit.A, Qit.A, // ##    
-            };
+                Qit.A, Qit.A, Qit.A, Qit.A, Qit.A, Qit.A, /*        */};
 
             /// <summary>
             /// Upper case K <code>K</code>
@@ -555,7 +555,7 @@ namespace Brubeck.Architecture
                 Qit.U, Qit.A, Qit.A, Qit.A, Qit.U, Qit.A, // #   # 
                 Qit.U, Qit.A, Qit.A, Qit.A, Qit.U, Qit.A, // #   # 
                 Qit.U, Qit.A, Qit.A, Qit.A, Qit.U, Qit.A, // #   # 
-            };
+                Qit.A, Qit.A, Qit.A, Qit.A, Qit.A, Qit.A, /*        */};
 
             /// <summary>
             /// Upper case L <code>L</code>
@@ -569,7 +569,7 @@ namespace Brubeck.Architecture
                 Qit.U, Qit.A, Qit.A, Qit.A, Qit.A, Qit.A, // #     
                 Qit.U, Qit.A, Qit.A, Qit.A, Qit.A, Qit.A, // #     
                 Qit.U, Qit.U, Qit.U, Qit.U, Qit.U, Qit.A, // ##### 
-            };
+                Qit.A, Qit.A, Qit.A, Qit.A, Qit.A, Qit.A, /*        */};
 
             /// <summary>
             /// Upper case M <code>M</code>
@@ -583,7 +583,7 @@ namespace Brubeck.Architecture
                 Qit.U, Qit.A, Qit.A, Qit.A, Qit.U, Qit.A, // #   # 
                 Qit.U, Qit.A, Qit.A, Qit.A, Qit.U, Qit.A, // #   # 
                 Qit.U, Qit.A, Qit.A, Qit.A, Qit.U, Qit.A, // #   # 
-            };
+                Qit.A, Qit.A, Qit.A, Qit.A, Qit.A, Qit.A, /*        */};
 
             /// <summary>
             /// Upper case N <code>N</code>
@@ -597,7 +597,7 @@ namespace Brubeck.Architecture
                 Qit.U, Qit.A, Qit.A, Qit.A, Qit.U, Qit.A, // #   # 
                 Qit.U, Qit.A, Qit.A, Qit.A, Qit.U, Qit.A, // #   # 
                 Qit.U, Qit.A, Qit.A, Qit.A, Qit.U, Qit.A, // #   # 
-            };
+                Qit.A, Qit.A, Qit.A, Qit.A, Qit.A, Qit.A, /*        */};
 
             /// <summary>
             /// Upper case O <code>O</code>
@@ -611,7 +611,7 @@ namespace Brubeck.Architecture
                 Qit.U, Qit.A, Qit.A, Qit.A, Qit.U, Qit.A, // #   # 
                 Qit.U, Qit.A, Qit.A, Qit.A, Qit.U, Qit.A, // #   # 
                 Qit.A, Qit.U, Qit.U, Qit.U, Qit.A, Qit.A, //  ###  
-            };
+                Qit.A, Qit.A, Qit.A, Qit.A, Qit.A, Qit.A, /*        */};
 
             /// <summary>
             /// Upper case P <code>P</code>
@@ -625,7 +625,7 @@ namespace Brubeck.Architecture
                 Qit.U, Qit.A, Qit.A, Qit.A, Qit.A, Qit.A, // #     
                 Qit.U, Qit.A, Qit.A, Qit.A, Qit.A, Qit.A, // #     
                 Qit.U, Qit.A, Qit.A, Qit.A, Qit.A, Qit.A, // #     
-            };
+                Qit.A, Qit.A, Qit.A, Qit.A, Qit.A, Qit.A, /*        */};
 
             /// <summary>
             /// Upper case Q <code>Q</code>
@@ -639,7 +639,7 @@ namespace Brubeck.Architecture
                 Qit.U, Qit.A, Qit.U, Qit.A, Qit.U, Qit.A, // # # # 
                 Qit.U, Qit.A, Qit.A, Qit.U, Qit.A, Qit.A, // #  #  
                 Qit.A, Qit.U, Qit.U, Qit.A, Qit.U, Qit.A, //  ## # 
-            };
+                Qit.A, Qit.A, Qit.A, Qit.A, Qit.A, Qit.A, /*        */};
 
             /// <summary>
             /// Upper case R <code>R</code>
@@ -653,7 +653,7 @@ namespace Brubeck.Architecture
                 Qit.U, Qit.A, Qit.U, Qit.A, Qit.A, Qit.A, // # #   
                 Qit.U, Qit.A, Qit.A, Qit.U, Qit.A, Qit.A, // #  #  
                 Qit.U, Qit.A, Qit.A, Qit.A, Qit.U, Qit.A, // #   # 
-            };
+                Qit.A, Qit.A, Qit.A, Qit.A, Qit.A, Qit.A, /*        */};
 
             /// <summary>
             /// Upper case S <code>S</code>
@@ -667,7 +667,7 @@ namespace Brubeck.Architecture
                 Qit.A, Qit.A, Qit.A, Qit.A, Qit.U, Qit.A, //     # 
                 Qit.A, Qit.A, Qit.A, Qit.A, Qit.U, Qit.A, //     # 
                 Qit.U, Qit.U, Qit.U, Qit.U, Qit.A, Qit.A, // ####  
-            };
+                Qit.A, Qit.A, Qit.A, Qit.A, Qit.A, Qit.A, /*        */};
 
             /// <summary>
             /// Upper case T <code>T</code> 
@@ -681,7 +681,7 @@ namespace Brubeck.Architecture
                 Qit.A, Qit.A, Qit.U, Qit.A, Qit.A, Qit.A, //   #   
                 Qit.A, Qit.A, Qit.U, Qit.A, Qit.A, Qit.A, //   #   
                 Qit.A, Qit.A, Qit.U, Qit.A, Qit.A, Qit.A, //   #   
-            };
+                Qit.A, Qit.A, Qit.A, Qit.A, Qit.A, Qit.A, /*        */};
 
             /// <summary>
             /// Upper case U <code>U</code>
@@ -695,7 +695,7 @@ namespace Brubeck.Architecture
                 Qit.U, Qit.A, Qit.A, Qit.A, Qit.U, Qit.A, // #   # 
                 Qit.U, Qit.A, Qit.A, Qit.A, Qit.U, Qit.A, // #   # 
                 Qit.A, Qit.U, Qit.U, Qit.U, Qit.A, Qit.A, //  ### 
-            };
+                Qit.A, Qit.A, Qit.A, Qit.A, Qit.A, Qit.A, /*        */};
 
             /// <summary>
             /// Upper case V <code>V</code>
@@ -709,7 +709,7 @@ namespace Brubeck.Architecture
                 Qit.A, Qit.U, Qit.A, Qit.U, Qit.A, Qit.A, //  # #  
                 Qit.A, Qit.U, Qit.A, Qit.U, Qit.A, Qit.A, //  # #  
                 Qit.A, Qit.A, Qit.U, Qit.A, Qit.A, Qit.A, //   #   
-            };
+                Qit.A, Qit.A, Qit.A, Qit.A, Qit.A, Qit.A, /*        */};
 
             /// <summary>
             /// Upper case W <code>W</code>
@@ -723,7 +723,7 @@ namespace Brubeck.Architecture
                 Qit.U, Qit.A, Qit.U, Qit.A, Qit.U, Qit.A, // # # # 
                 Qit.U, Qit.U, Qit.A, Qit.U, Qit.U, Qit.A, // ## ## 
                 Qit.U, Qit.A, Qit.A, Qit.A, Qit.U, Qit.A, // #   # 
-            };
+                Qit.A, Qit.A, Qit.A, Qit.A, Qit.A, Qit.A, /*        */};
 
             /// <summary>
             /// Upper case X <code>X</code>
@@ -737,7 +737,7 @@ namespace Brubeck.Architecture
                 Qit.U, Qit.A, Qit.A, Qit.A, Qit.U, Qit.A, // #   # 
                 Qit.U, Qit.A, Qit.A, Qit.A, Qit.U, Qit.A, // #   # 
                 Qit.U, Qit.A, Qit.A, Qit.A, Qit.U, Qit.A, // #   # 
-            };
+                Qit.A, Qit.A, Qit.A, Qit.A, Qit.A, Qit.A, /*        */};
 
             /// <summary>
             /// Upper case Y <code>Y</code>
@@ -751,7 +751,7 @@ namespace Brubeck.Architecture
                 Qit.A, Qit.A, Qit.U, Qit.A, Qit.A, Qit.A, //   #   
                 Qit.A, Qit.A, Qit.U, Qit.A, Qit.A, Qit.A, //   #   
                 Qit.A, Qit.A, Qit.U, Qit.A, Qit.A, Qit.A, //   #   
-            };
+                Qit.A, Qit.A, Qit.A, Qit.A, Qit.A, Qit.A, /*        */};
 
             /// <summary>
             /// Upper case Z <code>Z</code>
@@ -765,7 +765,7 @@ namespace Brubeck.Architecture
                 Qit.A, Qit.U, Qit.A, Qit.A, Qit.A, Qit.A, //  #    
                 Qit.U, Qit.A, Qit.A, Qit.A, Qit.A, Qit.A, // #     
                 Qit.U, Qit.U, Qit.U, Qit.U, Qit.U, Qit.A, // ##### 
-            };
+                Qit.A, Qit.A, Qit.A, Qit.A, Qit.A, Qit.A, /*        */};
 
             /// <summary>
             /// Open parenthesis <code>(</code>
@@ -779,7 +779,7 @@ namespace Brubeck.Architecture
                 Qit.U, Qit.A, Qit.A, Qit.A, Qit.A, Qit.A, // #     
                 Qit.A, Qit.U, Qit.U, Qit.A, Qit.A, Qit.A, //  ##   
                 Qit.A, Qit.A, Qit.A, Qit.U, Qit.U, Qit.A, //    ## 
-            };
+                Qit.A, Qit.A, Qit.A, Qit.A, Qit.A, Qit.A, /*        */};
 
             /// <summary>
             /// Close parenthesis <code>)</code>
@@ -793,7 +793,7 @@ namespace Brubeck.Architecture
                 Qit.A, Qit.A, Qit.A, Qit.A, Qit.U, Qit.A, //     # 
                 Qit.A, Qit.A, Qit.U, Qit.U, Qit.A, Qit.A, //   ##  
                 Qit.U, Qit.U, Qit.A, Qit.A, Qit.A, Qit.A, // ##    
-            };
+                Qit.A, Qit.A, Qit.A, Qit.A, Qit.A, Qit.A, /*        */};
 
             /// <summary>
             /// Open square brackets <code>[</code>
@@ -807,7 +807,7 @@ namespace Brubeck.Architecture
                 Qit.U, Qit.A, Qit.A, Qit.A, Qit.A, Qit.A, // #     
                 Qit.U, Qit.A, Qit.A, Qit.A, Qit.A, Qit.A, // #     
                 Qit.U, Qit.U, Qit.U, Qit.U, Qit.U, Qit.A, // #####
-            };
+                Qit.A, Qit.A, Qit.A, Qit.A, Qit.A, Qit.A, /*        */};
 
             /// <summary>
             /// Close square brackets <code>]</code>
@@ -821,7 +821,7 @@ namespace Brubeck.Architecture
                 Qit.A, Qit.A, Qit.A, Qit.A, Qit.U, Qit.A, //     # 
                 Qit.A, Qit.A, Qit.A, Qit.A, Qit.U, Qit.A, //     # 
                 Qit.U, Qit.U, Qit.U, Qit.U, Qit.U, Qit.A, // ##### 
-            };
+                Qit.A, Qit.A, Qit.A, Qit.A, Qit.A, Qit.A, /*        */};
 
             /// <summary>
             /// Open brace <code>{</code>
@@ -835,7 +835,7 @@ namespace Brubeck.Architecture
                 Qit.A, Qit.U, Qit.A, Qit.A, Qit.A, Qit.A, //  #    
                 Qit.A, Qit.U, Qit.A, Qit.A, Qit.A, Qit.A, //  #    
                 Qit.A, Qit.A, Qit.U, Qit.U, Qit.U, Qit.A, //   ### 
-            };
+                Qit.A, Qit.A, Qit.A, Qit.A, Qit.A, Qit.A, /*        */};
 
             /// <summary>
             /// Close brace <code>}</code>
@@ -849,7 +849,7 @@ namespace Brubeck.Architecture
                 Qit.A, Qit.A, Qit.A, Qit.U, Qit.A, Qit.A, //    #  
                 Qit.A, Qit.A, Qit.A, Qit.U, Qit.A, Qit.A, //    #  
                 Qit.U, Qit.U, Qit.U, Qit.A, Qit.A, Qit.A, // ###   
-            };
+                Qit.A, Qit.A, Qit.A, Qit.A, Qit.A, Qit.A, /*        */};
 
             /// <summary>
             /// Less than <code>&lt;</code>
@@ -863,7 +863,7 @@ namespace Brubeck.Architecture
                 Qit.A, Qit.U, Qit.U, Qit.A, Qit.A, Qit.A, //  ##   
                 Qit.A, Qit.A, Qit.A, Qit.U, Qit.U, Qit.A, //    ## 
                 Qit.A, Qit.A, Qit.A, Qit.A, Qit.A, Qit.A, //       
-            };
+                Qit.A, Qit.A, Qit.A, Qit.A, Qit.A, Qit.A, /*        */};
 
             /// <summary>
             /// Greater than <code>&gt;</code>
@@ -877,7 +877,7 @@ namespace Brubeck.Architecture
                 Qit.A, Qit.A, Qit.U, Qit.U, Qit.A, Qit.A, //   ##  
                 Qit.U, Qit.U, Qit.A, Qit.A, Qit.A, Qit.A, // ##    
                 Qit.A, Qit.A, Qit.A, Qit.A, Qit.A, Qit.A, //       
-            };
+                Qit.A, Qit.A, Qit.A, Qit.A, Qit.A, Qit.A, /*        */};
 
             /// <summary>
             /// Zero <code>0</code>
@@ -891,7 +891,7 @@ namespace Brubeck.Architecture
                 Qit.U, Qit.A, Qit.A, Qit.A, Qit.U, Qit.A, // #   # 
                 Qit.U, Qit.A, Qit.A, Qit.A, Qit.U, Qit.A, // #   # 
                 Qit.A, Qit.U, Qit.U, Qit.U, Qit.A, Qit.A, //  ###  
-            };
+                Qit.A, Qit.A, Qit.A, Qit.A, Qit.A, Qit.A, /*        */};
 
             /// <summary>
             /// One <code>1</code>
@@ -905,7 +905,7 @@ namespace Brubeck.Architecture
                 Qit.A, Qit.A, Qit.U, Qit.A, Qit.A, Qit.A, //   #   
                 Qit.A, Qit.A, Qit.U, Qit.A, Qit.A, Qit.A, //   #   
                 Qit.U, Qit.U, Qit.U, Qit.U, Qit.U, Qit.A, // ##### 
-            };
+                Qit.A, Qit.A, Qit.A, Qit.A, Qit.A, Qit.A, /*        */};
 
             /// <summary>
             /// Two <code>2</code>
@@ -919,7 +919,7 @@ namespace Brubeck.Architecture
                 Qit.A, Qit.U, Qit.A, Qit.A, Qit.A, Qit.A, //  #    
                 Qit.U, Qit.A, Qit.A, Qit.A, Qit.A, Qit.A, // #     
                 Qit.U, Qit.U, Qit.U, Qit.U, Qit.U, Qit.A, // ##### 
-            };
+                Qit.A, Qit.A, Qit.A, Qit.A, Qit.A, Qit.A, /*        */};
 
             /// <summary>
             /// Three <code>3</code>
@@ -933,7 +933,7 @@ namespace Brubeck.Architecture
                 Qit.A, Qit.A, Qit.A, Qit.A, Qit.U, Qit.A, //     # 
                 Qit.U, Qit.A, Qit.A, Qit.A, Qit.U, Qit.A, // #   # 
                 Qit.A, Qit.U, Qit.U, Qit.U, Qit.A, Qit.A, //  ###  
-            };
+                Qit.A, Qit.A, Qit.A, Qit.A, Qit.A, Qit.A, /*        */};
 
             /// <summary>
             /// Four <code>4</code>
@@ -947,7 +947,7 @@ namespace Brubeck.Architecture
                 Qit.A, Qit.A, Qit.A, Qit.U, Qit.A, Qit.A, //    #  
                 Qit.A, Qit.A, Qit.A, Qit.U, Qit.A, Qit.A, //    #  
                 Qit.A, Qit.A, Qit.A, Qit.U, Qit.A, Qit.A, //    #  
-            };
+                Qit.A, Qit.A, Qit.A, Qit.A, Qit.A, Qit.A, /*        */};
 
             /// <summary>
             /// Five <code>5</code>
@@ -961,7 +961,7 @@ namespace Brubeck.Architecture
                 Qit.A, Qit.A, Qit.A, Qit.A, Qit.U, Qit.A, //     # 
                 Qit.A, Qit.A, Qit.A, Qit.A, Qit.U, Qit.A, //     # 
                 Qit.U, Qit.U, Qit.U, Qit.U, Qit.A, Qit.A, // ####  
-            };
+                Qit.A, Qit.A, Qit.A, Qit.A, Qit.A, Qit.A, /*        */};
 
             /// <summary>
             /// Six <code>6</code>
@@ -975,7 +975,7 @@ namespace Brubeck.Architecture
                 Qit.U, Qit.A, Qit.A, Qit.A, Qit.U, Qit.A, // #   # 
                 Qit.U, Qit.A, Qit.A, Qit.A, Qit.U, Qit.A, // #   # 
                 Qit.A, Qit.U, Qit.U, Qit.U, Qit.A, Qit.A, //  ###  
-            };
+                Qit.A, Qit.A, Qit.A, Qit.A, Qit.A, Qit.A, /*        */};
 
             /// <summary>
             /// Seven <code>7</code>
@@ -989,7 +989,7 @@ namespace Brubeck.Architecture
                 Qit.A, Qit.U, Qit.A, Qit.A, Qit.A, Qit.A, //  #    
                 Qit.A, Qit.U, Qit.A, Qit.A, Qit.A, Qit.A, //  #    
                 Qit.A, Qit.U, Qit.A, Qit.A, Qit.A, Qit.A, //  #    
-            };
+                Qit.A, Qit.A, Qit.A, Qit.A, Qit.A, Qit.A, /*        */};
 
             /// <summary>
             /// Eight <code>8</code>
@@ -1003,7 +1003,7 @@ namespace Brubeck.Architecture
                 Qit.U, Qit.A, Qit.A, Qit.A, Qit.U, Qit.A, // #   # 
                 Qit.U, Qit.A, Qit.A, Qit.A, Qit.U, Qit.A, // #   # 
                 Qit.A, Qit.U, Qit.U, Qit.U, Qit.A, Qit.A, //  ###  
-            };
+                Qit.A, Qit.A, Qit.A, Qit.A, Qit.A, Qit.A, /*        */};
 
             /// <summary>
             /// Nine <code>9</code>
@@ -1017,7 +1017,7 @@ namespace Brubeck.Architecture
                 Qit.A, Qit.A, Qit.A, Qit.A, Qit.U, Qit.A, //     # 
                 Qit.A, Qit.A, Qit.A, Qit.U, Qit.A, Qit.A, //    #  
                 Qit.A, Qit.U, Qit.U, Qit.A, Qit.A, Qit.A, //  ##   
-            };
+                Qit.A, Qit.A, Qit.A, Qit.A, Qit.A, Qit.A, /*        */};
 
             /// <summary>
             /// Space <code> </code>
@@ -1031,7 +1031,7 @@ namespace Brubeck.Architecture
                 Qit.A, Qit.A, Qit.A, Qit.A, Qit.A, Qit.A, //       
                 Qit.A, Qit.A, Qit.A, Qit.A, Qit.A, Qit.A, //       
                 Qit.A, Qit.A, Qit.A, Qit.A, Qit.A, Qit.A, //       
-            };
+                Qit.A, Qit.A, Qit.A, Qit.A, Qit.A, Qit.A, /*        */};
 
             /// <summary>
             /// Full stop <code>.</code>
@@ -1045,7 +1045,7 @@ namespace Brubeck.Architecture
                 Qit.A, Qit.A, Qit.A, Qit.A, Qit.A, Qit.A, //       
                 Qit.A, Qit.A, Qit.U, Qit.A, Qit.A, Qit.A, //   #   
                 Qit.A, Qit.A, Qit.A, Qit.A, Qit.A, Qit.A, //       
-            };
+                Qit.A, Qit.A, Qit.A, Qit.A, Qit.A, Qit.A, /*        */};
 
             /// <summary>
             /// Comma <code>,</code>
@@ -1059,7 +1059,7 @@ namespace Brubeck.Architecture
                 Qit.A, Qit.A, Qit.A, Qit.A, Qit.A, Qit.A, //       
                 Qit.A, Qit.A, Qit.U, Qit.A, Qit.A, Qit.A, //   #   
                 Qit.A, Qit.A, Qit.U, Qit.A, Qit.A, Qit.A, //   #   
-            };
+                Qit.A, Qit.A, Qit.A, Qit.A, Qit.A, Qit.A, /*        */};
 
             /// <summary>
             /// Question mark <code>?</code>
@@ -1073,7 +1073,7 @@ namespace Brubeck.Architecture
                 Qit.A, Qit.A, Qit.U, Qit.A, Qit.A, Qit.A, //   #   
                 Qit.A, Qit.A, Qit.A, Qit.A, Qit.A, Qit.A, //       
                 Qit.A, Qit.A, Qit.U, Qit.A, Qit.A, Qit.A, //   #   
-            };
+                Qit.A, Qit.A, Qit.A, Qit.A, Qit.A, Qit.A, /*        */};
 
             /// <summary>
             /// Exclamation mark <code>!</code>
@@ -1087,7 +1087,7 @@ namespace Brubeck.Architecture
                 Qit.A, Qit.A, Qit.U, Qit.A, Qit.A, Qit.A, //   #   
                 Qit.A, Qit.A, Qit.A, Qit.A, Qit.A, Qit.A, //       
                 Qit.A, Qit.A, Qit.U, Qit.A, Qit.A, Qit.A, //   #   
-            };
+                Qit.A, Qit.A, Qit.A, Qit.A, Qit.A, Qit.A, /*        */};
 
             /// <summary>
             /// Colon <code>:</code>
@@ -1101,7 +1101,7 @@ namespace Brubeck.Architecture
                 Qit.A, Qit.A, Qit.A, Qit.A, Qit.A, Qit.A, //       
                 Qit.A, Qit.A, Qit.U, Qit.A, Qit.A, Qit.A, //   #   
                 Qit.A, Qit.A, Qit.A, Qit.A, Qit.A, Qit.A, //       
-            };
+                Qit.A, Qit.A, Qit.A, Qit.A, Qit.A, Qit.A, /*        */};
 
             /// <summary>
             /// Semicolon <code>;</code>
@@ -1115,7 +1115,7 @@ namespace Brubeck.Architecture
                 Qit.A, Qit.A, Qit.A, Qit.A, Qit.A, Qit.A, //       
                 Qit.A, Qit.A, Qit.U, Qit.A, Qit.A, Qit.A, //   #   
                 Qit.A, Qit.A, Qit.U, Qit.A, Qit.A, Qit.A, //   #   
-            };
+                Qit.A, Qit.A, Qit.A, Qit.A, Qit.A, Qit.A, /*        */};
 
             /// <summary>
             /// Apostrophe <code>'</code>
@@ -1129,7 +1129,7 @@ namespace Brubeck.Architecture
                 Qit.A, Qit.A, Qit.A, Qit.A, Qit.A, Qit.A, //       
                 Qit.A, Qit.A, Qit.A, Qit.A, Qit.A, Qit.A, //       
                 Qit.A, Qit.A, Qit.A, Qit.A, Qit.A, Qit.A, //       
-            };
+                Qit.A, Qit.A, Qit.A, Qit.A, Qit.A, Qit.A, /*        */};
 
             /// <summary>
             /// Speech mark <code>"</code>
@@ -1143,7 +1143,7 @@ namespace Brubeck.Architecture
                 Qit.A, Qit.A, Qit.A, Qit.A, Qit.A, Qit.A, //       
                 Qit.A, Qit.A, Qit.A, Qit.A, Qit.A, Qit.A, //       
                 Qit.A, Qit.A, Qit.A, Qit.A, Qit.A, Qit.A, //       
-            };
+                Qit.A, Qit.A, Qit.A, Qit.A, Qit.A, Qit.A, /*        */};
 
             /// <summary>
             /// Degree symbol <code>­°</code>
@@ -1157,7 +1157,7 @@ namespace Brubeck.Architecture
                 Qit.A, Qit.A, Qit.A, Qit.A, Qit.A, Qit.A, //       
                 Qit.A, Qit.A, Qit.A, Qit.A, Qit.A, Qit.A, //       
                 Qit.A, Qit.A, Qit.A, Qit.A, Qit.A, Qit.A, //       
-            };
+                Qit.A, Qit.A, Qit.A, Qit.A, Qit.A, Qit.A, /*        */};
 
             /// <summary>
             /// Plus sign <code>+</code>
@@ -1171,7 +1171,7 @@ namespace Brubeck.Architecture
                 Qit.A, Qit.A, Qit.U, Qit.A, Qit.A, Qit.A, //   #   
                 Qit.A, Qit.A, Qit.U, Qit.A, Qit.A, Qit.A, //   #   
                 Qit.A, Qit.A, Qit.A, Qit.A, Qit.A, Qit.A, //       
-            };
+                Qit.A, Qit.A, Qit.A, Qit.A, Qit.A, Qit.A, /*        */};
 
             /// <summary>
             /// Minus sign <code>-</code>
@@ -1185,7 +1185,7 @@ namespace Brubeck.Architecture
                 Qit.A, Qit.A, Qit.A, Qit.A, Qit.A, Qit.A, //       
                 Qit.A, Qit.A, Qit.A, Qit.A, Qit.A, Qit.A, //       
                 Qit.A, Qit.A, Qit.A, Qit.A, Qit.A, Qit.A, //       
-            };
+                Qit.A, Qit.A, Qit.A, Qit.A, Qit.A, Qit.A, /*        */};
 
             /// <summary>
             /// Asterisk <code>*</code>
@@ -1199,7 +1199,7 @@ namespace Brubeck.Architecture
                 Qit.A, Qit.A, Qit.A, Qit.A, Qit.A, Qit.A, //       
                 Qit.A, Qit.A, Qit.A, Qit.A, Qit.A, Qit.A, //       
                 Qit.A, Qit.A, Qit.A, Qit.A, Qit.A, Qit.A, //       
-            };
+                Qit.A, Qit.A, Qit.A, Qit.A, Qit.A, Qit.A, /*        */};
 
             /// <summary>
             /// Equals sign <code>=</code>
@@ -1213,7 +1213,7 @@ namespace Brubeck.Architecture
                 Qit.U, Qit.U, Qit.U, Qit.U, Qit.U, Qit.A, // ##### 
                 Qit.A, Qit.A, Qit.A, Qit.A, Qit.A, Qit.A, //       
                 Qit.A, Qit.A, Qit.A, Qit.A, Qit.A, Qit.A, //       
-            };
+                Qit.A, Qit.A, Qit.A, Qit.A, Qit.A, Qit.A, /*        */};
 
             /// <summary>
             /// Ampersand <code>&</code>
@@ -1227,7 +1227,7 @@ namespace Brubeck.Architecture
                 Qit.U, Qit.A, Qit.A, Qit.U, Qit.A, Qit.A, // #  #  
                 Qit.U, Qit.A, Qit.A, Qit.U, Qit.A, Qit.A, // #  #  
                 Qit.A, Qit.U, Qit.U, Qit.A, Qit.U, Qit.A, //  ## # 
-            };
+                Qit.A, Qit.A, Qit.A, Qit.A, Qit.A, Qit.A, /*        */};
 
             /// <summary>
             /// Hash mark <code>#</code>
@@ -1241,7 +1241,7 @@ namespace Brubeck.Architecture
                 Qit.U, Qit.U, Qit.U, Qit.U, Qit.U, Qit.A, // ##### 
                 Qit.A, Qit.U, Qit.A, Qit.U, Qit.A, Qit.A, //  # #  
                 Qit.A, Qit.A, Qit.A, Qit.A, Qit.A, Qit.A, //       
-            };
+                Qit.A, Qit.A, Qit.A, Qit.A, Qit.A, Qit.A, /*        */};
 
             /// <summary>
             /// Forward slash <code>/</code>
@@ -1255,7 +1255,7 @@ namespace Brubeck.Architecture
                 Qit.A, Qit.U, Qit.A, Qit.A, Qit.A, Qit.A, //  #    
                 Qit.U, Qit.A, Qit.A, Qit.A, Qit.A, Qit.A, // #     
                 Qit.U, Qit.A, Qit.A, Qit.A, Qit.A, Qit.A, // #     
-            };
+                Qit.A, Qit.A, Qit.A, Qit.A, Qit.A, Qit.A, /*        */};
 
             /// <summary>
             /// Back slash <code>\</code>
@@ -1269,7 +1269,7 @@ namespace Brubeck.Architecture
                 Qit.A, Qit.A, Qit.A, Qit.U, Qit.A, Qit.A, //    #  
                 Qit.A, Qit.A, Qit.A, Qit.A, Qit.U, Qit.A, //     # 
                 Qit.A, Qit.A, Qit.A, Qit.A, Qit.U, Qit.A, //     # 
-            };
+                Qit.A, Qit.A, Qit.A, Qit.A, Qit.A, Qit.A, /*        */};
 
             /// <summary>
             /// At symbol <code>@</code>
@@ -1283,7 +1283,7 @@ namespace Brubeck.Architecture
                 Qit.U, Qit.A, Qit.U, Qit.U, Qit.U, Qit.A, // # ### 
                 Qit.U, Qit.A, Qit.A, Qit.A, Qit.A, Qit.A, // #     
                 Qit.U, Qit.U, Qit.U, Qit.U, Qit.U, Qit.U, // ##### 
-            };
+                Qit.A, Qit.A, Qit.A, Qit.A, Qit.A, Qit.A, /*        */};
 
             /// <summary>
             /// Percent symbol <code>%</code>
@@ -1297,7 +1297,7 @@ namespace Brubeck.Architecture
                 Qit.A, Qit.U, Qit.A, Qit.A, Qit.A, Qit.A, //  #    
                 Qit.U, Qit.A, Qit.A, Qit.A, Qit.U, Qit.U, // #  ## 
                 Qit.U, Qit.A, Qit.A, Qit.A, Qit.U, Qit.U, // #  ## 
-            };
+                Qit.A, Qit.A, Qit.A, Qit.A, Qit.A, Qit.A, /*        */};
 
             /// <summary>
             /// Vertical Bar <code>|</code>
@@ -1311,7 +1311,7 @@ namespace Brubeck.Architecture
                 Qit.A, Qit.A, Qit.U, Qit.A, Qit.A, Qit.A, //  #    
                 Qit.A, Qit.A, Qit.U, Qit.A, Qit.A, Qit.A, //  #    
                 Qit.A, Qit.A, Qit.U, Qit.A, Qit.A, Qit.A, //  #    
-            };
+                Qit.A, Qit.A, Qit.A, Qit.A, Qit.A, Qit.A, /*        */};
 
             /// <summary>
             /// Caret / Circumflex <code>^</code>
@@ -1325,7 +1325,7 @@ namespace Brubeck.Architecture
                 Qit.A, Qit.A, Qit.A, Qit.A, Qit.A, Qit.A, //       
                 Qit.A, Qit.A, Qit.A, Qit.A, Qit.A, Qit.A, //       
                 Qit.A, Qit.A, Qit.A, Qit.A, Qit.A, Qit.A, //       
-            };
+                Qit.A, Qit.A, Qit.A, Qit.A, Qit.A, Qit.A, /*        */};
 
             /// <summary>
             /// Tilde <code>~</code>
@@ -1339,7 +1339,7 @@ namespace Brubeck.Architecture
                 Qit.A, Qit.A, Qit.A, Qit.A, Qit.A, Qit.A, //       
                 Qit.A, Qit.A, Qit.A, Qit.A, Qit.A, Qit.A, //       
                 Qit.A, Qit.A, Qit.A, Qit.A, Qit.A, Qit.A, //       
-            };
+                Qit.A, Qit.A, Qit.A, Qit.A, Qit.A, Qit.A, /*        */};
 
             /// <summary>
             /// Pound sign <code>£</code>
@@ -1353,7 +1353,7 @@ namespace Brubeck.Architecture
                 Qit.A, Qit.U, Qit.A, Qit.A, Qit.A, Qit.A, //  #    
                 Qit.U, Qit.A, Qit.A, Qit.A, Qit.A, Qit.A, // #     
                 Qit.U, Qit.U, Qit.U, Qit.U, Qit.U, Qit.A, // ##### 
-            };
+                Qit.A, Qit.A, Qit.A, Qit.A, Qit.A, Qit.A, /*        */};
 
             /// <summary>
             /// Dollar sign <code>$</code>
@@ -1367,7 +1367,7 @@ namespace Brubeck.Architecture
                 Qit.A, Qit.A, Qit.A, Qit.A, Qit.U, Qit.A, //     # 
                 Qit.A, Qit.U, Qit.U, Qit.U, Qit.A, Qit.A, //  ###  
                 Qit.A, Qit.A, Qit.U, Qit.A, Qit.A, Qit.A, //   #   
-            };
+                Qit.A, Qit.A, Qit.A, Qit.A, Qit.A, Qit.A, /*        */};
         }
     }
 }

@@ -9,7 +9,7 @@
     <RepositoryUrl>https://github.com/somecollagist/Brubeck</RepositoryUrl>
     <PackageLicenseFile>..\Resources\LICENSE.txt</PackageLicenseFile>
     <PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
-    <StartupObject>Brubeck.Program</StartupObject>
+    <StartupObject>Brubeck.Emulator</StartupObject>
   </PropertyGroup>
 
   <ItemGroup>
@@ -31,7 +31,6 @@
     <ProjectReference Include="..\Brubeck.Architecture\Brubeck.Architecture.csproj" />
     <ProjectReference Include="..\Brubeck.Assembler\Brubeck.Assembler.csproj" />
     <ProjectReference Include="..\Brubeck.Core\Brubeck.Core.csproj" />
-    <ProjectReference Include="..\Brubeck.Peripheral\Brubeck.Peripheral.csproj" />
   </ItemGroup>
 
 </Project>

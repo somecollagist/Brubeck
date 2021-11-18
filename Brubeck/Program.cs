@@ -9,7 +9,7 @@ using Brubeck.Core;
 
 namespace Brubeck
 {
-	public class Program
+	public class Emulator
 	{
 		/// <summary>
 		/// Entry point for the emulator, this method is independent of emulated hardware. 
@@ -28,6 +28,8 @@ namespace Brubeck
 				RAM InstMem = new();    //Create a memory instance for instructions
 				RAM DataMem = new();	//Create a memory instance for data
 				CPU ProcUnit = new();   //Create a cpu instance
+
+				
 
 				if (args.Length > 1)
 				{
