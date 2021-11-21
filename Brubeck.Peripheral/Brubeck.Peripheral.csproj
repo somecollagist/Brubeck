@@ -5,12 +5,14 @@
     <TargetFramework>net5.0-windows</TargetFramework>
     <Nullable>enable</Nullable>
     <UseWPF>true</UseWPF>
-    <SupportedOSPlatformVersion>7.0</SupportedOSPlatformVersion>
   </PropertyGroup>
 
   <ItemGroup>
+    <Page Remove="Peripheral.xaml" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\Brubeck.Core\Brubeck.Core.csproj" />
-    <ProjectReference Include="..\Brubeck\Brubeck.csproj" />
   </ItemGroup>
 
 </Project>

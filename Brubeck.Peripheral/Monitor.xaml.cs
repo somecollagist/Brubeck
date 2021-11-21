@@ -54,8 +54,6 @@ namespace Brubeck.Peripheral
                     Pixels.Children.Insert((y * ResWidth) + x, new Rectangle());
                 }
             }
-
-            ((App)Application.Current).RunEmulator();
         }
 
         public async void Display(Qyte[] input)

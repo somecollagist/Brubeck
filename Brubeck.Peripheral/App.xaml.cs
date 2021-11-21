@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 
@@ -15,23 +16,13 @@ namespace Brubeck.Peripheral
     /// </summary>
     public partial class App : Application
     {
-        private string[]? args;
-
-        private void StartUp(object Sender, StartupEventArgs e)
+        [STAThread]
+        public static async void Start()
         {
-            args = e.Args;
-        }
-
-        internal void RunEmulator()
-        {
-            try
-            {
-                Emulator.Main(args);
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message, "Alert", MessageBoxButton.OK, MessageBoxImage.Error);
-            }
+            App Peripheral = new();
+            Console.WriteLine("Running...");
+            Peripheral.Run(new Monitor());
+            Console.WriteLine("Run!");
         }
     }
 }

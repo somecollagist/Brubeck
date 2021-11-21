@@ -2,19 +2,26 @@
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Threading;
+using System.Threading.Tasks;
+using System.Xml.Serialization;
+
+using System.Windows.Threading;
 
 using Brubeck.Architecture;
 using Brubeck.Assembler;
 using Brubeck.Core;
+using Brubeck.Peripheral;
 
 namespace Brubeck
 {
-	public class Emulator
+	public partial class Emulator
 	{
 		/// <summary>
 		/// Entry point for the emulator, this method is independent of emulated hardware. 
 		/// </summary>
 		/// <param name="args"></param>
+		[STAThread]
 		public static void Main(params string[] args)
 		{
 			if (args.Length == 0 || new string[] { "-h, --help" }.Contains(args[0]))
@@ -25,38 +32,7 @@ namespace Brubeck
 
 			else if(new string[] {"-r", "--run"}.Contains(args[0])) //Run mode
 			{
-				RAM InstMem = new();    //Create a memory instance for instructions
-				RAM DataMem = new();	//Create a memory instance for data
-				CPU ProcUnit = new();   //Create a cpu instance
-
-				
-
-				if (args.Length > 1)
-				{
-					InstMem.FlashRAMState(ReadQuinaryFromFile(args[1]));        //Flash instructions
-
-					if (args.Length > 2)
-					{
-						DataMem.FlashRAMState(ReadQuinaryFromFile(args[2]));    //Flash data
-
-						if(args.Length > 3)
-						{
-							ProcUnit.FlashCPUState(ReadCPUState(args[3]));		//Flash CPU state
-						}
-					}
-				}
-				else
-				{
-					InstMem.FlashRAMState(ReadQuinaryFromFile("instmemlast.brbk5"));
-					DataMem.FlashRAMState(ReadQuinaryFromFile("datamemlast.brbk5"));
-					ProcUnit.FlashCPUState(ReadCPUState("cpulast.brbkcpu"));
-				}
-
-				CPU.ExecutionState es = ProcUnit.Run(ref InstMem, ref DataMem); //Start CPU execution with the current RAM state and store the final execution state
-				WriteQuinaryToFile("instmemlast.brbk5", InstMem.Memory);
-				WriteQuinaryToFile("datamemlast.brbk5", DataMem.Memory);
-				WriteCPUState("cpulast.brbkcpu", ProcUnit);
-				Console.WriteLine($"Program completed with execution state {es}");
+				RunEmulator(args);
 			}
 
 			else if(new string[] {"-a", "--assemble"}.Contains(args[0]))    //Assemble mode
@@ -92,20 +68,7 @@ namespace Brubeck
 		private static void WriteQuinaryToFile(string path, Qyte[] state)
 		{
 			using StreamWriter sw = new(path);
-
-			bool shrunk = false;
-			int index = 0;
-			while(!shrunk)
-            {
-				if (state[index].Equals(new Qyte())) shrunk = state[index..].All(t => t.Equals(new Qyte()));
-				if (!shrunk) index++;
-			}
-			state = state[..index];
-
-			foreach(Qyte s in state)
-            {
-				sw.Write(s.ToString());	//Write each qyte to the file in its string form.
-            }
+			sw.Write(string.Join("", state.Select(t => t.ToString())));
 		}
 
 		/// <summary>
@@ -119,11 +82,11 @@ namespace Brubeck
 			int instmemaddr = int.Parse(sr.ReadLine());	//first line is the instruction memory address
 			CPU.Register[] registerstates = new CPU.Register[10];
 			for(int x = 0; x < 10; x++)					//following 10 lines are the register states
-            {
+			{
 				string rawstate = sr.ReadLine().Trim();
 				if (rawstate.Length % 3 != 0) throw new SegmentationFaultException($"Provided register flash state for R{x} cannot be marshalled.");
 				registerstates[x] = new CPU.Register(new Qyte());
-            }
+			}
 
 			return (instmemaddr, registerstates);
 		}
@@ -134,7 +97,7 @@ namespace Brubeck
 		/// <param name="path">File to write to.</param>
 		/// <param name="cpu">CPU from which the state will be copied.</param>
 		private static void WriteCPUState(string path, CPU cpu)
-        {
+		{
 			using StreamWriter sw = new(path);
 			sw.WriteLine(cpu.GetInstMemAddr());
 			sw.WriteLine(CPU.R0.ToString());

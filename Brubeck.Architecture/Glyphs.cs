@@ -23,7 +23,7 @@ namespace Brubeck.Architecture
             /// <summary>
             /// Height of a character.
             /// </summary>
-            public const int Height = 7;
+            public const int Height = 8;
 
             /// <summary>
             /// Converts a Qit array of the correct size to a Qyte array which can be stored in data RAM.

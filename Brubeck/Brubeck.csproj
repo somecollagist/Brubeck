@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
-    <TargetFramework>net5.0</TargetFramework>
+    <TargetFramework>net5.0-windows</TargetFramework>
     <Company>Prole Industries</Company>
     <Authors>Ben Jackson</Authors>
     <PackageIcon>icon.png</PackageIcon>
@@ -10,6 +10,7 @@
     <PackageLicenseFile>..\Resources\LICENSE.txt</PackageLicenseFile>
     <PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
     <StartupObject>Brubeck.Emulator</StartupObject>
+    <UseWPF>True</UseWPF>
   </PropertyGroup>
 
   <ItemGroup>
@@ -31,6 +32,7 @@
     <ProjectReference Include="..\Brubeck.Architecture\Brubeck.Architecture.csproj" />
     <ProjectReference Include="..\Brubeck.Assembler\Brubeck.Assembler.csproj" />
     <ProjectReference Include="..\Brubeck.Core\Brubeck.Core.csproj" />
+    <ProjectReference Include="..\Brubeck.Peripheral\Brubeck.Peripheral.csproj" />
   </ItemGroup>
 
 </Project>
