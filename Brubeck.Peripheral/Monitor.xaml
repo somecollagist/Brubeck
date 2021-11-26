@@ -8,6 +8,7 @@
 		Title="Brubeck Peripheral" Height="180" Width="240"
 		SizeToContent="WidthAndHeight"
 		ResizeMode="NoResize">
+    <!-- The SizeToContent option will resize to window to accomodate the size of all controls contained -->
 	<Grid x:Name="Screen">
 		<UniformGrid x:Name="Pixels" Background="Black" Grid.Column="0"/>
 	</Grid>

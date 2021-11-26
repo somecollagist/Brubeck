@@ -16,7 +16,7 @@ namespace Brubeck
 {
 	public partial class Emulator
 	{
-		public static async void RunEmulator(string[] args)
+		public static void RunEmulator(string[] args)
 		{
 			RAM InstMem = new();    //Create a memory instance for instructions
 			RAM DataMem = new();    //Create a memory instance for data
@@ -24,37 +24,39 @@ namespace Brubeck
 
 			if (args.Length > 1)
 			{
+				Console.WriteLine($"Reading instruction memory from {args[1]}...");
 				InstMem.FlashRAMState(ReadQuinaryFromFile(args[1]));        //Flash instructions
 
 				if (args.Length > 2)
 				{
+					Console.WriteLine($"Reading data memory from {args[2]}...");
 					DataMem.FlashRAMState(ReadQuinaryFromFile(args[2]));    //Flash data
 
 					if (args.Length > 3)
 					{
+						Console.WriteLine($"Reading CPU state from {args[3]}...");
 						ProcUnit.FlashCPUState(ReadCPUState(args[3]));      //Flash CPU state
 					}
 				}
 			}
 			else
 			{
+				//If no file arguments are passed, restore the previous execution state
+
+				Console.WriteLine("Reading last instruction memory state...");
 				InstMem.FlashRAMState(ReadQuinaryFromFile("instmemlast.brbk5"));
+				Console.WriteLine("Reading last data memory state...");
 				DataMem.FlashRAMState(ReadQuinaryFromFile("datamemlast.brbk5"));
+				Console.WriteLine("Reading last CPU state...");
 				ProcUnit.FlashCPUState(ReadCPUState("cpulast.brbkcpu"));
 			}
 
-            Thread MonitorThread = new(new ThreadStart(App.Start));
-            MonitorThread.SetApartmentState(ApartmentState.STA);
+            Thread MonitorThread = new(new ThreadStart(App.Start)); //Run the monitor on a separate thread so the CPU isn't blocked
+			MonitorThread.SetApartmentState(ApartmentState.STA);	//Monitor must be created on STAThread because reasons
             MonitorThread.Start();
-            //await App.Start();
 
-            ProcUnit.AllocVRAM(184, 240);
+			ProcUnit.AllocVRAM(Peripheral.Monitor.ResHeight, Peripheral.Monitor.ResWidth);	//Allocate VRAM based off peripheral's resolution
 
-			//Timer MonitorRefresher = new(
-			//	e =>
-			//	{
-			//		//ProcUnit.GetVRAM();
-			//	}, null, TimeSpan.Zero, TimeSpan.FromSeconds(0.2));
 			CPU.ExecutionState es = ProcUnit.Run(ref InstMem, ref DataMem); //Start CPU execution with the current RAM state and store the final execution state
 			Console.WriteLine($"Program completed with execution state {es}");
 
