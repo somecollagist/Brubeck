@@ -16,13 +16,17 @@ namespace Brubeck.Peripheral
     /// </summary>
     public partial class App : Application
     {
+        public static Monitor MonitorInstance { get; private set; } = new();
+
         [STAThread]
         public static void Start()
         {
-            //Make all obejcts here so we don't share any instances over threads
+            //Make all objects here so we don't share any instances over threads
+            MonitorInstance = new();
+
             App Peripheral = new();
             Console.WriteLine("Running...");
-            Peripheral.Run(new Monitor());
+            Peripheral.Run(MonitorInstance);
             Console.WriteLine("Run!");
         }
     }

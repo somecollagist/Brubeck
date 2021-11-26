@@ -6,6 +6,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Brubeck.Core\Brubeck.Core.csproj" />
+    <ProjectReference Include="..\Brubeck.Peripheral\Brubeck.Peripheral.csproj" />
   </ItemGroup>
 
 </Project>

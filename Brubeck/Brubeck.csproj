@@ -11,6 +11,7 @@
     <PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
     <StartupObject>Brubeck.Emulator</StartupObject>
     <UseWPF>True</UseWPF>
+    <DisableWinExeOutputInference>true</DisableWinExeOutputInference>
   </PropertyGroup>
 
   <ItemGroup>

@@ -67,17 +67,40 @@ namespace Brubeck.Peripheral
         /// Displays the given video signal.
         /// </summary>
         /// <param name="input">Qyte array of the visual signal to display.</param>
-        public async void Display(Qyte[] input)
+        public void Display(Qyte[] input)
         {
-            //Qyte[] might become Qit[] in future, since that'd align more closely with how it works in the real world
+            //Dispatcher.Invoke(() =>
+            //{
+            //    //Qyte[] might become Qit[] in future, since that'd align more closely with how it works in the real world
 
-            //Convert to qitmap since that's how we'll store the state
+            //    //Convert to qitmap since that's how we'll store the state
+            //    Qit[] VisualQitMap = string.Join("", input.Select(t => t.ToString())).Select(t => QitConverter.GetQitFromChar(t)).ToArray();
+            //    //Each qit will be used to set the colour of each pixel
+            //    for (int index = 0; index < VisualQitMap.Length - 3; index++)
+            //    {
+            //        Dispatcher.Invoke(() =>
+            //        {
+            //            Pixels.Children.SetPixel(index, QitColourMapping[VisualQitMap[index]]);
+            //        });
+            //    }
+            //});
+
             Qit[] VisualQitMap = string.Join("", input.Select(t => t.ToString())).Select(t => QitConverter.GetQitFromChar(t)).ToArray();
-            //Each qit will be used to set the colour of each pixel
-            for(int index = 0; index < VisualQitMap.Length; index++)
+
+            for (int y = 0; y < ResHeight; y++)
             {
-                SetPixel(index, QitColourMapping[VisualQitMap[index]]);
+                Dispatcher.Invoke(() =>
+                {
+                    for(int x = 0; x < ResWidth; x++)
+                    {
+                        Dispatcher.Invoke(() =>
+                        {
+                            Pixels.Children.SetPixel(x, y, ResWidth, QitColourMapping[VisualQitMap[y * ResWidth + x]]);
+                        });
+                    }
+                });
             }
+            Console.WriteLine("VRAM Written");
         }
 
         /// <summary>
@@ -91,16 +114,19 @@ namespace Brubeck.Peripheral
             {Qit.O, new(Color.FromRgb(0, 0, 0)) },  //Black
             {Qit.U, new(Color.FromRgb(0, 255, 0)) } //Green
         };
+    }
 
+    internal static class PixelGridExtensionMethods
+    {
         /// <summary>
         /// Sets a pixel at a given coordinate to a certain colour.
         /// </summary>
         /// <param name="x">Pixel's altitude from the top.</param>
         /// <param name="y">Pixel's offset from the left.</param>
         /// <param name="colour">The colour to be assigned.</param>
-        private async void SetPixel(int x, int y, SolidColorBrush colour)
+        public static void SetPixel(this UIElementCollection pixels, int x, int y, int ResWidth, SolidColorBrush colour)
         {
-            await Task.Run(() => SetPixel(y * ResWidth + x, colour));
+            pixels.SetPixel(y * ResWidth + x, colour);
         }
 
         /// <summary>
@@ -109,9 +135,14 @@ namespace Brubeck.Peripheral
         /// <param name="index">The pixels index, computed left to right, top to bottom.</param>
         /// <param name="colour">the colour to be assigned.</param>
         /// <returns></returns>
-        private async void SetPixel(int index, SolidColorBrush colour)
+        public static void SetPixel(this UIElementCollection pixels, int index, SolidColorBrush colour)
         {
-            await Task.Run(() => ((Rectangle)Pixels.Children[index]).Fill = colour);
+            //Task.Run(() => ((Rectangle)pixels[index]).Fill = colour);
+            //lock(pixels)
+            //{
+            //    ((Rectangle)pixels[index]).Fill = colour;
+            //}
+            ((Rectangle)pixels[index]).Fill = colour;
         }
     }
 }

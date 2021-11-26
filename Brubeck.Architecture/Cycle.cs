@@ -18,6 +18,7 @@ namespace Brubeck.Architecture
         private ExecutionState Cycle(ref RAM InstMem, ref RAM DataMem)
         {
             Qyte opcode = GetNextQyte(ref InstMem);
+            Console.WriteLine(opcode.ToString());
             (Qyte, Qyte) ops;
 
             //Raw opcodes

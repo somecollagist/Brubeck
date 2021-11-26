@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 using Brubeck.Core;
+using Brubeck.Peripheral;
 
 namespace Brubeck.Architecture
 {
@@ -60,6 +61,9 @@ namespace Brubeck.Architecture
                     idx++;
                 }
             }
+            IncVRAMCharIndex();
+
+            App.MonitorInstance.Display(DataMem.Memory[VRAMStartIndex..]);
         }
 
         public Qyte[] GetVRAM(ref RAM DataMem) => DataMem.Memory[VRAMStartIndex..];
