@@ -11,5 +11,6 @@
     <!-- The SizeToContent option will resize to window to accomodate the size of all controls contained -->
 	<Grid x:Name="Screen">
 		<UniformGrid x:Name="Pixels" Background="Black" Grid.Column="0"/>
-	</Grid>
+        <Image x:Name="PixelMap"/>
+    </Grid>
 </Window>
