@@ -1,5 +1,7 @@
-mov %0, IIU
-mov %1, IIO
-add %0, %1
-mod %0, IIU
+vramadd 't'
+vramadd 'e'
+vramadd 's'
+vramadd 't'
+vramadd ' '
+vramadd '2'
 halt

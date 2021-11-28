@@ -48,16 +48,25 @@ namespace Brubeck.Assembler
 
 				Args = null;
 
-				if (Opcode.Length == 3) Adverb = '\0';          //If the opcode has no adverb (i.e. is a raw opcode) then set the adverb to null.
+				if (Opcode.Length == 3)                         //If the opcode has no adverb (i.e. is a raw opcode) then set the adverb to null.
+				{
+					Adverb = '\0';
+					switch(Alias)
+					{
+						case "VRAMADD":
+							Args = new string[] { Utils.ConvertCharToCode(cmd[cmd.IndexOf('\'')..][1]) };
+							break;
+					}
+				}
 				else                                            //These opcodes aren't raw and have adverbs that must be considered.
 				{
 					//Since we're operating with adverbs, arguments are guaranteed. Split by commas, cut the whitespace ends, and cast to array.
-					Args = cmd.Substring(cmd.IndexOf(' '))
+					Args = cmd[cmd.IndexOf(' ')..]
 					.Split(',')
 					.Select(t => t.Trim())
 					.ToArray();
 					Console.Write("\tArgs: ");
-					foreach (string arg in Args) Console.Write($"{arg} ");	//Arrays can't be printed, so loop through to display everything.
+					foreach (string arg in Args) Console.Write($"{arg} ");  //Arrays can't be printed, so loop through to display everything.
 					Console.Write("\n");
 
 					//Valid location marker
@@ -92,7 +101,7 @@ namespace Brubeck.Assembler
 			/// <summary>
 			/// Maps assembly mnemonics to opcodes.
 			/// </summary>
-			private static Dictionary<string, string> CommandOpcodePairs = new()
+			private static readonly Dictionary<string, string> CommandOpcodePairs = new()
 			{
 				{ "ADD", "AA" },
 				{ "SUB", "AE" },
@@ -124,6 +133,7 @@ namespace Brubeck.Assembler
 				{ "INT", "UO" },
 
 				//Raw opcodes from here on - these don't require adverbial qits.
+				{ "VRAMADD", "UEA" },
 				{ "HALT", "UII" },
 
 				{ "JEQ", "UAA" },

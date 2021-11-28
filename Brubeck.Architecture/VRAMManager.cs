@@ -27,15 +27,16 @@ namespace Brubeck.Architecture
 			ScreenHeight = screenheight;
 			ScreenWidth = screenwidth;
 
-			Rows = ScreenHeight / Char.Height;
-			Columns = ScreenWidth / Char.Width;
+			Rows = ScreenHeight / QChar.Height;
+			Columns = ScreenWidth / QChar.Width;
 
 			TotalChars = Rows * Columns;
-			CharSize = (Char.Width * Char.Height) / 3;
+			CharSize = (QChar.Width * QChar.Height) / 3;
 
 			VRAMStartIndex = RAM.RamCeiling - (TotalChars * CharSize);
 		}
-		private int VRAMCharIndex = 0;
+
+		public int VRAMCharIndex { get; private set; } = 0;
 
 		private void IncVRAMCharIndex() => VRAMCharIndex = ++VRAMCharIndex == TotalChars ? 0 : VRAMCharIndex;
 		private void DecVRAMCharIndex() => VRAMCharIndex = VRAMCharIndex-- == 0 ? TotalChars - 1 : VRAMCharIndex;
@@ -51,19 +52,31 @@ namespace Brubeck.Architecture
 			try { charline = index / Columns; } catch { charline = 0; }
 			int charcolumn = index - (charline * Columns);
 
-			Qyte[] data = Char.ConvertCharQitArrayToQyteArray(map);
+			Qyte[] data = QChar.ConvertCharQitArrayToQyteArray(map);
 			int idx = 0;
-			for(int y = 0; y < Char.Height * Char.Width * Columns / 3; y += Columns * (Char.Width / 3))
+			for(int y = 0; y < QChar.Height * QChar.Width * Columns / 3; y += Columns * (QChar.Width / 3))
 			{
-				for(int x = 0; x < Char.Width / 3; x++)
+				for(int x = 0; x < QChar.Width / 3; x++)
 				{
-					DataMem.QyteAtIndex(VRAMStartIndex + (charline * ScreenWidth * (Char.Height / 3)) + (charcolumn * Char.Width / 3) + x + y + (charline * ScreenWidth)) = data[idx];
+					DataMem.QyteAtIndex(VRAMStartIndex + (charline * ScreenWidth * (QChar.Height / 3)) + (charcolumn * QChar.Width / 3) + x + y + (charline * ScreenWidth)) = data[idx];
 					idx++;
 				}
 			}
 			IncVRAMCharIndex();
 
 			VideoFeed = DataMem.Memory[VRAMStartIndex..];
+		}
+
+		public void RemoveCharFromVRAM(ref RAM DataMem, ref Qyte[] VideoFeed)
+		{
+			RemoveCharFromVRAM(VRAMCharIndex, ref DataMem, ref VideoFeed);
+		}
+
+		public void RemoveCharFromVRAM(int index, ref RAM DataMem, ref Qyte[] VideoFeed)
+		{
+			DecVRAMCharIndex();
+			WriteCharToVRAM(QChar.SPC, index, ref DataMem, ref VideoFeed);
+			DecVRAMCharIndex();
 		}
 
 		public Qyte[] GetVRAM(ref RAM DataMem) => DataMem.Memory[VRAMStartIndex..];

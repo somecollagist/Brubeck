@@ -68,9 +68,6 @@ namespace Brubeck
 			WriteCPUState("cpulast.brbkcpu", ProcUnit);
 			Console.WriteLine("CPU state written");
 			Console.WriteLine("All state logs written");
-
-			Console.Write("Press any key to terminate emulator...");
-			Console.ReadKey();
 		}
 	}
 }

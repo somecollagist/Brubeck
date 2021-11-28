@@ -75,8 +75,8 @@ namespace Brubeck
 		/// Returns the CPU state stored in a given file.
 		/// </summary>
 		/// <param name="path">File to read from.</param>
-		/// <returns>The instruction memory address and the state of the registers.</returns>
-		private static (int, CPU.Register[]) ReadCPUState(string path)
+		/// <returns>The instruction memory address, the state of the registers, and VRAMCharIndex</returns>
+		private static (int, CPU.Register[], int) ReadCPUState(string path)
 		{
 			using StreamReader sr = new(path);
 			int instmemaddr = int.Parse(sr.ReadLine());	//first line is the instruction memory address
@@ -87,8 +87,9 @@ namespace Brubeck
 				if (rawstate.Length % 3 != 0) throw new SegmentationFaultException($"Provided register flash state for R{x} cannot be marshalled.");
 				registerstates[x] = new CPU.Register(new Qyte());
 			}
+			int vramcharindex = int.Parse(sr.ReadLine());
 
-			return (instmemaddr, registerstates);
+			return (instmemaddr, registerstates, vramcharindex);
 		}
 		
 		/// <summary>
@@ -110,6 +111,7 @@ namespace Brubeck
 			sw.WriteLine(CPU.R7.ToString());
 			sw.WriteLine(CPU.R8.ToString());
 			sw.WriteLine(CPU.R9.ToString());
+			sw.WriteLine(cpu.VRAMCharIndex);
 		}
 	}
 }

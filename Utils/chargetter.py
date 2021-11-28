@@ -8,8 +8,8 @@ def encode(msg):
                     o = "STOP"
             elif o == ",":
                     o = "COMMA"
-            out += f"Char.{o}, "
+            out += f"QChar.{o}, "
     print(out)
     print(f"length: {len(msg)}")
 
-encode("Hello world!")
+encode("BRUBECK")

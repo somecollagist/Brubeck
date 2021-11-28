@@ -39,7 +39,8 @@ namespace Brubeck.Assembler
 					code = sr
 						.ReadToEnd()
 						.Split("\n")
-						.Select(t => t.Trim().ToUpper())
+						.Select(t => t.Trim())
+						.Select(t => Utils.UppercaseByRegex(t, new(@"(.(?!')|(?<!').)+")))
 						.Where(t => t != "")
 						.ToArray();
 				}
@@ -83,6 +84,10 @@ namespace Brubeck.Assembler
 						 * with null adverbs included may throw a segmentation fault.
 						 */
 						push = mnn.Opcode;
+						if(mnn.Args != null)
+						{
+							push += string.Join(string.Empty, mnn.Args);
+						}
 					}
 
 					Console.WriteLine($"Decoded to machine code instruction {push}");

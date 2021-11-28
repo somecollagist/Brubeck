@@ -13,7 +13,7 @@ namespace Brubeck.Architecture
         /// <summary>
         /// Stores a qitmap of characters.
         /// </summary>
-        private static class Char
+        internal static class QChar
         {
             /// <summary>
             /// Width of a character.
@@ -43,10 +43,10 @@ namespace Brubeck.Architecture
             public static readonly Qit[] a =
             {
                 Qit.A, Qit.A, Qit.A, Qit.A, Qit.A, Qit.A, //       
+                Qit.A, Qit.A, Qit.A, Qit.A, Qit.A, Qit.A, //       
                 Qit.A, Qit.U, Qit.U, Qit.U, Qit.A, Qit.A, //  ###  
                 Qit.A, Qit.A, Qit.A, Qit.A, Qit.U, Qit.A, //     # 
                 Qit.A, Qit.U, Qit.U, Qit.U, Qit.U, Qit.A, //  #### 
-                Qit.U, Qit.A, Qit.A, Qit.A, Qit.U, Qit.A, // #   # 
                 Qit.U, Qit.A, Qit.A, Qit.A, Qit.U, Qit.A, // #   # 
                 Qit.A, Qit.U, Qit.U, Qit.U, Qit.U, Qit.A, //  #### 
                 Qit.A, Qit.A, Qit.A, Qit.A, Qit.A, Qit.A, /*        */};
@@ -311,11 +311,11 @@ namespace Brubeck.Architecture
             {
                 Qit.A, Qit.A, Qit.A, Qit.A, Qit.A, Qit.A, //       
                 Qit.A, Qit.A, Qit.U, Qit.A, Qit.A, Qit.A, //   #   
-                Qit.A, Qit.U, Qit.U, Qit.U, Qit.A, Qit.A, //  ###  
+                Qit.A, Qit.U, Qit.U, Qit.U, Qit.U, Qit.A, //  #### 
                 Qit.A, Qit.A, Qit.U, Qit.A, Qit.A, Qit.A, //   #   
                 Qit.A, Qit.A, Qit.U, Qit.A, Qit.A, Qit.A, //   #   
                 Qit.A, Qit.A, Qit.U, Qit.A, Qit.A, Qit.A, //   #   
-                Qit.A, Qit.A, Qit.A, Qit.U, Qit.A, Qit.A, //    #  
+                Qit.A, Qit.A, Qit.A, Qit.U, Qit.U, Qit.A, //    ## 
                 Qit.A, Qit.A, Qit.A, Qit.A, Qit.A, Qit.A, /*        */};
 
             /// <summary>
@@ -1304,14 +1304,28 @@ namespace Brubeck.Architecture
             /// </summary>
             public static readonly Qit[] VBAR =
             {
-                Qit.A, Qit.A, Qit.U, Qit.A, Qit.A, Qit.A, //  #    
-                Qit.A, Qit.A, Qit.U, Qit.A, Qit.A, Qit.A, //  #    
-                Qit.A, Qit.A, Qit.U, Qit.A, Qit.A, Qit.A, //  #    
-                Qit.A, Qit.A, Qit.U, Qit.A, Qit.A, Qit.A, //  #    
-                Qit.A, Qit.A, Qit.U, Qit.A, Qit.A, Qit.A, //  #    
-                Qit.A, Qit.A, Qit.U, Qit.A, Qit.A, Qit.A, //  #    
-                Qit.A, Qit.A, Qit.U, Qit.A, Qit.A, Qit.A, //  #    
+                Qit.A, Qit.A, Qit.U, Qit.A, Qit.A, Qit.A, //   #   
+                Qit.A, Qit.A, Qit.U, Qit.A, Qit.A, Qit.A, //   #   
+                Qit.A, Qit.A, Qit.U, Qit.A, Qit.A, Qit.A, //   #   
+                Qit.A, Qit.A, Qit.U, Qit.A, Qit.A, Qit.A, //   #   
+                Qit.A, Qit.A, Qit.U, Qit.A, Qit.A, Qit.A, //   #   
+                Qit.A, Qit.A, Qit.U, Qit.A, Qit.A, Qit.A, //   #   
+                Qit.A, Qit.A, Qit.U, Qit.A, Qit.A, Qit.A, //   #   
                 Qit.A, Qit.A, Qit.A, Qit.A, Qit.A, Qit.A, /*        */};
+
+            /// <summary>
+            /// Underscore <code>_</code>
+            /// </summary>
+            public static readonly Qit[] USCR =
+            {
+                Qit.A, Qit.A, Qit.A, Qit.A, Qit.A, Qit.A, //       
+                Qit.A, Qit.A, Qit.A, Qit.A, Qit.A, Qit.A, //       
+                Qit.A, Qit.A, Qit.A, Qit.A, Qit.A, Qit.A, //       
+                Qit.A, Qit.A, Qit.A, Qit.A, Qit.A, Qit.A, //       
+                Qit.A, Qit.A, Qit.A, Qit.A, Qit.A, Qit.A, //       
+                Qit.A, Qit.A, Qit.A, Qit.A, Qit.A, Qit.A, //       
+                Qit.U, Qit.U, Qit.U, Qit.U, Qit.U, Qit.A, // ##### 
+                Qit.A, Qit.A, Qit.A, Qit.A, Qit.A, Qit.A, /*      */};
 
             /// <summary>
             /// Caret / Circumflex <code>^</code>

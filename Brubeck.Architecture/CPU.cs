@@ -40,9 +40,9 @@ namespace Brubeck.Architecture
         /// Returns the value of the next Qyte in Memory.
         /// </summary>
         /// <param name="Memory">Reference to the current memory being used.</param>
-        public Qyte GetNextQyte(ref RAM Memory)
+        public Qyte GetNextQyte(ref RAM InstMem)
         {
-            Qyte ret = Memory.QyteAtIndex(InstMemAddr);
+            Qyte ret = InstMem.QyteAtIndex(InstMemAddr);
             IncInstMemAddr();
             return ret;
         }
@@ -52,10 +52,10 @@ namespace Brubeck.Architecture
         /// </summary>
         /// <param name="count">Number of qytes to read.</param>
         /// <param name="Memory">Reference to the current memory being used.</param>
-        public Qyte[] GetNextQytes(int count, ref RAM Memory)
+        public Qyte[] GetNextQytes(int count, ref RAM InstMem)
         {
             Qyte[] qytes = new Qyte[count];
-            for (int x = 0; x < count; x++) qytes[x] = GetNextQyte(ref Memory);
+            for (int x = 0; x < count; x++) qytes[x] = GetNextQyte(ref InstMem);
             return qytes;
         }
 
@@ -102,7 +102,7 @@ namespace Brubeck.Architecture
         /// <summary>
         /// Sets the CPU's state to match the provided parameters.
         /// </summary>
-        public Task FlashCPUState((int, Register[]) state)
+        public Task FlashCPUState((int, Register[], int) state)
         {
             InstMemAddr = state.Item1;
             if (state.Item2.Length != 10) throw new ComponentNonExistentException($"{state.Item2.Length} register states provided, should only be 10.");
@@ -116,6 +116,7 @@ namespace Brubeck.Architecture
             R7 = state.Item2[7];
             R8 = state.Item2[8];
             R9 = state.Item2[9];
+            VRAMCharIndex = state.Item3;
             return Task.CompletedTask;
         }
     }
