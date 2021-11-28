@@ -7,10 +7,10 @@
 		mc:Ignorable="d"
 		Title="Brubeck Peripheral" Height="180" Width="240"
 		SizeToContent="WidthAndHeight"
-		ResizeMode="NoResize">
+		ResizeMode="NoResize"
+        Background="Black">
     <!-- The SizeToContent option will resize to window to accomodate the size of all controls contained -->
-	<Grid x:Name="Screen">
-		<UniformGrid x:Name="Pixels" Background="Black" Grid.Column="0"/>
+    <Grid x:Name="Screen">
         <Image x:Name="PixelMap"/>
     </Grid>
 </Window>

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 
 using Brubeck.Core;
 
@@ -43,9 +44,10 @@ namespace Brubeck.Architecture
         /// </summary>
         /// <remarks>This method overwrites preexisting RAM states.</remarks>
         /// <param name="state">The Memory state to flash onto RAM.</param>
-        public void FlashRAMState(Qyte[] state)
+        public Task FlashRAMState(Qyte[] state)
         {
             Array.Copy(state, Memory, state.Length);
+            return Task.CompletedTask;
         }
     }
 }

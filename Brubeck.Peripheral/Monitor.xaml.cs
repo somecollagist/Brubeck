@@ -1,7 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
+using System.IO;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -12,6 +15,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Windows.Threading;
 
 using Brubeck.Core;
 
@@ -39,6 +43,15 @@ namespace Brubeck.Peripheral
 		private const int ScaleFactor = 4;
 
 		/// <summary>
+		/// Refresh rate of the emulated monitor in hertz.
+		/// </summary>
+		private const int RefreshRate = 2;
+
+		internal Bitmap bmp = new(ResWidth, ResHeight);
+
+		public Qyte[] CachedVideoFeed = new Qyte[ResHeight * ResWidth / 3];
+
+		/// <summary>
 		/// Constructor for a monitor.
 		/// </summary>
 		public Monitor()
@@ -49,48 +62,49 @@ namespace Brubeck.Peripheral
 			Screen.Height = ResHeight * ScaleFactor;
 			Screen.Width = ResWidth * ScaleFactor;
 
-			//Dynamically create cells in the uniformgrid
-			Pixels.Rows = ResHeight;
-			Pixels.Columns = ResWidth;
+			Array.Fill(CachedVideoFeed, new("AAA"));
 
-			//Make each cell of the uniformgrid a rectangle which can be coloured (i.e. a pixel)
-			for(int y = 0; y < ResHeight; y++)
-			{
-				for(int x = 0; x < ResWidth; x++)
-				{
-					Pixels.Children.Insert((y * ResWidth) + x, new Rectangle());
-				}
-			}
+			DispatcherTimer Refresher = new();
+			Refresher.Interval = TimeSpan.FromMilliseconds(1000 / RefreshRate);
+			Refresher.Tick += Display;
+			Refresher.Start();
 		}
 
 		/// <summary>
 		/// Displays the given video signal.
 		/// </summary>
-		/// <param name="input">Qyte array of the visual signal to display.</param>
-		public void Display(Qyte[] input)
+		void Display(object sender, EventArgs e)
 		{
-			//Console.WriteLine("Before");
-			//Qit[] VisualQitMap = string.Join("", input.Select(t => t.ToString())).Select(t => QitConverter.GetQitFromChar(t)).ToArray();
-			//Console.WriteLine("After");
-			//for (int y = 0; y < ResHeight; y++)
-			//{
-			//	Dispatcher.Invoke(() =>
-			//	{
-			//		for(int x = 0; x < ResWidth; x++)
-			//		{
-			//			Dispatcher.Invoke(() =>
-			//			{
-			//				Pixels.Children.SetPixel(x, y, ResWidth, QitColourMapping[VisualQitMap[y * ResWidth + x]]);
-			//			});
-			//		}
-			//	});
-			//}
-			//Console.WriteLine("VRAM Written");
+			Qit[] VisualQitMap =
+				string.Join("", CachedVideoFeed.Select(t => t.ToString()))
+				.Select(t => QitConverter.GetQitFromChar(t))
+				.ToArray();
 
-			Qit[] VisualQitMap = string.Join("", input.Select(t => t.ToString())).Select(t => QitConverter.GetQitFromChar(t)).ToArray();
+			WriteableBitmap bmp = new(ResWidth, ResHeight, 24, 24, PixelFormats.Bgr32, null);
+			uint[] pixels = new uint[bmp.PixelWidth * bmp.PixelHeight];
+			for (int x = 0; x < VisualQitMap.Length; x++)
+			{
+				byte[] colour = QitColourMapping[VisualQitMap[x]];
+				pixels[x] = (uint)((colour[0] << 16) + (colour[1] << 8) + (colour[2] << 0));
+			}
 
-			WriteableBitmap bmp = new(ResWidth, ResHeight, 96 / ScaleFactor, 96 / ScaleFactor, PixelFormats.Bgr24, null);
-			bmp.WritePixels(VisualQitMap.Select(t => ))
+			bmp.WritePixels(
+				new Int32Rect(0, 0, bmp.PixelWidth, bmp.PixelHeight),
+				pixels,
+				bmp.PixelWidth * (bmp.Format.BitsPerPixel / 8),
+				0
+			);
+
+			int sumcolourpixels = pixels.Where(t => t != 0x00000000).Count();
+
+			using(FileStream fs = new("img.bmp", FileMode.Create))
+            {
+				PngBitmapEncoder enc = new();
+				enc.Frames.Add(BitmapFrame.Create(bmp.Clone()));
+				enc.Save(fs);
+            }
+
+			PixelMap.Source = bmp;
 		}
 
 		/// <summary>
@@ -98,42 +112,12 @@ namespace Brubeck.Peripheral
 		/// </summary>
 		private static readonly Dictionary<Qit, byte[]> QitColourMapping = new()
 		{
-			//BGR
-			{ Qit.A, new byte[] { 0, 0, 0 } },
-			{ Qit.E, new byte[] { 0, 0, 0 } },
-			{ Qit.I, new byte[] { 0, 0, 0 } },
-			{ Qit.O, new byte[] { 0, 0, 0 } },
-			{ Qit.U, new byte[] { 0, 255, 0 } },
+								// B     G     R
+			{ Qit.A, new byte[] { 0x00, 0x00, 0x00} },
+			{ Qit.E, new byte[] { 0x00, 0x00, 0x00 } },
+			{ Qit.I, new byte[] { 0x00, 0x00, 0x00 } },
+			{ Qit.O, new byte[] { 0x00, 0x00, 0x00 } },
+			{ Qit.U, new byte[] { 0x00, 0xff, 0x00 } },
 		};
-	}
-
-	internal static class PixelGridExtensionMethods
-	{
-		/// <summary>
-		/// Sets a pixel at a given coordinate to a certain colour.
-		/// </summary>
-		/// <param name="x">Pixel's altitude from the top.</param>
-		/// <param name="y">Pixel's offset from the left.</param>
-		/// <param name="colour">The colour to be assigned.</param>
-		public static void SetPixel(this UIElementCollection pixels, int x, int y, int ResWidth, SolidColorBrush colour)
-		{
-			pixels.SetPixel(y * ResWidth + x, colour);
-		}
-
-		/// <summary>
-		/// Sets a pixel at a given index to a certain colour. 
-		/// </summary>
-		/// <param name="index">The pixels index, computed left to right, top to bottom.</param>
-		/// <param name="colour">the colour to be assigned.</param>
-		/// <returns></returns>
-		public static void SetPixel(this UIElementCollection pixels, int index, SolidColorBrush colour)
-		{
-			//Task.Run(() => ((Rectangle)pixels[index]).Fill = colour);
-			//lock(pixels)
-			//{
-			//    ((Rectangle)pixels[index]).Fill = colour;
-			//}
-			((Rectangle)pixels[index]).Fill = colour;
-		}
 	}
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 using Brubeck.Core;
 
@@ -101,7 +102,7 @@ namespace Brubeck.Architecture
         /// <summary>
         /// Sets the CPU's state to match the provided parameters.
         /// </summary>
-        public void FlashCPUState((int, Register[]) state)
+        public Task FlashCPUState((int, Register[]) state)
         {
             InstMemAddr = state.Item1;
             if (state.Item2.Length != 10) throw new ComponentNonExistentException($"{state.Item2.Length} register states provided, should only be 10.");
@@ -115,6 +116,7 @@ namespace Brubeck.Architecture
             R7 = state.Item2[7];
             R8 = state.Item2[8];
             R9 = state.Item2[9];
+            return Task.CompletedTask;
         }
     }
 }

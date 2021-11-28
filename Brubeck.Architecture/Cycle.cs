@@ -2,6 +2,7 @@
 using System.Linq;
 
 using Brubeck.Core;
+using Brubeck.Peripheral;
 
 namespace Brubeck.Architecture
 {
@@ -9,7 +10,6 @@ namespace Brubeck.Architecture
     {
         public ExecutionState Run(ref RAM InstMem, ref RAM DataMem)
         {
-            WriteCharToVRAM(Char.A, ref DataMem);
             ExecutionState es;
             while ((es = Cycle(ref InstMem, ref DataMem)) == ExecutionState.OK) ;
             return es;
