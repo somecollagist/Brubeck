@@ -119,5 +119,10 @@ namespace Brubeck.Peripheral
 			{ Qit.O, new byte[] { 0x00, 0x00, 0x00 } },
 			{ Qit.U, new byte[] { 0x00, 0xff, 0x00 } },
 		};
+
+		public static void KeyPress(object sender, KeyboardEventArgs e)
+        {
+
+        }
 	}
 }

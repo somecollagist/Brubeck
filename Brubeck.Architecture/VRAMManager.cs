@@ -44,6 +44,7 @@ namespace Brubeck.Architecture
 		public void WriteCharToVRAM(Qit[] map, ref RAM DataMem, ref Qyte[] VideoFeed)
 		{
 			WriteCharToVRAM(map, VRAMCharIndex, ref DataMem, ref VideoFeed);
+			IncVRAMCharIndex();
 		}
 
 		public void WriteCharToVRAM(Qit[] map, int index, ref RAM DataMem, ref Qyte[] VideoFeed)
@@ -62,21 +63,19 @@ namespace Brubeck.Architecture
 					idx++;
 				}
 			}
-			IncVRAMCharIndex();
 
 			VideoFeed = DataMem.Memory[VRAMStartIndex..];
 		}
 
 		public void RemoveCharFromVRAM(ref RAM DataMem, ref Qyte[] VideoFeed)
 		{
+			DecVRAMCharIndex();
 			RemoveCharFromVRAM(VRAMCharIndex, ref DataMem, ref VideoFeed);
 		}
 
 		public void RemoveCharFromVRAM(int index, ref RAM DataMem, ref Qyte[] VideoFeed)
 		{
-			DecVRAMCharIndex();
 			WriteCharToVRAM(QChar.SPC, index, ref DataMem, ref VideoFeed);
-			DecVRAMCharIndex();
 		}
 
 		public Qyte[] GetVRAM(ref RAM DataMem) => DataMem.Memory[VRAMStartIndex..];

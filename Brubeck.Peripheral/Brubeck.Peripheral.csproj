@@ -13,13 +13,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Brubeck.Core\Brubeck.Core.csproj" />
+    <PackageReference Include="System.Drawing.Common" Version="6.0.0" />
   </ItemGroup>
 
   <ItemGroup>
-    <Reference Include="System.Drawing.Common">
-      <HintPath>..\..\..\..\..\..\..\..\Program Files (x86)\Windows Kits\10\Windows Performance Toolkit\System.Drawing.Common.dll</HintPath>
-    </Reference>
+    <ProjectReference Include="..\Brubeck.Core\Brubeck.Core.csproj" />
   </ItemGroup>
 
 </Project>

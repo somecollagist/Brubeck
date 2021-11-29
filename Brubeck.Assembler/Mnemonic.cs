@@ -134,6 +134,7 @@ namespace Brubeck.Assembler
 
 				//Raw opcodes from here on - these don't require adverbial qits.
 				{ "VRAMADD", "UEA" },
+				{ "VRAMSUB", "UEE" },
 				{ "HALT", "UII" },
 
 				{ "JEQ", "UAA" },

@@ -11,6 +11,6 @@
         Background="Black">
     <!-- The SizeToContent option will resize to window to accomodate the size of all controls contained -->
     <Grid x:Name="Screen">
-        <Image x:Name="PixelMap"/>
+        <Image x:Name="PixelMap" KeyDown="KeyPress"/>
     </Grid>
 </Window>
