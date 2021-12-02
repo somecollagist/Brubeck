@@ -70,10 +70,10 @@ namespace Brubeck.Peripheral
 			Refresher.Start();
 		}
 
-		/// <summary>
-		/// Displays the given video signal.
-		/// </summary>
-		void Display(object sender, EventArgs e)
+        /// <summary>
+        /// Displays the given video signal.
+        /// </summary>
+        private void Display(object sender, EventArgs e)
 		{
 			Qit[] VisualQitMap =
 				string.Join("", CachedVideoFeed.Select(t => t.ToString()))
@@ -120,9 +120,6 @@ namespace Brubeck.Peripheral
 			{ Qit.U, new byte[] { 0x00, 0xff, 0x00 } },
 		};
 
-		public static void KeyPress(object sender, KeyboardEventArgs e)
-        {
 
-        }
-	}
+    }
 }
