@@ -2,7 +2,6 @@
 using System.Linq;
 
 using Brubeck.Core;
-using Brubeck.Peripheral;
 
 namespace Brubeck.Architecture
 {
@@ -10,12 +9,7 @@ namespace Brubeck.Architecture
 	{
 		public ExecutionState Run(ref RAM InstMem, ref RAM DataMem,ref Qyte[] VideoFeed)
 		{
-			//foreach(Qit[] map in new Qit[][]
-			//{
-			//    QChar.B, QChar.R, QChar.U, QChar.B, QChar.E, QChar.C, QChar.K
-			//}) { WriteCharToVRAM(map, ref DataMem, ref VideoFeed); }
-
-			ExecutionState es;
+            ExecutionState es;
 			while ((es = Cycle(ref InstMem, ref DataMem, ref VideoFeed)) == ExecutionState.OK) ;
 			return es;
 		}
@@ -29,15 +23,7 @@ namespace Brubeck.Architecture
 			if (opcode.QitAtIndex(0) == Qit.U)
 			{
 				switch(new string(opcode.Qits[1..3].Select(t => QitConverter.GetCharFromQit(t)).ToArray()))
-				{
-					case "EA": //VRAMADD
-						WriteCharToVRAM(BIEn.GetMapFromCode(GetNextQyte(ref InstMem)), ref DataMem, ref VideoFeed);
-						break;
-
-					case "EE": //VRAMSUB
-						RemoveCharFromVRAM(ref DataMem, ref VideoFeed);
-						break;
-					
+				{	
 					case "II": //HALT
 						return ExecutionState.HLT;
 
@@ -47,7 +33,7 @@ namespace Brubeck.Architecture
 			}
 			else
 			{
-				(Qyte, Qyte) ops;
+				(Qyte, Qyte) ops; //We define ops inside the cases because not every opcode uses ops in the defualt way and the method alters the state of DataMem
 				switch (new string(opcode.Qits[1..3].Select(t => QitConverter.GetCharFromQit(t)).ToArray()))
 				{
 					case "AA": //ADD
@@ -84,6 +70,33 @@ namespace Brubeck.Architecture
 						if (opcode.QitAtIndex(0) == Qit.I) return ExecutionState.OK;    //Allow continuation if qyte is null
 						else return ExecutionState.ERR;                                 //Otherwise it's a segmentation fault
 
+					case "OO": //VRAMADD
+						Qyte chr = GetNextQyte(ref InstMem);
+						switch(opcode.QitAtIndex(0))
+                        {
+							case Qit.A: //Register
+								chr = Register.GetRegisterFromQyte(chr);
+								break;
+
+							case Qit.E: //Mem Loc
+								chr = DataMem.QyteAtIndex(
+									QitConverter.GetIntFromQitArray(
+										new Qit[] { chr.QitAtIndex(2) }
+										.Concat(GetNextQyte(ref InstMem).Qits)
+										.Concat(GetNextQyte(ref InstMem).Qits)
+										.Concat(GetNextQyte(ref InstMem).Qits)
+										.ToArray()
+										)
+									);
+								break;
+                        }
+						WriteCharToVRAM(BIEn.GetMapFromCode(chr), ref DataMem, ref VideoFeed);
+						break;
+
+					case "OU": //VRAMSUB
+						RemoveCharFromVRAM(ref DataMem, ref VideoFeed);
+						break;
+
 					default:
 						return ExecutionState.ERR;
 				}
@@ -107,14 +120,14 @@ namespace Brubeck.Architecture
 					return (operands[0], Register.GetRegisterFromQyte(operands[1]));
 
 				case Qit.E: //Mem Loc
-					operands = GetNextQytes(4, ref InstMem);
+					operands = GetNextQytes(5, ref InstMem);
 					return (operands[0],
 							DataMem.QyteAtIndex(
 									QitConverter.GetIntFromQitArray(
-										new Qit[] { operands[0].QitAtIndex(2) }
-										.Concat(operands[1].Qits)
+										new Qit[] { operands[1].QitAtIndex(2) }
 										.Concat(operands[2].Qits)
 										.Concat(operands[3].Qits)
+										.Concat(operands[4].Qits)
 										.ToArray())
 									));
 

@@ -51,12 +51,6 @@ namespace Brubeck.Assembler
 				if (Opcode.Length == 3)                         //If the opcode has no adverb (i.e. is a raw opcode) then set the adverb to null.
 				{
 					Adverb = '\0';
-					switch(Alias)
-					{
-						case "VRAMADD":
-							Args = new string[] { Utils.ConvertCharToCode(cmd[cmd.IndexOf('\'')..][1]) };
-							break;
-					}
 				}
 				else                                            //These opcodes aren't raw and have adverbs that must be considered.
 				{
@@ -65,12 +59,18 @@ namespace Brubeck.Assembler
 					.Split(',')
 					.Select(t => t.Trim())
 					.ToArray();
-					Console.Write("\tArgs: ");
-					foreach (string arg in Args) Console.Write($"{arg} ");  //Arrays can't be printed, so loop through to display everything.
-					Console.Write("\n");
+
+					//One argument
+					if (CommandOpcodePairs["VRAMADD"] == Opcode)
+					{
+						Adverb = 'O';
+						Args = new string[] { Utils.ConvertCharToCode(cmd[cmd.IndexOf('\'')..][1]) };
+					}
+
+					//At least 2 arguments
 
 					//Valid location marker
-					if (Args[1][0] == '%')
+					else if (Args[1][0] == '%')
 					{
 						//Register marker of style %x
 						if (Args[1].Length == 2 && new char[] { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9' }.Contains(Args[1][1]))
@@ -91,17 +91,21 @@ namespace Brubeck.Assembler
 						Adverb = 'O';
 					}
 
-					//We've got no idea what they;re talking about, so throw a seg. fault.
+					//We've got no idea what they're talking about, so throw a seg. fault.
 					else throw new AssemblySegmentationFault();
 				}
 
+				Console.Write("\tArgs: ");
+				if (Args != null) foreach (string arg in Args) Console.Write($"{arg} ");  //Arrays can't be printed, so loop through to display everything.
+				else Console.Write("<<NON-EXISTENT>>");
+				Console.Write("\n");
 				Console.WriteLine($"\tAdverb: {Adverb}");
 			}
 
 			/// <summary>
 			/// Maps assembly mnemonics to opcodes.
 			/// </summary>
-			private static readonly Dictionary<string, string> CommandOpcodePairs = new()
+			internal static readonly Dictionary<string, string> CommandOpcodePairs = new()
 			{
 				{ "ADD", "AA" },
 				{ "SUB", "AE" },
@@ -124,17 +128,17 @@ namespace Brubeck.Assembler
 				{ "LABEL", "OE" },
 				{ "SUBR", "OI" },
 
-				{ "LSHIFT", "OO" },
-				{ "RSHIFT", "OU" },
+				{ "VRAMADD", "OO" },
+				{ "VRAMSUB", "OU" },
 
 				{ "INC", "UA" },
 				{ "DEC", "UE" },
 				{ "CALL", "UI" },
 				{ "INT", "UO" },
 
+				{ "SHIFT", "UU" },
+
 				//Raw opcodes from here on - these don't require adverbial qits.
-				{ "VRAMADD", "UEA" },
-				{ "VRAMSUB", "UEE" },
 				{ "HALT", "UII" },
 
 				{ "JEQ", "UAA" },

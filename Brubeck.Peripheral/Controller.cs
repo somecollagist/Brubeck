@@ -18,7 +18,5 @@ namespace Brubeck.Peripheral
         {
             return;
         }
-
-        //private Dictionary<>
     }
 }

@@ -56,8 +56,15 @@ namespace Brubeck.Assembler
 					Mnemonic mnn = new(cmd);    //Create a mnemonic object for each command
 					string push = "";           //This will store machine code for each command
 
-					//Adverbial opcodes - only run this if the adverb is not null (i.e. has an adverb)
-					if (mnn.Adverb != '\0')
+					//Adverbial opcodes - only run these if the adverb is not null (i.e. has an adverb)
+
+					if(mnn.Adverb != '\0' && mnn.Opcode == Mnemonic.CommandOpcodePairs["VRAMADD"])
+                    {
+						push = $"{mnn.Adverb}{mnn.Opcode}{mnn.Args[0]}";
+                    }
+
+					//if the mnemonic has an adverb and more than one argument
+					else if (mnn.Adverb != '\0')
 					{
 						push = $"{mnn.Adverb}{mnn.Opcode}";                                     //Part 1 - Adverb of the command followed by the opcode
 						push += Utils.GetRegisterAlias(int.Parse(mnn.Args[0][1..]));            //Part 2 - This should be a register, so decode %x
@@ -108,7 +115,10 @@ namespace Brubeck.Assembler
 						string mnemonic = Regex.Match(ex.Message, @"(?<=\')[A-Z]+(?=\')").Value;
 						Console.WriteLine($"Opcode mnemonic {mnemonic} is not recognised.");
 						return;
-				}
+
+					default:
+                        throw;
+                }
 			}
 
 			//This prints regardless of verbosity
