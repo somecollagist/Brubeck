@@ -91,6 +91,29 @@ namespace Brubeck.Architecture
             /// </summary>
             /// <param name="alpha">Value to use in modulus operation.</param>
             public void Mod(Qyte alpha) => Qits = ALU.Divide(this, alpha).Item2.Qits;
+
+            /// <summary>
+            /// Performs a qitwise logical NOT operation on the register.
+            /// </summary>
+            public void NOT() => Qits = Logic.NOT(new Qyte(Qits)).Qits;
+            
+            /// <summary>
+            /// Performs a qitwise logical AND operation of the register with the specified argument.
+            /// </summary>
+            /// <param name="alpha">Value to use in conjunction in the AND operation.</param>
+            public void AND(Qyte alpha) => Qits = Logic.AND(new Qyte(Qits), alpha).Qits;
+
+            /// <summary>
+            /// Performs a qitwise logical OR operation of the register with the specified argument.
+            /// </summary>
+            /// <param name="alpha">Value to use in conjunction in the OR operation.</param>
+            public void OR(Qyte alpha) => Qits = Logic.OR(new Qyte(Qits), alpha).Qits;
+
+            /// <summary>
+            /// Performs a qitwise logical XOR operation of the register with the specified argument.
+            /// </summary>
+            /// <param name="alpha">Value to use in conjunction in the XOR operation.</param>
+            public void XOR(Qyte alpha) => Qits = Logic.XOR(new Qyte(Qits), alpha).Qits;
         }
     }
 }

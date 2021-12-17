@@ -113,10 +113,11 @@ namespace Brubeck.Assembler
 				{ "DIV", "AO" },
 				{ "MOD", "AU" },
 
-				{ "NOT", "EA" },
 				{ "AND", "EE" },
 				{ "OR", "EI" },
 				{ "XOR", "EO" },
+
+				{ "MOVLOC", "EU" },
 
 				{ "MOV", "IA" },
 				{ "PUSH", "IE" },
@@ -146,7 +147,9 @@ namespace Brubeck.Assembler
 				{ "JGT", "UAE" },
 				{ "JLT", "UUO" },
 				{ "JGTEQ", "UAI" },
-				{ "JLTEQ", "UUI" }
+				{ "JLTEQ", "UUI" },
+
+				{ "NOT", "UEA" },
 			};
 		}
 	}

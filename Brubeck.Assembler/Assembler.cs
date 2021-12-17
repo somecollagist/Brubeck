@@ -59,24 +59,30 @@ namespace Brubeck.Assembler
 					//Adverbial opcodes - only run these if the adverb is not null (i.e. has an adverb)
 
 					if(mnn.Adverb != '\0' && mnn.Opcode == Mnemonic.CommandOpcodePairs["VRAMADD"])
-                    {
+					{
 						push = $"{mnn.Adverb}{mnn.Opcode}{mnn.Args[0]}";
-                    }
+					}
 
 					//if the mnemonic has an adverb and more than one argument
 					else if (mnn.Adverb != '\0')
 					{
-						push = $"{mnn.Adverb}{mnn.Opcode}";                                     //Part 1 - Adverb of the command followed by the opcode
-						push += Utils.GetRegisterAlias(int.Parse(mnn.Args[0][1..]));            //Part 2 - This should be a register, so decode %x
-
-						push += mnn.Adverb switch                                               //Part 3 - Decide this based off the adverb
+						push = $"{mnn.Adverb}{mnn.Opcode}";											//Part 1 - Adverb of the command followed by the opcode
+						if(mnn.Opcode == Mnemonic.CommandOpcodePairs["MOVLOC"])
+						{
+							push += $"II{mnn.Args[0][1..11]}";	//Push a memory location here
+						}
+						else
+						{
+							push += Utils.GetRegisterAlias(int.Parse(mnn.Args[0][1..]));            //Part 2 - This should be a register, so decode %x
+						}
+						push += mnn.Adverb switch													//Part 3 - Decide this based off the adverb
 						{
 							//Register
-							'A' => Utils.GetRegisterAlias(int.Parse(mnn.Args[1][1..])),			//Part 3 is a register, so decode %y
+							'A' => Utils.GetRegisterAlias(int.Parse(mnn.Args[1][1..])),				//Part 3 is a register, so decode %y
 							//Memory Location
-							'E' => $"{mnn.Args[1][1..11]}II",									//Part 3 is a 10-qit memory location, so get the first 10 qits and add II to the end (4 qytes, easier to parse)
+							'E' => $"II{mnn.Args[1][1..11]}",										//Part 3 is a 10-qit memory location, so get the last 10 qits (prepend II, this is 4 qytes, easier to parse)
 							//Constant
-							'O' => mnn.Args[1][..3],											//Part 3 is a constant, so just push the given constant (trimmed to length 3, just in case)
+							'O' => mnn.Args[1][..3],												//Part 3 is a constant, so just push the given constant (trimmed to length 3, just in case)
 							_ => throw new AssemblySegmentationFault(),
 						};
 					}
@@ -117,8 +123,8 @@ namespace Brubeck.Assembler
 						return;
 
 					default:
-                        throw;
-                }
+						throw;
+				}
 			}
 
 			//This prints regardless of verbosity

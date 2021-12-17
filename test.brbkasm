@@ -1,8 +1,4 @@
-vramadd 'B'
-vramadd 'R'
-vramadd 'U'
-vramadd 'B'
-vramadd 'E'
-vramadd 'C'
-vramadd 'K'
+mov %0, AEO
+xor %0, %0
+mov %1, %0
 halt

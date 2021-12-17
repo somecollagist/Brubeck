@@ -3,13 +3,14 @@ using System.Linq;
 
 using Brubeck.Core;
 
+#pragma warning disable CS8509
 namespace Brubeck.Architecture
 {
 	public partial class CPU
 	{
 		public ExecutionState Run(ref RAM InstMem, ref RAM DataMem,ref Qyte[] VideoFeed)
 		{
-            ExecutionState es;
+			ExecutionState es;
 			while ((es = Cycle(ref InstMem, ref DataMem, ref VideoFeed)) == ExecutionState.OK) ;
 			return es;
 		}
@@ -23,7 +24,11 @@ namespace Brubeck.Architecture
 			if (opcode.QitAtIndex(0) == Qit.U)
 			{
 				switch(new string(opcode.Qits[1..3].Select(t => QitConverter.GetCharFromQit(t)).ToArray()))
-				{	
+				{
+					case "EA": //NOT
+						Register.GetRegisterFromQyte(GetNextQyte(ref InstMem)).NOT();
+						break;
+
 					case "II": //HALT
 						return ExecutionState.HLT;
 
@@ -61,6 +66,58 @@ namespace Brubeck.Architecture
 						Register.GetRegisterFromQyte(ops.Item1).Mod(ops.Item2);
 						break;
 
+					case "EE": //AND
+						ops = GetOperands(opcode.QitAtIndex(0), ref InstMem, ref DataMem);
+						Register.GetRegisterFromQyte(ops.Item1).AND(ops.Item2);
+						break;
+
+					case "EI": //OR
+						ops = GetOperands(opcode.QitAtIndex(0), ref InstMem, ref DataMem);
+						Register.GetRegisterFromQyte(ops.Item1).OR(ops.Item2);
+						break;
+
+					case "EO": //XOR
+						ops = GetOperands(opcode.QitAtIndex(0), ref InstMem, ref DataMem);
+						Register.GetRegisterFromQyte(ops.Item1).XOR(ops.Item2);
+						break;
+
+					case "EU": //MOVLOC
+						//Get a reference to the memory location to write to
+						Qit[] dest = DataMem.QyteAtIndex(
+							QitConverter.GetIntFromQitArray(
+								new Qit[] { GetNextQyte(ref InstMem).QitAtIndex(2) }
+								.Concat(GetNextQyte(ref InstMem).Qits)
+								.Concat(GetNextQyte(ref InstMem).Qits)
+								.Concat(GetNextQyte(ref InstMem).Qits)
+								.ToArray()
+								) + (RAM.RamCeiling / 2)
+							).Qits;
+
+						//Switch the adverb to find what should be written to the memory location
+						//We use copy to so array references don't get shared between memory locations
+						switch(opcode.QitAtIndex(0))
+						{
+							case Qit.A:	//Another register
+								Register.GetRegisterFromQyte(GetNextQyte(ref InstMem)).Qits.CopyTo(dest, 0);
+								break;
+
+							case Qit.E:	//Another memory location
+								DataMem.QyteAtIndex(
+										QitConverter.GetIntFromQitArray(
+											new Qit[] { GetNextQyte(ref InstMem).QitAtIndex(2) }
+											.Concat(GetNextQyte(ref InstMem).Qits)
+											.Concat(GetNextQyte(ref InstMem).Qits)
+											.Concat(GetNextQyte(ref InstMem).Qits)
+											.ToArray()
+										) + (RAM.RamCeiling / 2)).Qits.CopyTo(dest, 0);
+								break;
+
+							case Qit.O:	//A constant
+								GetNextQyte(ref InstMem).Qits.CopyTo(dest, 0);
+								break;
+						};
+						break;
+
 					case "IA": //MOV
 						ops = GetOperands(opcode.QitAtIndex(0), ref InstMem, ref DataMem);
 						Register.GetRegisterFromQyte(ops.Item1).Qits = ops.Item2.Qits;
@@ -73,7 +130,7 @@ namespace Brubeck.Architecture
 					case "OO": //VRAMADD
 						Qyte chr = GetNextQyte(ref InstMem);
 						switch(opcode.QitAtIndex(0))
-                        {
+						{
 							case Qit.A: //Register
 								chr = Register.GetRegisterFromQyte(chr);
 								break;
@@ -86,10 +143,10 @@ namespace Brubeck.Architecture
 										.Concat(GetNextQyte(ref InstMem).Qits)
 										.Concat(GetNextQyte(ref InstMem).Qits)
 										.ToArray()
-										)
+										) + (RAM.RamCeiling / 2)
 									);
 								break;
-                        }
+						}
 						WriteCharToVRAM(BIEn.GetMapFromCode(chr), ref DataMem, ref VideoFeed);
 						break;
 
@@ -128,7 +185,7 @@ namespace Brubeck.Architecture
 										.Concat(operands[2].Qits)
 										.Concat(operands[3].Qits)
 										.Concat(operands[4].Qits)
-										.ToArray())
+										.ToArray()) + (RAM.RamCeiling / 2)
 									));
 
 				case Qit.O: //Const

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Threading.Tasks;
 
 using Brubeck.Core;
@@ -25,13 +26,14 @@ namespace Brubeck.Architecture
         /// </summary>
         public RAM()
         {
-            Array.Fill(Memory, new());
+            //We use this instead of Array.Fill() so each of the memory locations point to seperate Qyte references.
+            Memory = Enumerable.Range(0, RamCeiling).Select(t => new Qyte()).ToArray();
         }
 
         /// <summary>
         /// Gets the Qyte at the specified index.
         /// </summary>
-        /// <param name="index">The index of the Qyte (must be between 0 and RamCeiling inclusive).</param>
+        /// <param name="index">The index of the Qyte, must be between 0 and the RAM Ceiling.</param>
         /// <returns>Reference to the specified Qyte.</returns>
         public ref Qyte QyteAtIndex(int index)
         {
