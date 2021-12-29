@@ -39,7 +39,7 @@ namespace Brubeck.Architecture
         /// <summary>
         /// Returns the value of the next Qyte in Memory.
         /// </summary>
-        /// <param name="Memory">Reference to the current memory being used.</param>
+        /// <param name="InstMem">Reference to Instruction Memory.</param>
         public Qyte GetNextQyte(ref RAM InstMem)
         {
             Qyte ret = InstMem.QyteAtIndex(InstMemAddr);
@@ -51,7 +51,7 @@ namespace Brubeck.Architecture
         /// Returns the values of the next number of Qytes in memory;
         /// </summary>
         /// <param name="count">Number of qytes to read.</param>
-        /// <param name="Memory">Reference to the current memory being used.</param>
+        /// <param name="InstMem">Reference to Instruction Memory.</param>
         public Qyte[] GetNextQytes(int count, ref RAM InstMem)
         {
             Qyte[] qytes = new Qyte[count];

@@ -9,29 +9,8 @@ namespace Brubeck.Architecture
         /// <summary>
         /// Wrapper for ALU circuitry.
         /// </summary>
-        private static class ALU
+        private static partial class ALU
         {
-            /// <summary>
-            /// Returns if the given Qyte is 0 (III).
-            /// </summary>
-            public static bool IsZero(Qyte a)
-            {
-                return new Qyte("III").Equals(a);
-            }
-
-            /// <summary>
-            /// Returns if the given Qyte is greater than 0 (III).
-            /// </summary>
-            /// <param name="a"></param>
-            /// <returns></returns>
-            public static bool IsGreaterThanZero(Qyte a)
-            {
-                if (a.QitAtIndex(0) > Qit.I) return true;
-                else if (a.QitAtIndex(1) > Qit.I) return true;
-                else if (a.QitAtIndex(2) > Qit.I) return true;
-                return false;
-            }
-
             /// <summary>
             /// Adds two inputs, returns their sum without carry out.
             /// </summary>
@@ -212,6 +191,14 @@ namespace Brubeck.Architecture
 
                 return (s, Add(a, Logic.NOT(Multiply(b, s, Qit.I).Item1), Qit.I).Item1);
             }
+
+            /// <summary>
+            /// Computes the absolute value of a Qyte.
+            /// </summary>
+            public static Qyte Abs(Qyte a)
+			{
+                return IsGreaterThanZero(a) ? a : Logic.NOT(a);
+			}
         }
     }
 }

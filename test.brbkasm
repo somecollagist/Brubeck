@@ -1,4 +1,18 @@
-mov %0, AEO
-xor %0, %0
-mov %1, %0
+int %0
+; compare to control
+cmp %0, AAA
+jeq control
+vramadd %0
+halt
+
+label control
+int %1
+cmp %1, AAA
+jeq control
+vramadd 'C'
+vramadd 'T'
+vramadd 'R'
+vramadd 'L'
+vramadd ' '
+vramadd %1
 halt

@@ -87,7 +87,7 @@ namespace Brubeck.Architecture
             public void Div(Qyte alpha) => Qits = ALU.Divide(this, alpha).Item1.Qits;
 
             /// <summary>
-            /// Returns the modulus of this register and a given value.
+            /// Sets the value of the register to its modulo of a given value.
             /// </summary>
             /// <param name="alpha">Value to use in modulus operation.</param>
             public void Mod(Qyte alpha) => Qits = ALU.Divide(this, alpha).Item2.Qits;

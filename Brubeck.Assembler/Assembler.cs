@@ -34,6 +34,7 @@ namespace Brubeck.Assembler
 					 *  - Remove trailing and leading whitespace
 					 *  - Make everything uppercase
 					 *  - Remove any items that contain no data (i.e. paragraph lines)
+					 *  - Remove any comments
 					 *  - Cast to array
 					 */
 					code = sr
@@ -42,69 +43,74 @@ namespace Brubeck.Assembler
 						.Select(t => t.Trim())
 						.Select(t => Utils.UppercaseByRegex(t, new(@"(.(?!')|(?<!').)+")))
 						.Where(t => t != "")
+						.Where(t => t[0] != ';')
 						.ToArray();
 				}
 
 				string newpath = Path.ChangeExtension(path, "brbk5");   //The assembled machine code will be identical to the source, bar its new extension, brbk5
 				Console.WriteLine($"Machine code path: {newpath}");
 
-				using StreamWriter sw = new(newpath);                  //Reader to assembled machine code file
-				foreach (string cmd in code)
+				List<Mnemonic> commands = new();
+				bool requiresaddressresolve = false;
+
+				foreach(string cmd in code)
 				{
 					Console.WriteLine($"Instruction: {cmd}");
+					
+					Mnemonic mnn = new(cmd);
+					//Print out information about the mnemonic.
+					Console.WriteLine($"\tAlias:   {mnn.Alias}");
+					Console.WriteLine($"\tOpcode:  {mnn.Opcode}");
+					Console.WriteLine($"\tAdverb:  {mnn.Adverb}");
+					try { Console.WriteLine($"\tArgs:    {string.Join("' ", mnn.Args)}"); }
+					catch { Console.WriteLine($"\tArgs:    <<NOT APPLICABLE>>"); }
+					Console.WriteLine($"\tAddrPtr: {mnn.AddressPointer}");
 
-					Mnemonic mnn = new(cmd);    //Create a mnemonic object for each command
-					string push = "";           //This will store machine code for each command
-
-					//Adverbial opcodes - only run these if the adverb is not null (i.e. has an adverb)
-
-					if(mnn.Adverb != '\0' && mnn.Opcode == Mnemonic.CommandOpcodePairs["VRAMADD"])
+					if (mnn.AddressPointer == null)
 					{
-						push = $"{mnn.Adverb}{mnn.Opcode}{mnn.Args[0]}";
+						//If it doesn't point to an instruction, just translate and update offset.
+						mnn.MachineCode = Translator[mnn.Alias.ToUpper()](mnn);
+						Offset += mnn.MachineCode.Length / 3;
 					}
-
-					//if the mnemonic has an adverb and more than one argument
-					else if (mnn.Adverb != '\0')
-					{
-						push = $"{mnn.Adverb}{mnn.Opcode}";											//Part 1 - Adverb of the command followed by the opcode
-						if(mnn.Opcode == Mnemonic.CommandOpcodePairs["MOVLOC"])
-						{
-							push += $"II{mnn.Args[0][1..11]}";	//Push a memory location here
-						}
-						else
-						{
-							push += Utils.GetRegisterAlias(int.Parse(mnn.Args[0][1..]));            //Part 2 - This should be a register, so decode %x
-						}
-						push += mnn.Adverb switch													//Part 3 - Decide this based off the adverb
-						{
-							//Register
-							'A' => Utils.GetRegisterAlias(int.Parse(mnn.Args[1][1..])),				//Part 3 is a register, so decode %y
-							//Memory Location
-							'E' => $"II{mnn.Args[1][1..11]}",										//Part 3 is a 10-qit memory location, so get the last 10 qits (prepend II, this is 4 qytes, easier to parse)
-							//Constant
-							'O' => mnn.Args[1][..3],												//Part 3 is a constant, so just push the given constant (trimmed to length 3, just in case)
-							_ => throw new AssemblySegmentationFault(),
-						};
-					}
-
-					//Raw opcodes - we don't need to do anything special to them (yet)
 					else
 					{
-						/* It is critical that adverbs be ignored in this context. Since
-						 * raw opcodes are given the adverb \0 (null), they will not be
-						 * displayed to the user BUT WILL STILL COUNT TOWARDS THE LENGTH
-						 * OF THE MACHINE CODE. Therefore, any machine code assembled
-						 * with null adverbs included may throw a segmentation fault.
+						/* The address pointer will be resolved to 4 Qytes, 
+						 * so the total length of the instruction will be 5
+						 * Qytes. We need to account for this, so just add
+						 * 5 to the offset and it'll be reet.
 						 */
-						push = mnn.Opcode;
-						if(mnn.Args != null)
-						{
-							push += string.Join(string.Empty, mnn.Args);
-						}
+						requiresaddressresolve = true;
+						Offset += 5;
 					}
 
-					Console.WriteLine($"Decoded to machine code instruction {push}");
-					sw.Write(push); //Write the generated machine code to the assembly file
+					commands.Add(mnn);
+				}
+
+				if(requiresaddressresolve)
+				{
+					Console.WriteLine("\nNamed Locations:");
+					foreach(KeyValuePair<string, string> kvp in NamedLocations)
+					{
+						Console.WriteLine($"\t{kvp.Key} --> {kvp.Value[2..]}"); //Trim off the leading II from any addresses
+					}
+
+					//If there are named labels to resolve, then resolve them and translate the necessary mnemonics.
+					foreach(Mnemonic pointer in commands.Where(t => t.AddressPointer != null))
+					{
+						pointer.ResolvePointer();
+						pointer.MachineCode = Translator[pointer.Alias.ToUpper()](pointer);
+					}
+
+					Console.WriteLine("Pointers resolved.");
+				}
+
+				using StreamWriter sw = new(newpath);
+				Console.WriteLine("Starting write process...");
+				foreach(Mnemonic mnn in commands)
+				{
+					Console.WriteLine($"\t{mnn.SourceCode} decoded to machine code:");
+					Console.WriteLine($"\t\t{mnn.MachineCode}");
+					sw.Write(mnn.MachineCode); //Write the generated machine code to the assembly file
 				}
 			}
 			catch (Exception e)

@@ -15,6 +15,120 @@ namespace Brubeck.Architecture
 	/// <remarks>It's pronounced bean lol</remarks>
 	public static class BIEn
 	{
+		public static Qyte Decode(char c)
+		{
+			return new(c switch
+			{
+				'A' => "IIO",
+				'B' => "IIU",
+				'C' => "IOA",
+				'D' => "IOE",
+				'E' => "IOI",
+				'F' => "IOO",
+				'G' => "IOU",
+				'H' => "IUA",
+				'I' => "IUE",
+				'J' => "IUI",
+				'K' => "IUO",
+				'L' => "IUU",
+				'M' => "OAA",
+				'N' => "OAE",
+				'O' => "OAI",
+				'P' => "OAO",
+				'Q' => "OAU",
+				'R' => "OEA",
+				'S' => "OEE",
+				'T' => "OEI",
+				'U' => "OEO",
+				'V' => "OEU",
+				'W' => "OIA",
+				'X' => "OIE",
+				'Y' => "OII",
+				'Z' => "OIO",
+
+				'a' => "IIE",
+				'b' => "IIA",
+				'c' => "IEU",
+				'd' => "IEO",
+				'e' => "IEI",
+				'f' => "IEE",
+				'g' => "IEA",
+				'h' => "IAU",
+				'i' => "IAO",
+				'j' => "IAI",
+				'k' => "IAE",
+				'l' => "IAA",
+				'm' => "EUU",
+				'n' => "EUO",
+				'o' => "EUI",
+				'p' => "EUE",
+				'q' => "EUA",
+				'r' => "EOU",
+				's' => "EOO",
+				't' => "EOI",
+				'u' => "EOE",
+				'v' => "EOA",
+				'w' => "EIU",
+				'x' => "EIO",
+				'y' => "EII",
+				'z' => "EIE",
+
+				')' => "OIU",
+				']' => "OOA",
+				'}' => "OOE",
+				'>' => "OOI",
+
+				'(' => "EIA",
+				'[' => "EEU",
+				'{' => "EEO",
+				'<' => "EEI",
+
+				'0' => "OOO",
+				'1' => "OOU",
+				'2' => "OUA",
+				'3' => "OUE",
+				'4' => "OUI",
+				'5' => "OUO",
+				'6' => "OUU",
+				'7' => "UAA",
+				'8' => "UAE",
+				'9' => "UAI",
+
+				' ' => "EEE",
+				'.' => "EEA",
+				',' => "EAU",
+				'?' => "EAO",
+				'!' => "EAI",
+				':' => "EAE",
+				';' => "EAA",
+				'\'' => "AUU",
+				'"' => "AUO",
+				'°' => "AUI",
+
+				'+' => "UAO",
+				'*' => "UAU",
+				'&' => "UEA",
+				'/' => "UEE",
+				'@' => "UEI",
+				'|' => "UEO",
+				'^' => "UEU",
+				'£' => "UIA",
+
+				'-' => "AUE",
+				'=' => "AUA",
+				'#' => "AOU",
+				'\\' => "AOO",
+				'%' => "AOI",
+				'_' => "AOE",
+				'~' => "AOA",
+				'$' => "AIU",
+
+				'\u0001' => "AAA", //Control
+
+				_ => throw new UnknownOpcodeException("The given character is not encoded.")
+			});
+		}
+
 		public static Qit[] GetMapFromCode(Qyte code)
 		{
 			return code.ToString() switch

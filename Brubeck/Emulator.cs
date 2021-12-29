@@ -55,7 +55,8 @@ namespace Brubeck
 			MonitorThread.SetApartmentState(ApartmentState.STA);    //Monitor must be created on STAThread because reasons
 			MonitorThread.Start();
 
-			ProcUnit.AllocVRAM(Peripheral.Monitor.ResHeight, Peripheral.Monitor.ResWidth);	//Allocate VRAM based off peripheral's resolution
+			ProcUnit.AllocVRAM(Peripheral.Monitor.ResHeight, Peripheral.Monitor.ResWidth);  //Allocate VRAM based off peripheral's resolution
+			ProcUnit.AllocStack(ProcUnit.VRAMStartAddr - 1, 189000, ref DataMem);						// ~2% of total memory.
 
 			CPU.ExecutionState es = ProcUnit.Run(ref InstMem, ref DataMem, ref App.MonitorInstance.CachedVideoFeed); //Start CPU execution with the current RAM state and store the final execution state
 			Console.WriteLine($"Program completed with execution state {es}");

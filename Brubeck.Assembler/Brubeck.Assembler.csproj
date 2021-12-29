@@ -7,4 +7,9 @@
     <StartupObject />
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Brubeck.Architecture\Brubeck.Architecture.csproj" />
+    <ProjectReference Include="..\Brubeck.Core\Brubeck.Core.csproj" />
+  </ItemGroup>
+
 </Project>

@@ -1,0 +1,20 @@
+ju main
+
+label equal
+vramadd 'E'
+halt
+
+label notequal
+vramadd 'N'
+halt
+
+label main
+vramadd 'S'
+vramadd ' '
+mov %0, IIO
+mov %1, IIO
+cmp %0, %1
+jeq equal
+jneq notequal
+vramadd 'R'
+halt

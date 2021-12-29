@@ -5,6 +5,9 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
+using Brubeck.Architecture;
+using Brubeck.Core;
+
 namespace Brubeck.Assembler
 {
 	public partial class Assembler
@@ -55,116 +58,14 @@ namespace Brubeck.Assembler
 				};
 			}
 
-			public static string ConvertCharToCode(char c)
+			/// <summary>
+			/// Computes the address of an instruction given how many Qytes precede it.
+			/// </summary>
+			/// <param name="offset">Number of Qytes preceding an instruction.</param>
+			/// <returns>The Address of an instruction.</returns>
+			public static string GetAddress(int offset)
 			{
-				return c switch
-				{
-					'A' => "IIO",
-					'B' => "IIU",
-					'C' => "IOA",
-					'D' => "IOE",
-					'E' => "IOI",
-					'F' => "IOO",
-					'G' => "IOU",
-					'H' => "IUA",
-					'I' => "IUE",
-					'J' => "IUI",
-					'K' => "IUO",
-					'L' => "IUU",
-					'M' => "OAA",
-					'N' => "OAE",
-					'O' => "OAI",
-					'P' => "OAO",
-					'Q' => "OAU",
-					'R' => "OEA",
-					'S' => "OEE",
-					'T' => "OEI",
-					'U' => "OEO",
-					'V' => "OEU",
-					'W' => "OIA",
-					'X' => "OIE",
-					'Y' => "OII",
-					'Z' => "OIO",
-
-					'a' => "IIE",
-					'b' => "IIA",
-					'c' => "IEU",
-					'd' => "IEO",
-					'e' => "IEI",
-					'f' => "IEE",
-					'g' => "IEA",
-					'h' => "IAU",
-					'i' => "IAO",
-					'j' => "IAI",
-					'k' => "IAE",
-					'l' => "IAA",
-					'm' => "EUU",
-					'n' => "EUO",
-					'o' => "EUI",
-					'p' => "EUE",
-					'q' => "EUA",
-					'r' => "EOU",
-					's' => "EOO",
-					't' => "EOI",
-					'u' => "EOE",
-					'v' => "EOA",
-					'w' => "EIU",
-					'x' => "EIO",
-					'y' => "EII",
-					'z' => "EIE",
-
-					')' => "OIU",
-					']' => "OOA",
-					'}' => "OOE",
-					'>' => "OOI",
-
-					'(' => "EIA",
-					'[' => "EEU",
-					'{' => "EEO",
-					'<' => "EEI",
-
-					'0' => "OOO",
-					'1' => "OOU",
-					'2' => "OUA",
-					'3' => "OUE",
-					'4' => "OUI",
-					'5' => "OUO",
-					'6' => "OUU",
-					'7' => "UAA",
-					'8' => "UAE",
-					'9' => "UAI",
-
-					' ' => "EEE",
-					'.' => "EEA",
-					',' => "EAU",
-					'?' => "EAO",
-					'!' => "EAI",
-					':' => "EAE",
-					';' => "EAA",
-					'\''=> "AUU",
-					'"' => "AUO",
-					'°' => "AUI",
-
-					'+' => "UAO",
-					'*' => "UAU",
-					'&' => "UEA",
-					'/' => "UEE",
-					'@' => "UEI",
-					'|' => "UEO",
-					'^' => "UEU",
-					'£' => "UIA",
-
-					'-' => "AUE",
-					'=' => "AUA",
-					'#' => "AOU",
-					'\\'=> "AOO",
-					'%' => "AOI",
-					'_' => "AOE",
-					'~' => "AOA",
-					'$' => "AIU",
-
-					_ => throw new AssemblySegmentationFault()
-				};
+				return new string(QitConverter.GetQitArrayFromInt(offset - (RAM.RamCeiling / 2), 12).Select(x => QitConverter.GetCharFromQit(x)).ToArray());
 			}
 		}
 	}

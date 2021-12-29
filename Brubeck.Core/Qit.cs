@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Linq;
+using System.Collections.Generic;
 
 namespace Brubeck.Core
 {
@@ -96,6 +98,46 @@ namespace Brubeck.Core
 				total += (sbyte)qits[qits.Length - 1 - x] * (int)Math.Pow(5, x);
 			}
 			return total;
+		}
+
+		public static Qit[] GetQitArrayFromInt(int value, int? size = null)
+		{
+			int GetCoefficientClosestToZero(int value, int power)
+			{
+				double[] trials = (new Qit[]{Qit.A, Qit.E, Qit.I, Qit.O, Qit.U }).Select(t => Math.Abs(value - ((int)t * Math.Pow(5, power)))).ToArray();
+				return Array.IndexOf(trials, trials.Min()) - 2;
+			}
+
+			List<Qit> Qits = new();
+
+			if (value == 0) Qits.Add(Qit.I);
+			else
+			{
+				int delta = 1;
+				if(value < 0)
+				{
+					value *= -1;
+					delta = -1;
+				}
+
+				int index = (int)Math.Floor(Math.Log(2 * value, 5));
+				while(value != 0)
+				{
+					int coef = GetCoefficientClosestToZero(value, index);
+					value -= coef * (int)Math.Pow(5, index);
+					Qits.Add((Qit)(coef * delta));
+					index--;
+				}
+				for (int x = index; x >= 0; x--) Qits.Add(Qit.I);
+			}
+
+			if (size != null)
+			{
+				if (Qits.Count > size) throw new IllegalConstructionException($"The number {value} cannot be represented in {size} qits.");
+				while (Qits.Count < size) Qits.Insert(0, Qit.I);
+			}
+
+			return Qits.ToArray();
 		}
 	}
 }

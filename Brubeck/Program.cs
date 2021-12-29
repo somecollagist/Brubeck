@@ -38,7 +38,7 @@ namespace Brubeck
 			else if(new string[] {"-a", "--assemble"}.Contains(args[0]))    //Assemble mode
 			{
 				bool verbose = false;
-				if (args.Length > 2) verbose = args[2] == "-v"; //Run in verbose mode
+				if (args.Length > 2) verbose = args[2] == "-v" || args[2] == "--verbose"; //Run in verbose mode
 				Assembler.Assembler.Run(args[1], verbose);
 			}
 		}

@@ -5,35 +5,44 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
+using Brubeck.Architecture;
+
 namespace Brubeck.Assembler
 {
 	public partial class Assembler
 	{
-		/// <summary>
-		/// Describes a typical assembly instruction.
-		/// </summary>
 		private class Mnemonic
 		{
 			/// <summary>
-			/// The friendly name of an instruction.
+			/// The assembly command given.
 			/// </summary>
-			/// <example>IA</example>
 			public string Alias { get; private set; }
 			/// <summary>
-			/// The basic opcode of an instruction.
+			/// The basic opcode of the command.
 			/// </summary>
-			/// <example>A</example>
+			/// <remarks>Excludes the flag Qit</remarks>
 			public string Opcode { get; private set; }
 			/// <summary>
-			/// The leading qit determining what the type of the second arguement is (if applicable).
+			/// The flag Qit used by the command.
 			/// </summary>
-			/// <example>A</example>
 			public char Adverb { get; private set; }
 			/// <summary>
 			/// Arguments of an instruction.
 			/// </summary>
-			/// <example>%0, IIO</example>
 			public string[] Args { get; private set; }
+			/// <summary>
+			/// Stores an address to point to if the instruction jumps.
+			/// </summary>
+			public string AddressPointer { get; private set; }
+
+			/// <summary>
+			/// Machine code equivalent of the command.
+			/// </summary>
+			public string MachineCode { get; set; }
+			/// <summary>
+			/// The original source code of the command.
+			/// </summary>
+			public string SourceCode { get; private set; }
 
 			/// <summary>
 			/// Constructor for the Mnemonic class.
@@ -41,116 +50,315 @@ namespace Brubeck.Assembler
 			/// <param name="cmd">The command containing the assembly instruction.</param>
 			public Mnemonic(string cmd)
 			{
-				Alias = Regex.Match(cmd, @"[A-Za-z]+").Value;   //Get the first bit of text in a command (this is independent of spaces)
-				Console.WriteLine($"\tAlias: {Alias}");
-				Opcode = CommandOpcodePairs[Alias];             //Get the opcode with the corresponding mnemonic
-				Console.WriteLine($"\tOpcode: {Opcode}");
+				SourceCode = cmd;
 
-				Args = null;
+				Alias = Regex.Match(cmd, @"[A-Za-z]+").Value;
+				Opcode = CommandOpcodePairs[Alias];
 
-				if (Opcode.Length == 3)                         //If the opcode has no adverb (i.e. is a raw opcode) then set the adverb to null.
-				{
-					Adverb = '\0';
-				}
-				else                                            //These opcodes aren't raw and have adverbs that must be considered.
-				{
-					//Since we're operating with adverbs, arguments are guaranteed. Split by commas, cut the whitespace ends, and cast to array.
-					Args = cmd[cmd.IndexOf(' ')..]
-					.Split(',')
-					.Select(t => t.Trim())
-					.ToArray();
-
-					//One argument
-					if (CommandOpcodePairs["VRAMADD"] == Opcode)
-					{
-						Adverb = 'O';
-						Args = new string[] { Utils.ConvertCharToCode(cmd[cmd.IndexOf('\'')..][1]) };
-					}
-
-					//At least 2 arguments
-
-					//Valid location marker
-					else if (Args[1][0] == '%')
-					{
-						//Register marker of style %x
-						if (Args[1].Length == 2 && new char[] { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9' }.Contains(Args[1][1]))
-						{
-							Adverb = 'A';
-						}
-
-						//Memory Location of style %abcdefghij
-						else if (Args[1].Length == 11 && Utils.IsVowelRestricted(Args[1][1..]))
-						{
-							Adverb = 'E';
-						}
-					}
-
-					//Constant of style XYZ
-					else if (Args[1].Length == 3 && Utils.IsVowelRestricted(Args[1]))
-					{
-						Adverb = 'O';
-					}
-
-					//We've got no idea what they're talking about, so throw a seg. fault.
-					else throw new AssemblySegmentationFault();
-				}
-
-				Console.Write("\tArgs: ");
-				if (Args != null) foreach (string arg in Args) Console.Write($"{arg} ");  //Arrays can't be printed, so loop through to display everything.
-				else Console.Write("<<NON-EXISTENT>>");
-				Console.Write("\n");
-				Console.WriteLine($"\tAdverb: {Adverb}");
+				Mnemonic mnn = Parser[Alias.ToUpper()](cmd);
+				Args = mnn.Args;
+				Adverb = mnn.Adverb;
+				AddressPointer = mnn.AddressPointer;
 			}
 
 			/// <summary>
-			/// Maps assembly mnemonics to opcodes.
+			/// Null constructor, used for internal parse methods only
 			/// </summary>
-			internal static readonly Dictionary<string, string> CommandOpcodePairs = new()
+			private Mnemonic() { }
+
+			/// <summary>
+			/// Finds the arguments of a command.
+			/// </summary>
+			/// <param name="cmd">Command containing arguments.</param>
+			/// <returns>An array containing arguments.</returns>
+			private static string[] SplitArgs(string cmd)
 			{
+				return cmd[cmd.IndexOf(' ')..]	//Remove the mnemonic
+					.Split(',')					//Split across commas (they separate args)
+					.Select(t => t.Trim())		//Remove any trailing whitespace from args
+					.ToArray();					//Cast back to array
+			}
+
+			/// <summary>
+			/// Computes the adverb used by the command.
+			/// </summary>
+			/// <param name="args">The arguments of the command.</param>
+			/// <returns>The adverb/flag used by the command.</returns>
+			/// <exception cref="AssemblySegmentationFault">Thrown if an adverb cannot be assigned.</exception>
+			private static char GetAdverbByArgs(string[] args)
+			{
+				char Adverb = '\0'; //Use a null character as a checker.
+
+				if (args[1][0] == '%')
+				{
+					//The second argument is a register or a memory location
+
+					//It's a register
+					if (Regex.IsMatch(args[1], @"^%[0-9]$")) Adverb = 'A';
+					//It's a memory location
+					else if (Regex.IsMatch(args[1], @"^%[AEIOU]{10}$")) Adverb = 'E';
+				}
+				//It's a constant
+				else if (Regex.IsMatch(args[1], @"^[AEIOU]{3}$")) Adverb = 'O';
+				
+				//Either an adverb cannot be assigned, or return the adverb we found.
+				if (Adverb == '\0') throw new AssemblySegmentationFault();
+				return Adverb;
+			}
+
+			/// <summary>
+			/// Parses a standard format variable-flag instruction.
+			/// </summary>
+			/// <param name="cmd">The command to parse.</param>
+			/// <returns>Some data about the command.</returns>
+			private static Mnemonic ParseStandard(string cmd)
+			{
+				string[] args = SplitArgs(cmd);
+				char adverb = GetAdverbByArgs(args);
+
+				return new Mnemonic()
+				{
+					Args = args,
+					Adverb = adverb,
+					AddressPointer = null
+				};
+			}
+
+			/// <summary>
+			/// Parses an instruction targeting only a register.
+			/// </summary>
+			/// <param name="cmd">The command to parse.</param>
+			/// <returns>Some data about the command.</returns>
+			private static Mnemonic ParseRegister(string cmd)
+			{
+				string[] args = SplitArgs(cmd);
+
+				return new Mnemonic()
+				{
+					Args = args,
+					Adverb = 'U',
+					AddressPointer = null
+				};
+			}
+
+			/// <summary>
+			/// Parses a jump instruction.
+			/// </summary>
+			/// <param name="cmd">The command to parse.</param>
+			/// <returns>Some data about the command.</returns>
+			private static Mnemonic ParseJump(string cmd)
+			{
+				string[] args = SplitArgs(cmd);
+
+				return new Mnemonic()
+				{
+					Args = args,
+					Adverb = 'U',
+					AddressPointer = args[0]
+				};
+			}
+
+			/// <summary>
+			/// Parses a fixed-flag instruction.
+			/// </summary>
+			/// <param name="cmd">The command to parse.</param>
+			/// <returns>Some data about the command.</returns>
+			private static Mnemonic ParseFixedFlag(string cmd)
+			{
+				return new Mnemonic()
+				{
+					Args = null,
+					Adverb = 'U',
+					AddressPointer = null
+				};
+			}
+
+			/// <summary>
+			/// Converts a named label stored in address pointer to the memory location it should point to.
+			/// </summary>
+			/// <exception cref="AssemblySegmentationFault">Thrown if the named label does not exist.</exception>
+			public void ResolvePointer()
+			{
+				if (!NamedLocations.TryGetValue(AddressPointer, out string ptr)) throw new AssemblySegmentationFault($"No named label {AddressPointer} exists.");
+				AddressPointer = ptr;
+			}
+
+			/// <summary>
+			/// Maps mnemonic aliases to functions that parse them.
+			/// </summary>
+			private readonly Dictionary<string, Func<string, Mnemonic>> Parser = new()
+			{
+				//Standard format variable-flag instructions
+				{ "ADD", ParseStandard },
+				{ "SUB", ParseStandard },
+				{ "MUL", ParseStandard },
+				{ "DIV", ParseStandard },
+				{ "MOD", ParseStandard },
+				{ "MOVLOC", ParseStandard },
+				{ "MOV", ParseStandard },
+				{ "AND", ParseStandard },
+				{ "OR", ParseStandard },
+				{ "XOR", ParseStandard },
+				{ "CMP", ParseStandard },
+				{
+					"VRAMADD",
+					new Func<string, Mnemonic>(cmd =>
+					{
+						//This instruction is really awkward, so we have a custom implementation of the adverb checker.
+
+						string[] args = SplitArgs(cmd);
+						char adverb = '\0'; //Use a null character as a checker.
+
+						if (args[0][0] == '%')
+						{
+							//The second argument is a register or a memory location
+
+							//It's a register
+							if (Regex.IsMatch(args[0], @"^%[0-9]$"))
+							{
+								adverb = 'A';
+								//args[0] = Utils.GetRegisterAlias(args[0][1]);
+							}
+							//It's a memory location
+							else if (Regex.IsMatch(args[0], @"^%[AEIOU]{10}$"))
+							{
+								adverb = 'E';
+								//args[0] = args[0][1..11];
+							}
+						}
+						//It's a constant
+						else if (Regex.IsMatch(args[0], @"^'.'$"))
+						{
+							//ConvertToCharCode has its own method of validating characters, so don't bother making this regex check for BIEn encoded characters, it's not worth doing
+
+							adverb = 'O';
+							//args[0] = BIEn.Decode(args[0][1]).ToString();
+						}
+
+						//Either an adverb cannot be assigned, or return the adverb we found.
+						if (adverb == '\0') throw new AssemblySegmentationFault();
+
+						return new Mnemonic()
+						{
+							Args = args,
+							Adverb = adverb,
+							AddressPointer = null
+						};
+					})
+				},
+				{ "VRAMSUB", ParseStandard },
+				{ "SHIFT", ParseStandard },
+				{ "ROTATE", ParseStandard },
+
+				{ "JEQ", ParseJump },
+				{ "JNEQ", ParseJump },
+				{ "JMAGEQ", ParseJump },
+				{ "JMAGNEQ", ParseJump },
+				{ "JLT", ParseJump },
+				{ "JGT", ParseJump },
+				{ "JLTEQ", ParseJump },
+				{ "JGTEQ", ParseJump },
+				{ "JZ", ParseJump },
+				{ "JNZ", ParseJump },
+				{ "JU", ParseJump },
+
+				{ "NOT", ParseRegister },
+				{ "PUSH", ParseRegister },
+				{ "PUSHALL", ParseFixedFlag },
+				{ "POP", ParseRegister },
+				{ "POPALL", ParseFixedFlag },
+				{ "CLEARFLAGS", ParseFixedFlag },
+				{ "INC", ParseRegister },
+				{ "DEC", ParseRegister },
+				{
+					"LABEL",
+					new Func<string, Mnemonic>(cmd =>
+					{
+						//Needs to bind a new location
+
+						string[] args = SplitArgs(cmd);
+						NamedLocations.Add(args[0], Utils.GetAddress(Offset));
+						return ParseFixedFlag(cmd);
+					})
+				},
+				{
+					"SUBR",
+					new Func<string, Mnemonic>(cmd =>
+					{
+						//Needs to bind a new location
+
+						string[] args = SplitArgs(cmd);
+						NamedLocations.Add(args[0], Utils.GetAddress(Offset));
+						return ParseFixedFlag(cmd);
+					})
+				},
+				{ "RETURN", ParseFixedFlag },
+				{ "CALL", ParseJump },
+				{ "HALT", ParseFixedFlag },
+				{ "INT", ParseRegister }
+			};
+
+			/// <summary>
+			/// Maps mnemonic aliases to opcodes, not including adverbs.
+			/// </summary>
+			private static readonly Dictionary<string, string> CommandOpcodePairs = new()
+			{
+				//Variable-flag instructions
 				{ "ADD", "AA" },
 				{ "SUB", "AE" },
 				{ "MUL", "AI" },
 				{ "DIV", "AO" },
 				{ "MOD", "AU" },
+				{ "MOVLOC", "EA" },
+				{ "MOV", "EE" },
+				{ "AND", "EI" },
+				{ "OR", "EO" },
+				{ "XOR", "EU" },
+				{ "CMP", "IA" },
+				{ "VRAMADD", "IE" },
+				{ "VRAMSUB", "II" },
+				{ "SHIFT", "IO" },
+				{ "ROTATE", "IU" },
 
-				{ "AND", "EE" },
-				{ "OR", "EI" },
-				{ "XOR", "EO" },
-
-				{ "MOVLOC", "EU" },
-
-				{ "MOV", "IA" },
-				{ "PUSH", "IE" },
-				{ "PUSHALL", "II" },
-				{ "POP", "IO" },
-				{ "POPALL", "IU" },
-
-				{ "CMP", "OA" },
-				{ "LABEL", "OE" },
-				{ "SUBR", "OI" },
-
-				{ "VRAMADD", "OO" },
-				{ "VRAMSUB", "OU" },
-
-				{ "INC", "UA" },
-				{ "DEC", "UE" },
+				//Fixed-flag instructions
+				{ "JEQ", "AA" },
+				{ "JNEQ", "AE" },
+				{ "JMAGEQ", "AI" },
+				{ "JMAGNEQ", "AO" },
+				{ "JLT", "AU" },
+				{ "JGT", "EA" },
+				{ "JLTEQ", "EE" },
+				{ "JGTEQ", "EI" },
+				{ "JZ", "EO" },
+				{ "JNZ", "EU" },
+				{ "JU", "IA" },
+				{ "NOT", "IE" },
+				{ "PUSH", "II" },
+				{ "PUSHALL", "IO" },
+				{ "POP", "IU" },
+				{ "POPALL", "OA" },
+				{ "CLEARFLAGS", "OE" },
+				{ "INC", "OI" },
+				{ "DEC", "OO" },
+				{ "LABEL", "OU" },
+				{ "SUBR", "UA" },
+				{ "RETURN", "UE" },
 				{ "CALL", "UI" },
-				{ "INT", "UO" },
-
-				{ "SHIFT", "UU" },
-
-				//Raw opcodes from here on - these don't require adverbial qits.
-				{ "HALT", "UII" },
-
-				{ "JEQ", "UAA" },
-				{ "JNEQ", "UUU" },
-				{ "JGT", "UAE" },
-				{ "JLT", "UUO" },
-				{ "JGTEQ", "UAI" },
-				{ "JLTEQ", "UUI" },
-
-				{ "NOT", "UEA" },
+				{ "HALT", "UO" },
+				{ "INT", "UU" }
 			};
 		}
+
+		#pragma warning disable IDE0044
+		/// <summary>
+		/// Maps named locations to memory addresses.
+		/// </summary>
+		private static Dictionary<string, string> NamedLocations = new();
+
+		/// <summary>
+		/// Amount of Qytes currently generated by the assembler.
+		/// </summary>
+		private static int Offset = 0;
+		#pragma warning restore IDE0044
 	}
 }

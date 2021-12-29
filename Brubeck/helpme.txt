@@ -43,6 +43,6 @@ Usage:
 		flash RAM states to instruction and/or data memory, by being paths to files containing
 		valid machine code (usually ending in .brbk5).
 
-	-a, --assemble [path]
+	-a, --assemble [path] (-v/--verbose)
 		Reads from the provided path (usually ending in .brbkasm) and translates the provided
 		assembly code into Brubeck machine code.
