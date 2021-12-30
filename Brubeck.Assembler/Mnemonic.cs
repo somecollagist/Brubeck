@@ -11,7 +11,7 @@ namespace Brubeck.Assembler
 {
 	public partial class Assembler
 	{
-		private class Mnemonic
+		internal sealed class Mnemonic
 		{
 			/// <summary>
 			/// The assembly command given.
@@ -62,9 +62,9 @@ namespace Brubeck.Assembler
 			}
 
 			/// <summary>
-			/// Null constructor, used for internal parse methods only
+			/// Null constructor, used for internal parse methods only.
 			/// </summary>
-			private Mnemonic() { }
+			internal Mnemonic() { }
 
 			/// <summary>
 			/// Finds the arguments of a command.

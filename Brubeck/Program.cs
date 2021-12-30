@@ -39,7 +39,9 @@ namespace Brubeck
 			{
 				bool verbose = false;
 				if (args.Length > 2) verbose = args[2] == "-v" || args[2] == "--verbose"; //Run in verbose mode
-				Assembler.Assembler.Run(args[1], verbose);
+																						  
+				Assembler.Assembler assembler = new();
+				assembler.Invoke(args[1], verbose);
 			}
 		}
 		
@@ -50,8 +52,8 @@ namespace Brubeck
 		/// <returns>A quinary state.</returns>
 		private static Qyte[] ReadQuinaryFromFile(string path)
 		{
-            using StreamReader sr = new(Path.GetFullPath(path));	//Reader to file with path to .brbk5 file (file type is not a filter)
-            string rawstate = sr.ReadToEnd();											//Read Quinary
+            using StreamReader sr = new(Path.Combine(Environment.CurrentDirectory, path));	//Reader to file with path to .brbk5 file (file type is not a filter)
+            string rawstate = sr.ReadToEnd();												//Read Quinary
 
             //If the number of Qits (represented as chars) isn't divisible by 3 or exceeds the number of qits that can be stored in RAM, throw a segmentation fault
             if (rawstate.Length % 3 != 0 || rawstate.Length / 3 > RAM.RamCeiling) throw new SegmentationFaultException($"Instruction RAM Flash State size is {rawstate.Length} Qits ({(float)rawstate.Length / 3} Qytes). Ram ceiling size is {RAM.RamCeiling} Qytes.");

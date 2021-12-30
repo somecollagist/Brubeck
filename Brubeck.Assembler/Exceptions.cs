@@ -15,4 +15,11 @@ namespace Brubeck.Assembler
 		public AssemblySegmentationFault(string message) : base(message) { }
 		public AssemblySegmentationFault(string message, Exception inner) : base(message, inner) { }
 	}
+
+	public class DirectiveFault : Exception
+    {
+		public DirectiveFault() : base() { }
+		public DirectiveFault(string message) : base(message) { }
+		public DirectiveFault(string message, Exception inner) : base(message, inner) { }
+    }
 }
