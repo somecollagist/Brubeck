@@ -1,0 +1,25 @@
+{
+    "name": "BrubeckAssembly",
+    "displayName": "Brubeck Emulator Syntax Highlighting",
+    "description": "Syntax Highlighter for Brubeck Emulator assembly files.",
+    "version": "0.0.1",
+    "engines": {
+        "vscode": "^1.63.0"
+    },
+    "categories": [
+        "Programming Languages"
+    ],
+    "contributes": {
+        "languages": [{
+            "id": "brbkasm",
+            "aliases": ["Brubeck Assembly", "brbkasm"],
+            "extensions": [".brbkasm"],
+            "configuration": "./language-configuration.json"
+        }],
+        "grammars": [{
+            "language": "brbkasm",
+            "scopeName": "source.BrubeckAssembly",
+            "path": "./syntaxes/highlighter.tmLanguage"
+        }]
+    }
+}

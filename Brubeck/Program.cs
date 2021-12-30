@@ -30,12 +30,12 @@ namespace Brubeck
 				Console.WriteLine(sr.ReadToEnd());
 			}
 
-			else if(new string[] {"-r", "--run"}.Contains(args[0])) //Run mode
+			else if (new string[] { "-r", "--run" }.Contains(args[0])) //Run mode
 			{
 				RunEmulator(args);
 			}
 
-			else if(new string[] {"-a", "--assemble"}.Contains(args[0]))    //Assemble mode
+			else if (new string[] { "-a", "--assemble" }.Contains(args[0]))    //Assemble mode
 			{
 				bool verbose = false;
 				if (args.Length > 2) verbose = args[2] == "-v" || args[2] == "--verbose"; //Run in verbose mode
@@ -50,14 +50,15 @@ namespace Brubeck
 		/// <returns>A quinary state.</returns>
 		private static Qyte[] ReadQuinaryFromFile(string path)
 		{
-			using StreamReader sr = new(path);			//Reader to file with path to .brbk5 file (file type is not a filter)
-			string rawstate = sr.ReadToEnd();           //Read Quinary
-			//If the number of Qits (represented as chars) isn't divisible by 3 or exceeds the number of qits that can be stored in RAM, throw a segmentation fault
-			if (rawstate.Length % 3 != 0 || rawstate.Length / 3 > RAM.RamCeiling) throw new SegmentationFaultException($"Instruction RAM Flash State size is {rawstate.Length} Qits ({(float)rawstate.Length / 3} Qytes). Ram ceiling size is {RAM.RamCeiling} Qytes.");
-			//Split the machine code into groups of 3 chars and generate qytes accordingly, push these to the state array
-			return Enumerable.Range(0, rawstate.Length / 3)
-				.Select(t => new Qyte(rawstate.Substring(t * 3, 3)))
-				.ToArray();
+            using StreamReader sr = new(Path.GetFullPath(path));	//Reader to file with path to .brbk5 file (file type is not a filter)
+            string rawstate = sr.ReadToEnd();											//Read Quinary
+
+            //If the number of Qits (represented as chars) isn't divisible by 3 or exceeds the number of qits that can be stored in RAM, throw a segmentation fault
+            if (rawstate.Length % 3 != 0 || rawstate.Length / 3 > RAM.RamCeiling) throw new SegmentationFaultException($"Instruction RAM Flash State size is {rawstate.Length} Qits ({(float)rawstate.Length / 3} Qytes). Ram ceiling size is {RAM.RamCeiling} Qytes.");
+            //Split the machine code into groups of 3 chars and generate qytes accordingly, push these to the state array
+            return Enumerable.Range(0, rawstate.Length / 3)
+                .Select(t => new Qyte(rawstate.Substring(t * 3, 3)))
+                .ToArray();
 		}
 
 		/// <summary>
@@ -67,7 +68,7 @@ namespace Brubeck
 		/// <param name="state">State to write.</param>
 		private static void WriteQuinaryToFile(string path, Qyte[] state)
 		{
-			using StreamWriter sw = new(path);
+			using StreamWriter sw = new(Path.GetFullPath(path));
 			sw.Write(string.Join("", state.Select(t => t.ToString())));
 		}
 
@@ -78,7 +79,7 @@ namespace Brubeck
 		/// <returns>The instruction memory address, the state of the registers, and VRAMCharIndex</returns>
 		private static (int, CPU.Register[], int) ReadCPUState(string path)
 		{
-			using StreamReader sr = new(path);
+			using StreamReader sr = new(Path.GetFullPath(path));
 			int instmemaddr = int.Parse(sr.ReadLine());	//first line is the instruction memory address
 			CPU.Register[] registerstates = new CPU.Register[10];
 			for(int x = 0; x < 10; x++)					//following 10 lines are the register states
@@ -99,7 +100,7 @@ namespace Brubeck
 		/// <param name="cpu">CPU from which the state will be copied.</param>
 		private static void WriteCPUState(string path, CPU cpu)
 		{
-			using StreamWriter sw = new(path);
+			using StreamWriter sw = new(Path.GetFullPath(path));
 			sw.WriteLine(cpu.GetInstMemAddr());
 			sw.WriteLine(CPU.R0.ToString());
 			sw.WriteLine(CPU.R1.ToString());

@@ -123,7 +123,7 @@ namespace Brubeck.Architecture
 				'~' => "AOA",
 				'$' => "AIU",
 
-				'\u0001' => "AAA", //Control
+				'\u0001' => "AAA", //Control, typically invoked by CTRL+A or CTRL+SHIFT+A
 
 				_ => throw new UnknownOpcodeException("The given character is not encoded.")
 			});

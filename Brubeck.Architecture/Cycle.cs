@@ -164,21 +164,17 @@ namespace Brubeck.Architecture
 							break;
 
 						case "EA": //MOVLOC
-								   //Get a reference to the memory location to write to
-							Qit[] dest = ReadDataMemoryLocation(GetNextQytes(4, ref InstMem), ref DataMem).Qits;
+							Qyte[] MOVLOCaddr = GetNextQytes(4, ref InstMem);
+							SetDataMemAddr(ReadAddress(MOVLOCaddr));
+							//Get a reference to the memory location to write to
+							Qit[] MOVLOCdest = ReadDataMemoryLocation(MOVLOCaddr, ref DataMem).Qits;
 
 							//Switch the adverb to find what should be written to the memory location
 							//We use copy to so array references don't get shared between memory locations
 							try
 							{
-								Qyte val = opcode.QitAtIndex(0) switch
-								{
-									Qit.A => Register.GetRegisterFromQyte(GetNextQyte(ref InstMem)),
-									Qit.E => ReadDataMemoryLocation(GetNextQytes(4, ref InstMem), ref DataMem),
-									Qit.O => GetNextQyte(ref InstMem),
-									_ => throw new SegmentationFaultException()
-								};
-								val.Qits.CopyTo(dest, 0);
+								Qyte MOVLOCval = GetNextOperandRaw(opcode.QitAtIndex(0), ref InstMem, ref DataMem);
+								MOVLOCval.Qits.CopyTo(MOVLOCdest, 0);
 							}
 							catch (SegmentationFaultException) { return ExecutionState.ERR; }
 							break;
@@ -204,48 +200,38 @@ namespace Brubeck.Architecture
 							break;
 
 						case "IA": //CMP
-								   //SetFlags(GetNextQyte(ref InstMem), GetNextQyte(ref InstMem));
-							Qyte reg = Register.GetRegisterFromQyte(GetNextQyte(ref InstMem));
-							Qyte op2;
+							
+							//SetFlags(GetNextQyte(ref InstMem), GetNextQyte(ref InstMem));
+							Qyte CMPreg = Register.GetRegisterFromQyte(GetNextQyte(ref InstMem));
+							Qyte CMPop2;
 							try
 							{
-								op2 = opcode.QitAtIndex(0) switch
-								{
-									Qit.A => Register.GetRegisterFromQyte(GetNextQyte(ref InstMem)),
-									Qit.E => ReadDataMemoryLocation(GetNextQytes(4, ref InstMem), ref DataMem),
-									Qit.O => GetNextQyte(ref InstMem),
-									_ => throw new SegmentationFaultException()
-								};
+								CMPop2 = GetNextOperandRaw(opcode.QitAtIndex(0), ref InstMem, ref DataMem);
 							}
 							catch (SegmentationFaultException) { return ExecutionState.ERR; }
 
-							SetFlags(reg, op2);
+							SetFlags(CMPreg, CMPop2);
 							break;
 
 						case "IE": //VRAMADD
-							Qyte chr;
+							Qyte VRAMADDchr;
 							try
 							{
-								chr = opcode.QitAtIndex(0) switch
-								{
-									Qit.A => Register.GetRegisterFromQyte(GetNextQyte(ref InstMem)),
-									Qit.E => ReadDataMemoryLocation(GetNextQytes(4, ref InstMem), ref DataMem),
-									Qit.O => GetNextQyte(ref InstMem),
-									_ => throw new SegmentationFaultException()
-								};
+								VRAMADDchr = GetNextOperandRaw(opcode.QitAtIndex(0), ref InstMem, ref DataMem);
 							}
 							catch (SegmentationFaultException) { return ExecutionState.ERR; }
 
-							WriteCharToVRAM(BIEn.GetMapFromCode(chr), ref DataMem, ref VideoFeed);
+							WriteCharToVRAM(BIEn.GetMapFromCode(VRAMADDchr), ref DataMem, ref VideoFeed);
 							break;
 
 						case "II": //VRAMSUB
-							Qit flag = opcode.QitAtIndex(0);                //Prevents a double access
-							if (flag == Qit.I) return ExecutionState.OK;    //Allow continuation if qyte is null
+							Qit VRAMSUBflag = opcode.QitAtIndex(0);                //Prevents a double access
+							if (VRAMSUBflag == Qit.I) return ExecutionState.OK;    //Allow continuation if qyte is null
 							else
 							{
+								int max = QitConverter.GetIntFromQitArray(ALU.Abs(GetNextOperandRaw(VRAMSUBflag, ref InstMem, ref DataMem)).Qits); //Evaluated seperately to avoid overreading
 								//Loops through for the value of the operand. It uses absolute value so negatives are ok.
-								for (int x = 0; x < QitConverter.GetIntFromQitArray(ALU.Abs(GetNextOperandRaw(flag, ref InstMem, ref DataMem)).Qits); x++)
+								for (int x = 0; x < max; x++)
 								{
 									RemoveCharFromVRAM(ref DataMem, ref VideoFeed);
 								}
@@ -259,9 +245,9 @@ namespace Brubeck.Architecture
 							{
 								for (int x = 0; x < QitConverter.GetIntFromQitArray(ops.Item2.Qits); x++)
 								{
-									Qit[] original = Register.GetRegisterFromQyte(ops.Item1).Qits;
-									if (ALU.IsGreaterThanZero(ops.Item2)) original = new Qit[] { original[1], original[2], Qit.I };
-									else original = new Qit[] { Qit.I, original[0], original[1] };
+									Qit[] SHIFToriginal = Register.GetRegisterFromQyte(ops.Item1).Qits;
+									if (ALU.IsGreaterThanZero(ops.Item2)) SHIFToriginal = new Qit[] { SHIFToriginal[1], SHIFToriginal[2], Qit.I };
+									else SHIFToriginal = new Qit[] { Qit.I, SHIFToriginal[0], SHIFToriginal[1] };
 								}
 							}
 							break;
@@ -273,10 +259,70 @@ namespace Brubeck.Architecture
 							{
 								for (int x = 0; x < QitConverter.GetIntFromQitArray(ops.Item2.Qits); x++)
 								{
-									Qit[] original = Register.GetRegisterFromQyte(ops.Item1).Qits;
-									if (ALU.IsGreaterThanZero(ops.Item2)) original = new Qit[] { original[1], original[2], original[0] };
-									else original = new Qit[] { original[2], original[0], original[1] };
+									Qit[] ROTATEoriginal = Register.GetRegisterFromQyte(ops.Item1).Qits;
+									if (ALU.IsGreaterThanZero(ops.Item2)) ROTATEoriginal = new Qit[] { ROTATEoriginal[1], ROTATEoriginal[2], ROTATEoriginal[0] };
+									else ROTATEoriginal = new Qit[] { ROTATEoriginal[2], ROTATEoriginal[0], ROTATEoriginal[1] };
 								}
+							}
+							break;
+
+						case "UA": //DWRITE
+							switch (opcode.QitAtIndex(0))
+							{
+								case Qit.O:
+									DataMem.QyteAtIndex(GetDataMemAddr()).Qits = Register.GetRegisterFromQyte(GetNextQyte(ref InstMem)).Qits;
+									break;
+
+								default:
+									break;
+							}
+							break;
+
+						case "UE": //DREAD
+							switch(opcode.QitAtIndex(0))
+							{
+								case Qit.O:
+									Register.GetRegisterFromQyte(GetNextQyte(ref InstMem)).Qits = DataMem.QyteAtIndex(GetDataMemAddr()).Qits;
+									break;
+
+								default:
+									break;
+							}
+							break;
+
+						case "UI": //DPSET
+							switch (opcode.QitAtIndex(0))
+							{
+								case Qit.O:
+									SetDataMemAddr(ReadAddress(GetNextQytes(4, ref InstMem)));
+									break;
+
+								default:
+									break;
+							}
+							break;
+
+						case "UO": //DPINC
+							switch (opcode.QitAtIndex(0))
+							{
+								case Qit.O:
+									IncDataMemAddr();
+									break;
+
+								default:
+									break;
+							}
+							break;
+
+						case "UU": //DPDEC
+							switch (opcode.QitAtIndex(0))
+							{
+								case Qit.O:
+									DecDataMemAddr();
+									break;
+
+								default:
+									break;
 							}
 							break;
 
@@ -334,24 +380,15 @@ namespace Brubeck.Architecture
 		/// <returns>The value of the next operand.</returns>
 		private Qyte GetNextOperandRaw(Qit OptionFlag, ref RAM InstMem, ref RAM DataMem)
 		{
-			Qyte ret = GetNextQyte(ref InstMem);
 			return OptionFlag switch
 			{
 				//Register
-				Qit.A => Register.GetRegisterFromQyte(ret),
+				Qit.A => Register.GetRegisterFromQyte(GetNextQyte(ref InstMem)),
 				//Mem Loc
-				Qit.E => DataMem.QyteAtIndex(
-							QitConverter.GetIntFromQitArray(
-								new Qit[] { ret.QitAtIndex(2) }
-								.Concat(GetNextQyte(ref InstMem).Qits)
-								.Concat(GetNextQyte(ref InstMem).Qits)
-								.Concat(GetNextQyte(ref InstMem).Qits)
-								.ToArray()
-								) + (RAM.RamCeiling / 2)
-							),
+				Qit.E => ReadDataMemoryLocation(GetNextQytes(4, ref InstMem), ref DataMem),
 				//Const
-				Qit.O => ret,
-				_ => null,
+				Qit.O => GetNextQyte(ref InstMem),
+				_ => throw new SegmentationFaultException(),
 			};
 		}
 

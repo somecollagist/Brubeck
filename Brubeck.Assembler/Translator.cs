@@ -14,7 +14,7 @@ namespace Brubeck.Assembler
         {
             string push = $"{mnn.Adverb}{mnn.Opcode}";
             push += $"{Utils.GetRegisterAlias(int.Parse(mnn.Args[0][1..]))}";
-            push += GetOperandByAdverb(mnn);
+            push += GetOperandByAdverb(mnn, 1);
 
             return push;
         }
@@ -34,13 +34,13 @@ namespace Brubeck.Assembler
             return $"{mnn.Adverb}{mnn.Opcode}";
 		}
         
-        private static string GetOperandByAdverb(Mnemonic mnn)
+        private static string GetOperandByAdverb(Mnemonic mnn, int idx)
 		{
             return mnn.Adverb switch
             {
-                'A' => Utils.GetRegisterAlias(int.Parse(mnn.Args[1][1..])),
-                'E' => $"II{mnn.Args[1][1..11]}",
-                'O' => mnn.Args[1][..3],
+                'A' => Utils.GetRegisterAlias(int.Parse(mnn.Args[idx][1..])),
+                'E' => $"II{mnn.Args[idx][1..11]}",
+                'O' => mnn.Args[idx][..3],
                 _ => throw new AssemblySegmentationFault()
             };
         }
@@ -68,7 +68,7 @@ namespace Brubeck.Assembler
                 {
                     string push = $"{mnn.Adverb}{mnn.Opcode}";
                     push += $"II{mnn.Args[0][1..11]}";
-                    push += GetOperandByAdverb(mnn);
+                    push += GetOperandByAdverb(mnn, 1);
 
                     return push;
                 })
@@ -78,13 +78,8 @@ namespace Brubeck.Assembler
                 new Func<Mnemonic, string>(mnn =>
                 {
                     string push = $"{mnn.Adverb}{mnn.Opcode}";
-                    push += mnn.Adverb switch
-                    {
-                        'A' => Utils.GetRegisterAlias(int.Parse(mnn.Args[0][1..])),
-                        'E' => mnn.Args[0][1..11],
-                        'O' => BIEn.Decode(mnn.Args[0][1]),
-                        _ => throw new AssemblySegmentationFault()
-                    };
+                    if (mnn.Adverb == 'O') push += BIEn.Decode(mnn.Args[0][1]).ToString();
+                    else push += GetOperandByAdverb(mnn, 0);
                     return push;
                 })
             },
@@ -92,9 +87,34 @@ namespace Brubeck.Assembler
                 "VRAMSUB",
                 new Func<Mnemonic, string>(mnn =>
                 {
-                    return $"{mnn.Adverb}{mnn.Opcode}{mnn.Args[0]}";
+                    return $"{mnn.Adverb}{mnn.Opcode}{GetOperandByAdverb(mnn, 0)}";
                 })
             },
+
+            //Data Memory pointer instructions
+            {
+                "DWRITE",
+                new Func<Mnemonic, string>(mnn =>
+                {
+                    return $"{mnn.Adverb}{mnn.Opcode}{Utils.GetRegisterAlias(int.Parse(mnn.Args[0][1..]))}";
+                })
+            },
+            {
+                "DREAD",
+                new Func<Mnemonic, string>(mnn =>
+                {
+                    return $"{mnn.Adverb}{mnn.Opcode}{Utils.GetRegisterAlias(int.Parse(mnn.Args[0][1..]))}";
+                })
+            },
+            {
+                "DPSET",
+                new Func<Mnemonic, string>(mnn =>
+                {
+                    return $"{mnn.Adverb}{mnn.Opcode}II{mnn.Args[0][1..11]}";
+                })
+            },
+            { "DPINC", FixedFlagMnemonicOnly },
+            { "DPDEC", FixedFlagMnemonicOnly },
 
             //Jump instructions
             { "JEQ", TranslateJump },

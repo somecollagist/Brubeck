@@ -21,11 +21,12 @@ namespace Brubeck.Assembler
 			 * verbose mode and no ouptut is given if not.
 			 */
 			if (!verbose) Console.SetOut(TextWriter.Null);
+			Console.WriteLine(Environment.CurrentDirectory);
 
 			try
 			{
-				string[] code;                      //Store each of the mnemonics of the source code in an array
-				using (StreamReader sr = new(path)) //Reader to assembly source file
+				string[] code;																				//Store each of the mnemonics of the source code in an array
+				using (StreamReader sr = new(Path.Combine(Environment.CurrentDirectory, path)))	//Reader to assembly source file
 				{
 					Console.WriteLine($"Full path: {Path.GetFullPath(path)}");
 					/* Process for getting code:

@@ -217,22 +217,18 @@ namespace Brubeck.Assembler
 							if (Regex.IsMatch(args[0], @"^%[0-9]$"))
 							{
 								adverb = 'A';
-								//args[0] = Utils.GetRegisterAlias(args[0][1]);
 							}
 							//It's a memory location
 							else if (Regex.IsMatch(args[0], @"^%[AEIOU]{10}$"))
 							{
 								adverb = 'E';
-								//args[0] = args[0][1..11];
 							}
 						}
 						//It's a constant
 						else if (Regex.IsMatch(args[0], @"^'.'$"))
 						{
 							//ConvertToCharCode has its own method of validating characters, so don't bother making this regex check for BIEn encoded characters, it's not worth doing
-
 							adverb = 'O';
-							//args[0] = BIEn.Decode(args[0][1]).ToString();
 						}
 
 						//Either an adverb cannot be assigned, or return the adverb we found.
@@ -246,9 +242,108 @@ namespace Brubeck.Assembler
 						};
 					})
 				},
-				{ "VRAMSUB", ParseStandard },
+				{
+					"VRAMSUB",
+					new Func<string, Mnemonic>(cmd =>
+                    {
+						string[] args = SplitArgs(cmd);
+						char adverb = '\0'; //Use a null character as a checker.
+
+						if (args[0][0] == '%')
+						{
+							//The second argument is a register or a memory location
+
+							//It's a register
+							if (Regex.IsMatch(args[0], @"^%[0-9]$"))
+							{
+								adverb = 'A';
+							}
+							//It's a memory location
+							else if (Regex.IsMatch(args[0], @"^%[AEIOU]{10}$"))
+							{
+								adverb = 'E';
+							}
+						}
+						//It's a constant
+						else if (Regex.IsMatch(args[0], @"^[AEIOU]{3}$"))
+						{
+							adverb = 'O';
+						}
+
+						//Either an adverb cannot be assigned, or return the adverb we found.
+						if (adverb == '\0') throw new AssemblySegmentationFault();
+
+						return new Mnemonic()
+						{
+							Args = args,
+							Adverb = adverb,
+							AddressPointer = null
+						};
+					})
+				},
 				{ "SHIFT", ParseStandard },
 				{ "ROTATE", ParseStandard },
+
+				{
+					"DWRITE",
+					new Func<string, Mnemonic>(cmd =>
+					{
+						return new Mnemonic()
+						{
+							Args = SplitArgs(cmd),
+							Adverb = 'O',
+							AddressPointer = null
+						};
+					})
+                },
+                {
+					"DREAD",
+					new Func<string, Mnemonic>(cmd =>
+					{
+						return new Mnemonic()
+						{
+							Args = SplitArgs(cmd),
+							Adverb = 'O',
+							AddressPointer = null
+						};
+					})
+				},
+                {
+					"DPSET",
+					new Func<string, Mnemonic>(cmd =>
+					{
+						return new Mnemonic()
+						{
+							Args = SplitArgs(cmd),
+							Adverb = 'O',
+							AddressPointer = null
+						};
+					})
+				},
+                {
+					"DPINC",
+					new Func<string, Mnemonic>(cmd =>
+					{
+						return new Mnemonic()
+						{
+							Args = null,
+							Adverb = 'O',
+							AddressPointer = null
+						};
+					})
+				},
+				{
+					"DPDEC",
+					new Func<string, Mnemonic>(cmd =>
+					{
+						return new Mnemonic()
+						{
+							Args = null,
+							Adverb = 'O',
+							AddressPointer = null
+						};
+					})
+				},
 
 				{ "JEQ", ParseJump },
 				{ "JNEQ", ParseJump },
@@ -319,6 +414,11 @@ namespace Brubeck.Assembler
 				{ "VRAMSUB", "II" },
 				{ "SHIFT", "IO" },
 				{ "ROTATE", "IU" },
+				{ "DWRITE", "UA" },
+				{ "DREAD", "UE" },
+				{ "DPSET", "UI" },
+				{ "DPINC", "UO" },
+				{ "DPDEC", "UU" },
 
 				//Fixed-flag instructions
 				{ "JEQ", "AA" },

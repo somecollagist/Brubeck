@@ -1,5 +1,6 @@
 @echo off
 cls
+set exepath = Brubeck\bin\Debug\net5.0-windows\Brubeck.exe
 goto start
 
 :start
@@ -20,15 +21,15 @@ set /p filename=Filename to assemble (.brbkasm, do not include extension):
 set /p verbose=Type 'Y' to run verbose:
 if '%verbose%'=='Y' goto verbose
 
-Brubeck\bin\Debug\net5.0\Brubeck.exe -a %filename%.brbkasm
+%exepath% -a %filename%.brbkasm
 goto start
 :verbose
-Brubeck\bin\Debug\net5.0\Brubeck.exe -a %filename%.brbkasm -v
+%exepath% -a %filename%.brbkasm -v
 goto start
 
 :run
 set /p filename=Filename to run (.brbk5, do not include extension):
-Brubeck\bin\Debug\net5.0\Brubeck.exe -r %filename%.brbk5
+%exepath% -r %filename%.brbk5
 goto start
 
 :clear

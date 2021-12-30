@@ -8,10 +8,9 @@
 		Title="Brubeck Peripheral" Height="180" Width="240"
 		SizeToContent="WidthAndHeight"
 		ResizeMode="NoResize"
-        Background="Black"
-        KeyDown="KeyPress">
+        Background="Black">
     <!-- The SizeToContent option will resize to window to accomodate the size of all controls contained -->
     <Grid x:Name="Screen">
-        <Image x:Name="PixelMap" KeyDown="KeyPress"/>
+        <Image x:Name="PixelMap"/>
     </Grid>
 </Window>

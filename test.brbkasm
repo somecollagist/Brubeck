@@ -1,18 +1,54 @@
-int %0
-; compare to control
-cmp %0, AAA
-jeq control
-vramadd %0
-halt
-
-label control
-int %1
-cmp %1, AAA
-jeq control
-vramadd 'C'
-vramadd 'T'
-vramadd 'R'
-vramadd 'L'
+label main
+vramadd 'W'
+vramadd 'h'
+vramadd 'o'
 vramadd ' '
-vramadd %1
+vramadd 'a'
+vramadd 'r'
+vramadd 'e'
+vramadd ' '
+vramadd 'y'
+vramadd 'o'
+vramadd 'u'
+vramadd '?'
+vramadd ' '
+
+; buffer size counter
+mov %1, III
+
+label input
+int %0
+; compare with control input
+cmp %0, AAA
+jeq print
+dwrite %0
+dpinc
+inc %1
+ju input
+
+label print
+dpset %AAAAAAAAAA
+cmp %1, III
+jlteq main
+
+vramadd 'Y'
+vramadd 'o'
+vramadd 'u'
+vramadd ' '
+vramadd 'a'
+vramadd 'r'
+vramadd 'e'
+vramadd ' '
+
+label printchar
+clearflags
+dread %0
+vramadd %0
+dec %1
+dpinc
+cmp %1, III
+jgt printchar
+
+label end
+vramadd '!'
 halt

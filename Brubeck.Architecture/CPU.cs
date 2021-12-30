@@ -12,29 +12,54 @@ namespace Brubeck.Architecture
     public partial class CPU
     {
         /// <summary>
-        /// Current Memory Address of RAM being read.
+        /// Current Instruction Memory Address.
         /// </summary>
         private int InstMemAddr;
 
         /// <summary>
-        /// Getter for Current Memory Address.
+        /// Getter for Instruction Memory Address.
         /// </summary>
         public int GetInstMemAddr() => InstMemAddr;
         /// <summary>
-        /// Setter for Current Memory Address.
+        /// Setter for Instruction Memory Address.
         /// </summary>
         public void SetInstMemAddr(int value) => InstMemAddr = value is < 0 or >= RAM.RamCeiling
-            ? throw new IllegalIndexException($"Memory Address cannot be set to value {value} because it is either less than 0 or greater than the established RAM Ceiling.")
+            ? throw new IllegalIndexException($"Instruction Memory Address cannot be set to value {value} because it is either less than 0 or greater than the established RAM Ceiling.")
             : value;
 
         /// <summary>
-        /// Increments Current Memory Address. Exceeding the RAM Ceiling sets the address to 0.
+        /// Increments Instruction Memory Address. Exceeding the RAM Ceiling sets the address to 0.
         /// </summary>
         public void IncInstMemAddr() => InstMemAddr = ++InstMemAddr == RAM.RamCeiling ? 0 : InstMemAddr;
         /// <summary>
-        /// Decrements Current Memory Address. Going below 0 sets the address to the RAM Ceiling.
+        /// Decrements Instruction Memory Address. Going below 0 sets the address to the RAM Ceiling.
         /// </summary>
         public void DecInstMemAddr() => InstMemAddr = InstMemAddr-- == 0 ? RAM.RamCeiling - 1 : InstMemAddr;
+
+        /// <summary>
+        /// Current Data Memory Address.
+        /// </summary>
+        private int DataMemAddr;
+
+        /// <summary>
+        /// Getter for Data Memory Address.
+        /// </summary>
+        public int GetDataMemAddr() => DataMemAddr;
+        /// <summary>
+        /// Setter for Data Memory Address.
+        /// </summary>
+        public void SetDataMemAddr(int value) => DataMemAddr = value is < 0 or >= RAM.RamCeiling
+            ? throw new IllegalIndexException($"Data Memory Address cannot be set to value {value} because it is either less than 0 or greater than the established RAM Ceiling.")
+            : value;
+
+        /// <summary>
+        /// Increments Data Memory Address. Exceeding the RAM Ceiling sets the address to 0.
+        /// </summary>
+        public void IncDataMemAddr() => DataMemAddr = ++DataMemAddr == RAM.RamCeiling ? 0 : DataMemAddr;
+        /// <summary>
+        /// Decrements Data Memory Address. Going below 0 sets the address to the RAM Ceiling.
+        /// </summary>
+        public void DecDataMemAddr() => DataMemAddr = DataMemAddr-- == 0 ? RAM.RamCeiling - 1 : DataMemAddr;
 
         /// <summary>
         /// Returns the value of the next Qyte in Memory.
