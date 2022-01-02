@@ -284,6 +284,16 @@ namespace Brubeck.Assembler
 				{ "SHIFT", ParseStandard },
 				{ "ROTATE", ParseStandard },
 
+                {
+					"DRUN",
+					new Func<string, Mnemonic>(cmd =>
+                    {
+						Mnemonic mnn = ParseFixedFlag(cmd);
+						mnn.Adverb = 'E';
+						return mnn;
+                    })
+                },
+
 				{
 					"DWRITE",
 					new Func<string, Mnemonic>(cmd =>
@@ -414,6 +424,8 @@ namespace Brubeck.Assembler
 				{ "VRAMSUB", "II" },
 				{ "SHIFT", "IO" },
 				{ "ROTATE", "IU" },
+
+				{ "DRUN", "UU" },
 				{ "DWRITE", "UA" },
 				{ "DREAD", "UE" },
 				{ "DPSET", "UI" },

@@ -11,55 +11,8 @@ namespace Brubeck.Architecture
     /// </summary>
     public partial class CPU
     {
-        /// <summary>
-        /// Current Instruction Memory Address.
-        /// </summary>
-        private int InstMemAddr;
-
-        /// <summary>
-        /// Getter for Instruction Memory Address.
-        /// </summary>
-        public int GetInstMemAddr() => InstMemAddr;
-        /// <summary>
-        /// Setter for Instruction Memory Address.
-        /// </summary>
-        public void SetInstMemAddr(int value) => InstMemAddr = value is < 0 or >= RAM.RamCeiling
-            ? throw new IllegalIndexException($"Instruction Memory Address cannot be set to value {value} because it is either less than 0 or greater than the established RAM Ceiling.")
-            : value;
-
-        /// <summary>
-        /// Increments Instruction Memory Address. Exceeding the RAM Ceiling sets the address to 0.
-        /// </summary>
-        public void IncInstMemAddr() => InstMemAddr = ++InstMemAddr == RAM.RamCeiling ? 0 : InstMemAddr;
-        /// <summary>
-        /// Decrements Instruction Memory Address. Going below 0 sets the address to the RAM Ceiling.
-        /// </summary>
-        public void DecInstMemAddr() => InstMemAddr = InstMemAddr-- == 0 ? RAM.RamCeiling - 1 : InstMemAddr;
-
-        /// <summary>
-        /// Current Data Memory Address.
-        /// </summary>
-        private int DataMemAddr;
-
-        /// <summary>
-        /// Getter for Data Memory Address.
-        /// </summary>
-        public int GetDataMemAddr() => DataMemAddr;
-        /// <summary>
-        /// Setter for Data Memory Address.
-        /// </summary>
-        public void SetDataMemAddr(int value) => DataMemAddr = value is < 0 or >= RAM.RamCeiling
-            ? throw new IllegalIndexException($"Data Memory Address cannot be set to value {value} because it is either less than 0 or greater than the established RAM Ceiling.")
-            : value;
-
-        /// <summary>
-        /// Increments Data Memory Address. Exceeding the RAM Ceiling sets the address to 0.
-        /// </summary>
-        public void IncDataMemAddr() => DataMemAddr = ++DataMemAddr == RAM.RamCeiling ? 0 : DataMemAddr;
-        /// <summary>
-        /// Decrements Data Memory Address. Going below 0 sets the address to the RAM Ceiling.
-        /// </summary>
-        public void DecDataMemAddr() => DataMemAddr = DataMemAddr-- == 0 ? RAM.RamCeiling - 1 : DataMemAddr;
+        public AddressRegister InstMemAddr { get; private set; } = new();
+        public AddressRegister DataMemAddr { get; private set; } = new();
 
         /// <summary>
         /// Returns the value of the next Qyte in Memory.
@@ -67,8 +20,8 @@ namespace Brubeck.Architecture
         /// <param name="InstMem">Reference to Instruction Memory.</param>
         public Qyte GetNextQyte(ref RAM InstMem)
         {
-            Qyte ret = InstMem.QyteAtIndex(InstMemAddr);
-            IncInstMemAddr();
+            Qyte ret = InstMem.QyteAtIndex(InstMemAddr.GetAddr());
+            InstMemAddr.IncAddr();
             return ret;
         }
 
@@ -127,21 +80,22 @@ namespace Brubeck.Architecture
         /// <summary>
         /// Sets the CPU's state to match the provided parameters.
         /// </summary>
-        public Task FlashCPUState((int, Register[], int) state)
+        public Task FlashCPUState((int, int, Register[], int) state)
         {
-            InstMemAddr = state.Item1;
-            if (state.Item2.Length != 10) throw new ComponentNonExistentException($"{state.Item2.Length} register states provided, should only be 10.");
-            R0 = state.Item2[0];
-            R1 = state.Item2[1];
-            R2 = state.Item2[2];
-            R3 = state.Item2[3];
-            R4 = state.Item2[4];
-            R5 = state.Item2[5];
-            R6 = state.Item2[6];
-            R7 = state.Item2[7];
-            R8 = state.Item2[8];
-            R9 = state.Item2[9];
-            VRAMCharIndex = state.Item3;
+            InstMemAddr.SetAddr(state.Item1);
+            DataMemAddr.SetAddr(state.Item2);
+            if (state.Item3.Length != 10) throw new ComponentNonExistentException($"{state.Item3.Length} register states provided, should only be 10.");
+            R0 = state.Item3[0];
+            R1 = state.Item3[1];
+            R2 = state.Item3[2];
+            R3 = state.Item3[3];
+            R4 = state.Item3[4];
+            R5 = state.Item3[5];
+            R6 = state.Item3[6];
+            R7 = state.Item3[7];
+            R8 = state.Item3[8];
+            R9 = state.Item3[9];
+            VRAMCharIndex = state.Item4;
             return Task.CompletedTask;
         }
     }

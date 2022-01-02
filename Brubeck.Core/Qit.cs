@@ -139,5 +139,15 @@ namespace Brubeck.Core
 
 			return Qits.ToArray();
 		}
+
+		public static Qit[] GetQitArrayFromQyteArray(Qyte[] arr)
+        {
+			List<Qit> ret = new();
+			foreach(Qyte qyte in arr)
+				foreach(Qit qit in qyte.Qits)
+					ret.Add(qit);
+
+			return ret.ToArray();
+        }
 	}
 }

@@ -11,7 +11,7 @@ namespace Brubeck.Core
 		/// <summary>
 		/// Array of Qits contained within the Qyte (3 Qits)
 		/// </summary>
-		public Qit[] Qits { get; set; } = new Qit[3];
+		public virtual Qit[] Qits { get; set; } = new Qit[3];
 
 		/// <summary>
 		/// Creates a null Qyte (III).
@@ -50,11 +50,11 @@ namespace Brubeck.Core
 		/// <summary>
 		/// Gets the Qit at the specified index.
 		/// </summary>
-		/// <param name="index">The index of the Qit (must be between 0 and 2 inclusive).</param>
+		/// <param name="index">The index of the Qit.</param>
 		/// <returns>Reference to the specified Qit.</returns>
-		public ref Qit QitAtIndex(int index)
+		public virtual ref Qit QitAtIndex(int index)
 		{
-			if (index < 0 || index > 2) throw new IllegalIndexException($"Cannot access Qit at index {index}");
+			if (index < 0 || index > Qits.Length-1) throw new IllegalIndexException($"Cannot access Qit at index {index}");
 			return ref Qits[index];
 		}
 
@@ -63,7 +63,7 @@ namespace Brubeck.Core
 		/// </summary>
 		/// <param name="input">The Qit to input into the rightmost index.</param>
 		/// <returns>The original leftmost Qit.</returns>
-		public Qit LeftShift(Qit input = Qit.I)
+		public virtual Qit LeftShift(Qit input = Qit.I)
 		{
 			Qit ret = Qits[0];
 			Qits = new Qit[] { Qits[1], Qits[2], input };
@@ -75,7 +75,7 @@ namespace Brubeck.Core
 		/// </summary>
 		/// <param name="input">The Qit to input into the leftmost index.</param>
 		/// <returns>the original rightmost Qit.</returns>
-		public Qit RightShift(Qit input = Qit.I)
+		public virtual Qit RightShift(Qit input = Qit.I)
 		{
 			Qit ret = Qits[2];
 			Qits = new Qit[] { input, Qits[0], Qits[1] };

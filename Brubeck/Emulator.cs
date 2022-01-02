@@ -19,7 +19,7 @@ namespace Brubeck
 		public static async void RunEmulator(string[] args)
 		{
 			try
-            {
+			{
 				RAM InstMem = new();    //Create a memory instance for instructions
 				RAM DataMem = new();    //Create a memory instance for data
 				CPU ProcUnit = new();   //Create a cpu instance
@@ -58,7 +58,7 @@ namespace Brubeck
 				MonitorThread.Start();
 
 				ProcUnit.AllocVRAM(Peripheral.Monitor.ResHeight, Peripheral.Monitor.ResWidth);  //Allocate VRAM based off peripheral's resolution
-				ProcUnit.AllocStack(ProcUnit.VRAMStartAddr - 1, 189000, ref DataMem);                       // ~2% of total memory.
+				ProcUnit.AllocStack(ProcUnit.VRAMStartAddr - 1, 189000);						// ~2% of total memory.
 
 				CPU.ExecutionState es = ProcUnit.Run(ref InstMem, ref DataMem, ref App.MonitorInstance.CachedVideoFeed); //Start CPU execution with the current RAM state and store the final execution state
 				Console.WriteLine($"Program completed with execution state {es}");
@@ -74,9 +74,9 @@ namespace Brubeck
 			}
 			catch(Exception ex)
 			{
-                Console.WriteLine($"\tUnhandled Exception of type: {ex.GetType()}");
-                Console.WriteLine($"\tMessage: {ex.Message}");
-                Console.WriteLine($"\tStack Trace:\n\t\t{string.Join("\n\t\t", ex.StackTrace.Split('\n').Select(t => t.Trim()))}");
+				Console.WriteLine($"\tUnhandled Exception of type: {ex.GetType()}");
+				Console.WriteLine($"\tMessage: {ex.Message}");
+				Console.WriteLine($"\tStack Trace:\n\t\t{string.Join("\n\t\t", ex.StackTrace.Split('\n').Select(t => t.Trim()))}");
 			}
 		}
 	}

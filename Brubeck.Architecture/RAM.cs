@@ -14,12 +14,12 @@ namespace Brubeck.Architecture
         /// <summary>
         /// Maximum number of RAM Addresses. Each RAM address contains one Qyte.
         /// </summary>
-        public const int RamCeiling = 9765625;  //This is 5^10
+        public static readonly int RamCeiling = 9765625;  //This is 5^10
 
         /// <summary>
         /// One-Dimensional array of Qytes with size RamCeiling.
         /// </summary>
-        public Qyte[] Memory { get; private set; } = new Qyte[RamCeiling];
+        public Qyte[] Memory { get; protected set; } = new Qyte[RamCeiling];
 
         /// <summary>
         /// Initialises RAM as an array of null Qytes.

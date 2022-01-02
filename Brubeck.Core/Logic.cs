@@ -21,20 +21,20 @@ namespace Brubeck.Core
 		/// </summary>
 		public static Qit AND(Qit a, Qit b) => ((sbyte)a < (sbyte)b) ? a : b;
 
-		/// <summary>
-		/// Qitwise logical AND Gate.
-		/// </summary>
-		public static Qyte AND(Qyte a, Qyte b) => new(new Qit[]
-		{
-			AND(a.QitAtIndex(0), b.QitAtIndex(0)),
-			AND(a.QitAtIndex(1), b.QitAtIndex(1)),
-			AND(a.QitAtIndex(2), b.QitAtIndex(2))
-		});
+        /// <summary>
+        /// Qitwise logical AND Gate.
+        /// </summary>
+        public static Qyte AND(Qyte a, Qyte b) => new(new Qit[]
+        {
+            AND(a.QitAtIndex(0), b.QitAtIndex(0)),
+            AND(a.QitAtIndex(1), b.QitAtIndex(1)),
+            AND(a.QitAtIndex(2), b.QitAtIndex(2))
+        });
 
-		/// <summary>
-		/// Logical OR Gate.
-		/// </summary>
-		public static Qit OR(Qit a, Qit b) => ((sbyte)a > (sbyte)b) ? a : b;
+        /// <summary>
+        /// Logical OR Gate.
+        /// </summary>
+        public static Qit OR(Qit a, Qit b) => ((sbyte)a > (sbyte)b) ? a : b;
 
 		/// <summary>
 		/// Qitwise logical OR Gate.

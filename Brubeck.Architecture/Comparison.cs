@@ -152,23 +152,23 @@ namespace Brubeck.Architecture
 
 			if(Compare(method))
 			{
-				SetInstMemAddr(ReadAddress(addr));
-				if (InstMem.QyteAtIndex(InstMemAddr).Equals(new("UOU"))) return;
+				InstMemAddr.SetAddr(ReadAddress(addr));
+				if (InstMem.QyteAtIndex(InstMemAddr.GetAddr()).Equals(new("UOU"))) return;
 				throw new IllegalIndexException($"Jump to location {InstMemAddr} is not permitted in this context.");
 			}
 		}
 		
 		private void RunUnconditionalJumpToLabel(ref RAM InstMem)
 		{
-			SetInstMemAddr(ReadAddress(GetNextQytes(4, ref InstMem)));
-			if (InstMem.QyteAtIndex(InstMemAddr).Equals(new("UOU"))) return;
+			InstMemAddr.SetAddr(ReadAddress(GetNextQytes(4, ref InstMem)));
+			if (InstMem.QyteAtIndex(InstMemAddr.GetAddr()).Equals(new("UOU"))) return;
 			throw new IllegalIndexException($"Jump to location {InstMemAddr} is not permitted in this context.");
 		}
 
 		private void RunUnconditionalJumpToSubroutine(ref RAM InstMem)
 		{
-			SetInstMemAddr(ReadAddress(GetNextQytes(4, ref InstMem)));
-			if (InstMem.QyteAtIndex(InstMemAddr).Equals(new("UUA"))) return;
+			InstMemAddr.SetAddr(ReadAddress(GetNextQytes(4, ref InstMem)));
+			if (InstMem.QyteAtIndex(InstMemAddr.GetAddr()).Equals(new("UUA"))) return;
 			throw new IllegalIndexException($"Jump to location {InstMemAddr} is not permitted in this context.");
 		}
 	}

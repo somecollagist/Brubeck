@@ -92,6 +92,7 @@ namespace Brubeck.Assembler
             },
 
             //Data Memory pointer instructions
+            { "DRUN", FixedFlagMnemonicOnly },
             {
                 "DWRITE",
                 new Func<Mnemonic, string>(mnn =>

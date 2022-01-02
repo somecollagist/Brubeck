@@ -4,6 +4,14 @@
     <TargetFramework>net5.0-windows</TargetFramework>
   </PropertyGroup>
 
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+
   <ItemGroup>
     <ProjectReference Include="..\Brubeck.Core\Brubeck.Core.csproj" />
     <ProjectReference Include="..\Brubeck.Peripheral\Brubeck.Peripheral.csproj" />

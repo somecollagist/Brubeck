@@ -55,6 +55,7 @@ namespace Brubeck.Architecture
                         return ref R8;
                     case "IOU":
                         return ref R9;
+
                     default:
                         throw new ComponentNonExistentException($"No Register can be accessed from Qyte '{addr}'");
                 }

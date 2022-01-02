@@ -79,10 +79,11 @@ namespace Brubeck
 		/// </summary>
 		/// <param name="path">File to read from.</param>
 		/// <returns>The instruction memory address, the state of the registers, and VRAMCharIndex</returns>
-		private static (int, CPU.Register[], int) ReadCPUState(string path)
+		private static (int, int, CPU.Register[], int) ReadCPUState(string path)
 		{
 			using StreamReader sr = new(Path.GetFullPath(path));
 			int instmemaddr = int.Parse(sr.ReadLine());	//first line is the instruction memory address
+			int datamemaddr = int.Parse(sr.ReadLine()); //second line is the data memory address
 			CPU.Register[] registerstates = new CPU.Register[10];
 			for(int x = 0; x < 10; x++)					//following 10 lines are the register states
 			{
@@ -92,7 +93,7 @@ namespace Brubeck
 			}
 			int vramcharindex = int.Parse(sr.ReadLine());
 
-			return (instmemaddr, registerstates, vramcharindex);
+			return (instmemaddr, datamemaddr, registerstates, vramcharindex);
 		}
 		
 		/// <summary>
@@ -103,7 +104,8 @@ namespace Brubeck
 		private static void WriteCPUState(string path, CPU cpu)
 		{
 			using StreamWriter sw = new(Path.GetFullPath(path));
-			sw.WriteLine(cpu.GetInstMemAddr());
+			sw.WriteLine(cpu.InstMemAddr.GetAddr());
+			sw.WriteLine(cpu.DataMemAddr.GetAddr());
 			sw.WriteLine(CPU.R0.ToString());
 			sw.WriteLine(CPU.R1.ToString());
 			sw.WriteLine(CPU.R2.ToString());

@@ -14,7 +14,7 @@ namespace Brubeck.Architecture
 			return es;
 		}
 
-		private ExecutionState Cycle(ref RAM InstMem, ref RAM DataMem, ref Qyte[] VideoFeed)
+		internal ExecutionState Cycle(ref RAM InstMem, ref RAM DataMem, ref Qyte[] VideoFeed)
 		{
 			Qyte opcode = GetNextQyte(ref InstMem);
 
@@ -74,19 +74,19 @@ namespace Brubeck.Architecture
 							break;
 
 						case "II": //PUSH
-							Push(Register.GetRegisterFromQyte(GetNextQyte(ref InstMem)));
+							Push(Register.GetRegisterFromQyte(GetNextQyte(ref InstMem)), ref DataMem);
 							break;
 
 						case "IO": //PUSHALL
-							PushAll();
+							PushAll(ref DataMem);
 							break;
 
 						case "IU": //POP
-							Register.GetRegisterFromQyte(GetNextQyte(ref InstMem)).Qits = Pop();
+							Register.GetRegisterFromQyte(GetNextQyte(ref InstMem)).Qits = Pop(ref DataMem);
 							break;
 
 						case "OA": //POPALL
-							PopAll();
+							PopAll(ref DataMem);
 							break;
 
 						case "OE": //CLEARFLAGS
@@ -98,7 +98,7 @@ namespace Brubeck.Architecture
 							break;
 
 						case "OO": //DEC
-							Register.GetRegisterFromQyte(GetNextQyte(ref InstMem)).Add(new("IIE"));
+							Register.GetRegisterFromQyte(GetNextQyte(ref InstMem)).Sub(new("IIO"));
 							break;
 
 						case "OU": //LABEL
@@ -110,12 +110,12 @@ namespace Brubeck.Architecture
 							break;
 
 						case "UE": //RETURN
-							PopAll();
-							InstMemAddr += 4;
+							PopAll(ref DataMem);
+							InstMemAddr.SetAddr(InstMemAddr.GetAddr() + 4);
 							break;
 
 						case "UI": //CALL
-							PushAll();
+							PushAll(ref DataMem);
 							RunUnconditionalJumpToSubroutine(ref InstMem);
 							break;
 
@@ -165,12 +165,10 @@ namespace Brubeck.Architecture
 
 						case "EA": //MOVLOC
 							Qyte[] MOVLOCaddr = GetNextQytes(4, ref InstMem);
-							SetDataMemAddr(ReadAddress(MOVLOCaddr));
+							DataMemAddr.SetAddr(ReadAddress(MOVLOCaddr));
 							//Get a reference to the memory location to write to
 							Qit[] MOVLOCdest = ReadDataMemoryLocation(MOVLOCaddr, ref DataMem).Qits;
 
-							//Switch the adverb to find what should be written to the memory location
-							//We use copy to so array references don't get shared between memory locations
 							try
 							{
 								Qyte MOVLOCval = GetNextOperandRaw(opcode.QitAtIndex(0), ref InstMem, ref DataMem);
@@ -181,7 +179,7 @@ namespace Brubeck.Architecture
 
 						case "EE": //MOV
 							ops = GetStandardOperands(opcode.QitAtIndex(0), ref InstMem, ref DataMem);
-							Register.GetRegisterFromQyte(ops.Item1).Qits = ops.Item2.Qits;
+							ops.Item2.Qits.CopyTo(Register.GetRegisterFromQyte(ops.Item1).Qits, 0);
 							break;
 
 						case "EI": //AND
@@ -221,6 +219,7 @@ namespace Brubeck.Architecture
 							}
 							catch (SegmentationFaultException) { return ExecutionState.ERR; }
 
+							Console.WriteLine($"{{{VRAMADDchr}}}");
 							WriteCharToVRAM(BIEn.GetMapFromCode(VRAMADDchr), ref DataMem, ref VideoFeed);
 							break;
 
@@ -243,12 +242,14 @@ namespace Brubeck.Architecture
 
 							if (!ALU.IsZero(ops.Item2))
 							{
+								Qit[] SHIFToriginal = new Qit[3];
+								Register.GetRegisterFromQyte(ops.Item1).Qits.CopyTo(SHIFToriginal, 0);
 								for (int x = 0; x < QitConverter.GetIntFromQitArray(ops.Item2.Qits); x++)
 								{
-									Qit[] SHIFToriginal = Register.GetRegisterFromQyte(ops.Item1).Qits;
 									if (ALU.IsGreaterThanZero(ops.Item2)) SHIFToriginal = new Qit[] { SHIFToriginal[1], SHIFToriginal[2], Qit.I };
 									else SHIFToriginal = new Qit[] { Qit.I, SHIFToriginal[0], SHIFToriginal[1] };
 								}
+								SHIFToriginal.CopyTo(Register.GetRegisterFromQyte(ops.Item1).Qits, 0);
 							}
 							break;
 
@@ -257,20 +258,22 @@ namespace Brubeck.Architecture
 
 							if (!ALU.IsZero(ops.Item2))
 							{
-								for (int x = 0; x < QitConverter.GetIntFromQitArray(ops.Item2.Qits); x++)
+								Qit[] ROTATEoriginal = new Qit[3];
+								Register.GetRegisterFromQyte(ops.Item1).Qits.CopyTo(ROTATEoriginal, 0);
+								for (int x = 0; x < Math.Abs(QitConverter.GetIntFromQitArray(ops.Item2.Qits)); x++)
 								{
-									Qit[] ROTATEoriginal = Register.GetRegisterFromQyte(ops.Item1).Qits;
 									if (ALU.IsGreaterThanZero(ops.Item2)) ROTATEoriginal = new Qit[] { ROTATEoriginal[1], ROTATEoriginal[2], ROTATEoriginal[0] };
 									else ROTATEoriginal = new Qit[] { ROTATEoriginal[2], ROTATEoriginal[0], ROTATEoriginal[1] };
 								}
+								ROTATEoriginal.CopyTo(Register.GetRegisterFromQyte(ops.Item1).Qits, 0);
 							}
 							break;
 
-						case "UA": //DWRITE
+						case "UA":
 							switch (opcode.QitAtIndex(0))
 							{
-								case Qit.O:
-									DataMem.QyteAtIndex(GetDataMemAddr()).Qits = Register.GetRegisterFromQyte(GetNextQyte(ref InstMem)).Qits;
+								case Qit.O: //DWRITE
+									Register.GetRegisterFromQyte(GetNextQyte(ref InstMem)).Qits.CopyTo(DataMem.QyteAtIndex(DataMemAddr.GetAddr()).Qits, 0);
 									break;
 
 								default:
@@ -278,11 +281,11 @@ namespace Brubeck.Architecture
 							}
 							break;
 
-						case "UE": //DREAD
+						case "UE":
 							switch(opcode.QitAtIndex(0))
 							{
-								case Qit.O:
-									Register.GetRegisterFromQyte(GetNextQyte(ref InstMem)).Qits = DataMem.QyteAtIndex(GetDataMemAddr()).Qits;
+								case Qit.O: //DREAD
+									DataMem.QyteAtIndex(DataMemAddr.GetAddr()).Qits.CopyTo(Register.GetRegisterFromQyte(GetNextQyte(ref InstMem)).Qits, 0);
 									break;
 
 								default:
@@ -290,11 +293,11 @@ namespace Brubeck.Architecture
 							}
 							break;
 
-						case "UI": //DPSET
+						case "UI":
 							switch (opcode.QitAtIndex(0))
 							{
-								case Qit.O:
-									SetDataMemAddr(ReadAddress(GetNextQytes(4, ref InstMem)));
+								case Qit.O: //DPSET
+									DataMemAddr.SetAddr(QitConverter.GetQitArrayFromQyteArray(GetNextQytes(4, ref InstMem))[2..]);
 									break;
 
 								default:
@@ -302,11 +305,11 @@ namespace Brubeck.Architecture
 							}
 							break;
 
-						case "UO": //DPINC
+						case "UO":
 							switch (opcode.QitAtIndex(0))
 							{
-								case Qit.O:
-									IncDataMemAddr();
+								case Qit.O: //DPINC
+									DataMemAddr.IncAddr();
 									break;
 
 								default:
@@ -314,11 +317,15 @@ namespace Brubeck.Architecture
 							}
 							break;
 
-						case "UU": //DPDEC
+						case "UU": 
 							switch (opcode.QitAtIndex(0))
 							{
-								case Qit.O:
-									DecDataMemAddr();
+								case Qit.E: //DRUN
+									DRUN(ref DataMem, ref VideoFeed);
+									break;
+
+								case Qit.O: //DPDEC
+									DataMemAddr.DecAddr();
 									break;
 
 								default:
