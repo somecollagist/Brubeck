@@ -24,7 +24,7 @@ namespace Brubeck
 		[STAThread]
 		public static void Main(params string[] args)
 		{
-			if (args.Length == 0 || new string[] { "-h, --help" }.Contains(args[0]))
+			if (args.Length == 0 || new string[] { "-h", "--help" }.Contains(args[0]))
 			{
 				using StreamReader sr = new(Assembly.GetExecutingAssembly().GetManifestResourceStream("Brubeck.helpme.txt"));
 				Console.WriteLine(sr.ReadToEnd());
